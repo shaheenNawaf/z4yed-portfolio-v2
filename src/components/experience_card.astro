@@ -7,15 +7,14 @@ interface Props {
   location: string;
   description: string;
   color: string;
-  details?: string[];
-  video?: string;    // Optional video link
-  gallery?: string[]; // Optional array of images
+  details?: readonly string[]; 
+  gallery?: readonly string[]; 
+  video?: string;
 }
 
 const { id, title, company, date, location, description, color, details = [], video, gallery = [] } = Astro.props;
 ---
 
-<!-- The Card on the main page -->
 <div 
   class="border border-zinc-800 bg-zinc-900/30 rounded-2xl p-5 flex gap-4 cursor-pointer transition-all duration-300 hover:border-zinc-700 hover:shadow-[0_0_30px_-10px_rgba(59,130,246,0.3)] hover:-translate-y-1 group"
   data-modal-id={id}
@@ -30,7 +29,6 @@ const { id, title, company, date, location, description, color, details = [], vi
   </div>
 </div>
 
-<!-- The Modal -->
 <dialog id={id} class="bg-zinc-900 text-zinc-300 p-0 rounded-2xl border border-zinc-800 max-w-3xl w-[95%] backdrop:bg-black/70 backdrop:backdrop-blur-md focus:outline-none">
   <div class="relative max-h-[90vh] overflow-y-auto">
     <button class="absolute top-4 right-4 text-zinc-400 hover:text-white close-modal z-50 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center transition-colors">✕</button>
@@ -67,14 +65,12 @@ const { id, title, company, date, location, description, color, details = [], vi
 
       <br>
       
-      <!-- Media Section: Video First -->
     {video && (
       <div class="w-full bg-black aspect-video">
         <iframe src={video} class="w-full h-full" allowfullscreen></iframe>
       </div>
     )}
 
-    <!-- Image Gallery Grid -->
     {gallery.length > 0 && (
       <div class={`grid gap-2 p-2 ${gallery.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
         {gallery.map((img) => (

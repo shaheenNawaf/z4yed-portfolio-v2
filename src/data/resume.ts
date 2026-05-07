@@ -1,7 +1,52 @@
-export const name = "Shaheen Nawaf Zayed";
+export type Category = 'software' | 'marketing';
+
+export interface Project {
+  id: string;
+  category: Category;
+  results?: string;
+  deliverables?: string[];
+  title: string;
+  date: string;
+  role: string;
+  color: string;
+  tags: readonly string[];
+  description: string;
+  media?: { type: 'video' | 'image'; url: string };
+  liveUrl?: string;
+  repoUrl?: string;
+}
+
+export interface Experience {
+  id: string;
+  category: Category;
+  title: string;
+  company: string;
+  date: string;
+  location: string;
+  color: string;
+  description: string;
+  details: readonly string[];
+  gallery?: readonly string[];
+  video?: string;
+}
+
+export interface CreativeAsset {
+  id: string;
+  title: string;
+  category: 'Graphic' | 'Brief' | 'Video Edit';
+  imageUrl: string;
+}
+
+export const name = "Shaheen Al Adwani";
 export const pronouns = "he/him";
-export const shortBio = "Full-stack Software Engineer & Creator Partnerships Specialist.";
-export const introParagraph = "I'm a Product Engineer and Marketing Specialist based in Davao, Philippines. I bridge the gap between technical infrastructure and high-scale digital advertising. With four years of experience in the creator economy, I've managed B2B relationships and scaled creator contracts that delivered $355K in transaction volume. Currently pursuing a B.S. in Computer Science at Ateneo de Davao University, I focus on building the systems that drive measurable user acquisition.";
+export const shortBio = "Full-stack Software Engineer & Creator Partnerships Specialist";
+
+// export const introParagraph = "I'm a Product Engineer and Marketing Specialist based in Davao, Philippines. I bridge the gap between technical infrastructure and high-scale digital advertising. With four years of experience in the creator economy, I've managed B2B relationships and scaled creator contracts that delivered $355K in transaction volume. Currently pursuing a B.S. in Computer Science at Ateneo de Davao University, I focus on building the systems that drive measurable user acquisition.";
+
+export const softwareSummary = "Computer Science graduate at Ateneo de Davao. I build full-stack applications with a focus on performance and real-world utility. My background in marketing taught me to build systems that don't just work, but actually drive business results.";
+
+export const marketingSummary = "Growth Marketer with 4 years of experience. I've managed $355K in transaction volume and structured 20+ high-performance creator deals. I combine data-driven strategy with technical automation to scale influencer networks and businesses.";
+
 export const contact = {
   email: "contact.shaheenaladwani@gmail.com",
   phone: "+63 917 786 5315",
@@ -11,19 +56,42 @@ export const contact = {
 };
 
 export const softwareSkills = [
-  'Astro', 'Flutter', 'JavaScript', 'TypeScript', 'React',
-  'Node.js', 'Python', 'Git', 'Data Infrastructure', 'API Integration', 'Project Management'
+  'Astra (Framework)',
+  'Flutter & Dart (Advanced)',
+  'Python (Data Pipelines)',
+  'JavaScript & TypeScript',
+  'RAG Pipelines & LLM Integration',
+  'REST API Integration',
+  'Supabase & Firebase',
+  'SaaS Product Development',
+  'Systems Analysis & Design',
+  'Agile & Scrum Methodology',
+  'Git & Version Control'
 ];
 
 export const marketingSkills = [
-  'B2B and B2C Sales', 'Creator Partnerships', 'Growth Marketer',
-  'Influencer Marketing Specialist', 'Community Building',
-  'CPA/CML Modeling', 'Performance Analytics'
+  'Influencer & KOL Marketing',
+  'Creator Lifecycle Management',
+  'Performance Marketing (ROAS)',
+  'Hybrid CPA & Rev-Share Models',
+  'Contract Negotiation',
+  'Growth Strategy & UA',
+  'SEA & Philippine Market Expertise',
+  'Content Strategy & Briefing',
+  'Community Building',
+  'Campaign Analytics'
 ];
 
-export const projects = [
-    {
+export const toolStack = {
+  technical: ['VS Code', 'Cursor', 'Postman', 'Android Studio', 'Firebase', 'Docker', 'Wordpress', 'Bubble.IO', 'Wix','GoHighLevel'],
+  marketing: ['Meta Business Suite', 'Figma', 'Canva', 'Notion', 'Airtable', 'HubSpot', 'Google Workspace'],
+  ai: ['ChatGPT', 'Claude', 'Gemini', 'Grok', 'n8n', 'Prompt Engineering']
+};
+
+export const projects: Project[] = [
+  {
     id: 'proj-gymeasy',
+    category: 'software',
     title: 'GymEasy: A Full-Service Gym Management Software',
     date: '2025-',
     role: 'Back-End Developer & Project Manager',
@@ -39,6 +107,7 @@ export const projects = [
   },
   {
     id: 'proj-agripinoy',
+    category: 'software',
     title: 'Agri-Pinoy: RAG-Powered Philippine Agri-Chatbot',
     date: 'Feb 2026',
     role: 'Lead Front-End Developer',
@@ -54,6 +123,7 @@ export const projects = [
   },
   {
     id: 'proj-staysafe',
+    category: 'software',
     title: 'SafeStay: AirBNB Clone via Flutter',
     date: 'Dec 2024',
     role: 'Full Stack Developer',
@@ -69,6 +139,7 @@ export const projects = [
   },
   {
     id: 'proj-JCSD',
+    category: 'software',
     title: 'JCSD: A Full-Service Booking Management System',
     date: 'Aug 2024',
     role: 'Full Stack Developer',
@@ -82,11 +153,12 @@ export const projects = [
     liveUrl: '',
     repoUrl: 'https://github.com/shaheenNawaf/JCSD_Flutter',
   },
-] as const;
+]
 
-export const experiences = [
+export const experiences: Experience[] = [
   {
     id: 'exp-yohoho-lead',
+    category: 'marketing',
     title: 'Philippines Team Lead',
     company: 'Yohoho.bet',
     date: 'June 2025 - Oct 2025',
@@ -105,6 +177,7 @@ export const experiences = [
   },
   {
     id: 'exp-yohoho-influ',
+    category: 'marketing',
     title: 'Influencer Specialist',
     company: 'Yohoho.bet',
     date: 'June 2025 - Oct 2025',
@@ -123,6 +196,7 @@ export const experiences = [
   },
   {
     id: 'exp-rivalry-partnerships',
+    category: 'marketing',
     title: 'Partnerships & Influencer Specialist',
     company: 'Rivalry.com',
     date: 'Sept 2021 - July 2024',
@@ -140,12 +214,12 @@ export const experiences = [
       '/rivalry/pindabali.jpg',
       '/rivalry/bali-1.jpg',
     ], 
-    video: [
-        'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D483447207175593&show_text=0'
-    ],
+    video: 
+        'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D483447207175593&show_text=0',
   },
   {
     id: 'exp-rivalry-community',
+    category: 'marketing',
     title: 'Community Marketing Specialist',
     company: 'Rivalry.com',
     date: 'June 2023 - July 2024',
@@ -168,6 +242,7 @@ export const experiences = [
   },
   {
     id: 'exp-rivalry-campaigns',
+    category: 'marketing',
     title: 'Campaign and Affiliates Specialist',
     company: 'Rivalry.com',
     date: 'Sept 2021 - Aug 2022',
@@ -186,5 +261,20 @@ export const experiences = [
       '/rivalry/initial-affiliates.jpg',
     ], 
     video: '',
+  },
+]
+
+export const creativeGallery: CreativeAsset[] = [
+  {
+    id: 'gfx-1',
+    title: 'Rivalry Bali Major Campaign Overlay',
+    category: 'Graphic',
+    imageUrl: '/rivalry/bali-1.jpg',
+  },
+  {
+    id: 'gfx-2',
+    title: 'Yohoho Influencer Onboarding Flow',
+    category: 'Brief',
+    imageUrl: '/yohoho/yohoho-1.png',
   },
 ];

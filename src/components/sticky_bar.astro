@@ -1,0 +1,53 @@
+---
+interface Props {
+  ctaText: string;
+  contactEmail: string;
+  linkedinUrl: string;
+  profileImage: string;
+  name: string;
+}
+const { ctaText, contactEmail, linkedinUrl, profileImage, name } = Astro.props;
+---
+
+<div id="sticky-cta" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] w-[95%] max-w-xl translate-y-40 transition-all duration-700 ease-in-out pointer-events-none">
+  <div class="bg-zinc-900/90 backdrop-blur-2xl border border-zinc-800 p-2 rounded-2xl shadow-2xl flex items-center justify-between pointer-events-auto">
+    
+    <!-- Left: Identity -->
+    <div class="flex items-center gap-3 pl-2">
+      <img src={profileImage} class="w-10 h-10 rounded-xl object-cover border border-zinc-800" alt={name} />
+      <div class="hidden md:block">
+        <p class="text-white text-xs font-semibold tracking-tight">{name}</p>
+        <p class="text-zinc-500 text-[9px] uppercase tracking-widest">Available for projects</p>
+      </div>
+    </div>
+    
+    <!-- Right: Dual Actions -->
+    <div class="flex items-center gap-2">
+      <a href={`https://${linkedinUrl}`} target="_blank" class="p-2.5 rounded-xl border border-zinc-800 text-zinc-400 hover:text-blue-400 transition-colors bg-zinc-950/50" title="LinkedIn">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+      <a href={`mailto:${contactEmail}`} class="bg-white text-black px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-tight hover:bg-zinc-200 transition-all active:scale-95 flex items-center gap-2">
+        <span>{ctaText}</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stickyBar = document.getElementById('sticky-cta');
+  const heroTrigger = document.getElementById('hero-trigger');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        stickyBar?.classList.remove('translate-y-40');
+        stickyBar?.classList.add('translate-y-0');
+      } else {
+        stickyBar?.classList.add('translate-y-40');
+        stickyBar?.classList.remove('translate-y-0');
+      }
+    });
+  }, { threshold: 0 });
+
+  if (heroTrigger) observer.observe(heroTrigger);
+</script>

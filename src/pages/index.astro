@@ -1,94 +1,72 @@
 ---
 import BaseLayout from '../layouts/layout.astro';
-import Sidebar from '../components/sidebar.astro';
-import ProjectCard from '../components/project_card.astro';
-import ExperienceCard from '../components/experience_card.astro';
-import { introParagraph, projects, experiences } from '../data/resume';
+import { name, shortBio, contact } from '../data/resume';
 ---
 
-<BaseLayout title="Shaheen Nawaf Zayed Al Adwani - Portfolio">
-  <Sidebar />
-  
-  <main class="flex-1 flex flex-col gap-16">
-    <section>
-      <h2 class="text-xs font-semibold text-zinc-500 tracking-widest uppercase mb-4">Intro</h2>
-      <p class="text-sm leading-relaxed text-justify">{introParagraph}</p>
-    </section>
+<BaseLayout title={name}>
+  <header class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl">
+    <div class="bg-zinc-950/60 backdrop-blur-md border border-zinc-800 p-4 md:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-4 md:gap-6">
+      
+      <img 
+        src={contact.profileImage} 
+        alt={name} 
+        class="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-zinc-800 shadow-inner"
+      />
 
-    <section>
-      <h2 class="text-xs font-semibold text-zinc-500 tracking-widest uppercase mb-4">Projects</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {projects.map(project => <ProjectCard {...project} />)}
+      <div class="text-center md:text-left flex-1">
+        <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">{name}</h1>
+        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed max-w-sm">
+          {shortBio}
+        </p>
       </div>
-    </section>
 
-    <section>
-      <h2 class="text-xs font-semibold text-zinc-500 tracking-widest uppercase mb-4">Experience</h2>
-      <div class="flex flex-col gap-4">
-        {experiences.map(exp => <ExperienceCard {...exp} />)}
+      <div class="flex md:flex-col gap-3 border-t md:border-t-0 md:border-l border-zinc-800 pt-4 md:pt-0 md:pl-6">
+        <a href={`mailto:${contact.email}`} class="text-zinc-400 hover:text-white transition-colors" title="Email Me">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        </a>
+        <a href={`https://${contact.linkedin}`} target="_blank" class="text-zinc-400 hover:text-blue-400 transition-colors" title="LinkedIn">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
       </div>
-    </section>
-  </main>
+    </div>
+  </header>
 
-  <script>
-  const setupModals = () => {
-    const modalTriggers = document.querySelectorAll('[data-modal-id]');
-    const closeButtons = document.querySelectorAll('.close-modal');
-    const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
+  <!-- Split Screen Portal -->
+  <div class="fixed inset-0 flex flex-col md:flex-row">
+    <a href="/software" class="group relative flex-1 flex items-end md:items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800 transition-all duration-700 hover:flex-[1.4]">
+      <div class="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors"></div>
+      <div class="relative z-10 text-center p-12 md:p-8">
+        <span class="text-blue-500 font-mono mb-2 block tracking-[0.3em] text-xs uppercase">Technical Architecture</span>
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-none">SOFTWARE<br/><span class="text-blue-500">ENGINEER</span></h2>
+        <div class="inline-flex items-center gap-2 px-6 py-2 border border-blue-500/30 text-blue-400 rounded-full group-hover:bg-blue-500 group-hover:text-white transition-all text-sm font-bold uppercase tracking-widest">
+          Enter Lab
+        </div>
+      </div>
+    </a>
 
-    const stopVideo = (modal: HTMLDialogElement) => {
-      const iframe = modal.querySelector('iframe');
-      if (iframe) {
-        const currentSrc = iframe.src;
-        iframe.src = '';
-        iframe.src = currentSrc;
-      }
-    };
+    <a href="/marketing" class="group relative flex-1 flex items-end md:items-center justify-center overflow-hidden transition-all duration-700 hover:flex-[1.4]">
+      <div class="absolute inset-0 bg-orange-600/5 group-hover:bg-orange-600/10 transition-colors"></div>
+      <div class="relative z-10 text-center p-12 md:p-8">
+        <span class="text-orange-500 font-mono mb-2 block tracking-[0.3em] text-xs uppercase">Growth & Scale</span>
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-none">CREATOR<br/><span class="text-orange-500">STRATEGIST</span></h2>
+        <div class="inline-flex items-center gap-2 px-6 py-2 border border-orange-500/30 text-orange-400 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-all text-sm font-bold uppercase tracking-widest">
+          Enter Studio
+        </div>
+      </div>
+    </a>
+  </div>
 
-    modalTriggers.forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        const modalId = trigger.getAttribute('data-modal-id');
-        if (!modalId) return;
-        const modal = document.getElementById(modalId) as HTMLDialogElement;
-        if (modal) {
-          modal.showModal();
-          document.body.style.overflow = 'hidden';
-        }
-      });
-    });
-
-    closeButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const dialog = btn.closest('dialog');
-        if (dialog) {
-          stopVideo(dialog);
-          dialog.close();
-        }
-      });
-    });
-
-    dialogs.forEach(dialog => {
-      dialog.addEventListener('close', () => {
-        document.body.style.overflow = 'auto';
-      });
-
-      dialog.addEventListener('click', (e) => {
-        const dialogDimensions = dialog.getBoundingClientRect();
-        if (
-          e.clientX < dialogDimensions.left ||
-          e.clientX > dialogDimensions.right ||
-          e.clientY < dialogDimensions.top ||
-          e.clientY > dialogDimensions.bottom
-        ) {
-          stopVideo(dialog);
-          dialog.close();
-        }
-      });
-    });
-  };
-
-  setupModals();
-  document.addEventListener('astro:after-swap', setupModals);
-  </script>
+  <!-- Bottom Trust Bar -->
+  <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-3xl pointer-events-none">
+    <div class="bg-zinc-950/40 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-4 flex flex-col items-center gap-3">
+      <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-[0.4em]">Proven Impact At</span>
+      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-40 grayscale">
+        <!-- Text Placeholders for Logos -->
+        <span class="text-white font-black tracking-tighter text-lg italic">RIVALRY</span>
+        <span class="text-white font-black tracking-tighter text-lg italic">YOHOHO</span>
+        <span class="text-white font-black tracking-tighter text-lg italic">BLACKLIST</span>
+        <span class="text-white font-black tracking-tighter text-lg italic">ADDU</span>
+      </div>
+    </div>
+  </div>
 </BaseLayout>

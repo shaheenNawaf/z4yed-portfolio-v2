@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/layout.astro';
+import IdentityHero from '../components/identity_hero.astro';
+import ProjectCard from '../components/project_card.astro';
+import ExperienceCard from '../components/experience_card.astro';
+import StickyBar from '../components/sticky_bar.astro';
+import { name, softwareSummary, projects, experiences, softwareSkills, contact } from '../data/resume';
+
+const softwareProjects = projects.filter(p => p.category === 'software');
+const softwareExp = experiences.filter(e => e.category === 'software');
+---
+
+<BaseLayout title="Shaheen | Software Engineering">
+  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none"></div>
+
+  <main class="max-w-4xl mx-auto w-full flex flex-col gap-16 py-12 px-6">
+    <nav>
+      <a href="/" class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 hover:text-white transition-colors uppercase">← Back to Portal</a>
+    </nav>
+
+    <IdentityHero 
+      name={name}
+      headline="Full-stack Software Engineer and Project Manager"
+      image={contact.profileImage}
+      summary={softwareSummary} 
+      skills={softwareSkills}
+      contact={contact}
+      mode="software"
+    />
+
+    <section>
+      <div class="flex items-center gap-4 mb-8">
+        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Featured Projects</h2>
+        <div class="h-px flex-1 bg-zinc-800/50"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {softwareProjects.map(project => <ProjectCard {...project} />)}
+      </div>
+    </section>
+
+    <section class="pb-20">
+      <div class="flex items-center gap-4 mb-8">
+        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Engineering History & Experience</h2>
+        <div class="h-px flex-1 bg-zinc-800/50"></div>
+      </div>
+      <div class="flex flex-col gap-4">
+        {softwareExp.map(exp => <ExperienceCard {...exp} />)}
+      </div>
+    </section>
+  </main>
+
+  <StickyBar 
+    ctaText="Let's talk" 
+    contactEmail={contact.email}
+    linkedinUrl={contact.linkedin}
+    profileImage={contact.profileImage}
+    name={name}
+  />
+</BaseLayout>

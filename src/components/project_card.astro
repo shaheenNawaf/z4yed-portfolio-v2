@@ -6,7 +6,7 @@ interface Props {
   role: string;
   color: string;
   description: string;
-  tags?: string[];
+  tags?: readonly string[]; // Add 'readonly' here
   liveUrl?: string;
   repoUrl?: string;
   media?: {
@@ -14,7 +14,6 @@ interface Props {
     url: string;
   };
 }
-
 const { id, title, date, role, color, tags = [], description, media, liveUrl, repoUrl } = Astro.props;
 ---
 <div 

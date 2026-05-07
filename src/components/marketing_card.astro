@@ -1,0 +1,111 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  role: string;
+  results?: string;
+  deliverables?: readonly string[];
+  description: string;
+  media?: { type: 'video' | 'image'; url: string };
+  color: string;
+}
+
+const { id, title, role, results, deliverables = [], description, media, color } = Astro.props;
+---
+
+<!-- The Card -->
+<div 
+  class="group border border-zinc-800 bg-zinc-900/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:border-orange-500/50 hover:-translate-y-1 shadow-xl" 
+  data-modal-id={id}
+>
+  <div class="aspect-video w-full bg-zinc-800 relative overflow-hidden">
+    <!-- Play Overlay for Videos -->
+    {media?.type === 'video' && (
+      <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors z-10">
+         <div class="w-12 h-12 flex items-center justify-center bg-orange-600 text-white rounded-full shadow-xl group-hover:scale-110 transition-transform">▶</div>
+      </div>
+    )}
+    
+    <img src={media?.url} alt={title} class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+    
+    <!-- Result Badge -->
+    {results && (
+      <div class="absolute top-4 left-4 z-20 bg-orange-600 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter shadow-2xl">
+        Result: {results}
+      </div>
+    )}
+  </div>
+
+  <div class="p-6">
+    <div class="mb-4">
+      <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">{title}</h3>
+      <p class="text-orange-500 text-xs font-medium uppercase tracking-widest">{role}</p>
+    </div>
+
+    <p class="text-sm text-zinc-400 line-clamp-2 mb-6 leading-relaxed">
+      {description}
+    </p>
+
+    <div class="flex flex-wrap gap-2">
+      {deliverables.map((item) => (
+        <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-800 px-2 py-1 rounded bg-zinc-950/50">
+          {item}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<!-- The Modal (Dialog) -->
+<dialog id={id} class="bg-zinc-900 text-zinc-300 p-0 rounded-2xl border border-zinc-800 max-w-3xl w-[90%] backdrop:bg-black/80 backdrop:backdrop-blur-sm focus:outline-none">
+  <div class="flex flex-col relative">
+    <button class="absolute top-4 right-4 text-zinc-400 hover:text-white close-modal z-30 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center transition-colors">✕</button>
+    
+    <div class="w-full bg-black overflow-hidden aspect-video relative flex items-center justify-center">
+      {media?.type === 'video' ? (
+        <iframe 
+          data-src={media.url} 
+          src="" 
+          class="w-full h-full" 
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+          allowfullscreen
+        ></iframe>
+      ) : (
+        <img src={media?.url} alt={title} class="w-full h-full object-cover" />
+      )}
+    </div>
+
+    <div class="p-8">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h2 class="text-3xl font-black text-white mb-1">{title}</h2>
+          <p class="text-orange-500 font-bold uppercase tracking-widest text-sm">{role}</p>
+        </div>
+        {results && (
+          <div class="text-right">
+            <span class="text-[10px] text-zinc-500 font-bold uppercase block mb-1">Campaign Outcome</span>
+            <span class="text-xl font-black text-white bg-orange-600 px-3 py-1 rounded-lg">{results}</span>
+          </div>
+        )}
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-2">
+          <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Strategy & Execution</h4>
+          <p class="text-sm leading-relaxed text-zinc-300">{description}</p>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Deliverables</h4>
+          <ul class="space-y-2">
+            {deliverables.map(item => (
+              <li class="text-xs text-zinc-400 flex items-center gap-2">
+                <span class="w-1 h-1 bg-orange-500 rounded-full"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>

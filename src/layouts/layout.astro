@@ -30,7 +30,68 @@ const ogImage = `${siteUrl}`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
   </head>
-  <body class="max-w-6xl mx-auto min-h-screen flex flex-col md:flex-row gap-10 p-6 md:p-12 lg:p-20 font-sans relative">
+  <body class="min-h-screen bg-zinc-950 font-sans relative selection:bg-blue-500/30">
+    <script>
+    const setupModals = () => {
+      const modalTriggers = document.querySelectorAll('[data-modal-id]');
+      const closeButtons = document.querySelectorAll('.close-modal');
+      const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
+
+      const stopVideo = (modal: HTMLDialogElement) => {
+        const iframe = modal.querySelector('iframe');
+        if (iframe) {
+          const currentSrc = iframe.src;
+          iframe.src = '';
+          iframe.src = currentSrc;
+        }
+      };
+
+      modalTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          const modalId = trigger.getAttribute('data-modal-id');
+          if (!modalId) return;
+          const modal = document.getElementById(modalId) as HTMLDialogElement;
+          if (modal) {
+            modal.showModal();
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      });
+
+      closeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const dialog = btn.closest('dialog');
+          if (dialog) {
+            stopVideo(dialog);
+            dialog.close();
+          }
+        });
+      });
+
+      dialogs.forEach(dialog => {
+        dialog.addEventListener('close', () => {
+          document.body.style.overflow = 'auto';
+        });
+
+        dialog.addEventListener('click', (e) => {
+          const dialogDimensions = dialog.getBoundingClientRect();
+          if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+          ) {
+            stopVideo(dialog);
+            dialog.close();
+          }
+        });
+      });
+    };
+
+    setupModals();
+    document.addEventListener('astro:after-swap', setupModals);
+    </script>
     <slot /> 
   </body>
 </html>

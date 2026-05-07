@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/layout.astro';
+import IdentityHero from '../components/identity_hero.astro';
+import MarketingCard from '../components/marketing_card.astro';
+import ExperienceCard from '../components/experience_card.astro';
+import StickyBar from '../components/sticky_bar.astro';
+import { name, marketingSummary, projects, experiences, marketingSkills, contact, creativeGallery } from '../data/resume';
+
+const marketingProjects = projects.filter(p => p.category === 'marketing');
+const marketingExp = experiences.filter(e => e.category === 'marketing');
+---
+
+<BaseLayout title="Shaheen | Creator Partnerships">
+  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none"></div>
+
+  <main class="max-w-4xl mx-auto w-full flex flex-col gap-16 py-12 px-6">
+    <nav>
+      <a href="/" class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 hover:text-white transition-colors uppercase">← Back to Portal</a>
+    </nav>
+
+    <IdentityHero 
+      name={name}
+      headline="Creator Partnerships Specialist"
+      image={contact.profileImage}
+      summary={marketingSummary}
+      skills={marketingSkills}
+      contact={contact}
+      mode="marketing"
+      impactBadge="$355K+ Managed Volume in 4 months"
+    />
+
+    <section>
+      <div class="flex items-center gap-4 mb-8">
+        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Campaign Case Studies</h2>
+        <div class="h-px flex-1 bg-zinc-800/50"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {marketingProjects.map(project => <MarketingCard {...project} />)}
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-center gap-4 mb-8">
+        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Professional History</h2>
+        <div class="h-px flex-1 bg-zinc-800/50"></div>
+      </div>
+      <div class="flex flex-col gap-4">
+        {marketingExp.map(exp => <ExperienceCard {...exp} />)}
+      </div>
+    </section>
+
+    <section class="pb-24">
+      <div class="flex items-center gap-4 mb-12">
+        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Creative Assets & Briefs</h2>
+        <div class="h-px flex-1 bg-zinc-800/50"></div>
+      </div>
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+        {creativeGallery.map((asset) => (
+          <div class="relative group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+            <img src={asset.imageUrl} alt={asset.title} class="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+              <span class="text-[9px] font-bold text-orange-500 uppercase tracking-widest mb-1">{asset.category}</span>
+              <h3 class="text-white text-xs font-medium leading-tight">{asset.title}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <StickyBar 
+    ctaText="Let's talk" 
+    contactEmail={contact.email}
+    linkedinUrl={contact.linkedin}
+    profileImage={contact.profileImage}
+    name={name}
+  />
+</BaseLayout>
