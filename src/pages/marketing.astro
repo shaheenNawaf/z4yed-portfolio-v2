@@ -26,7 +26,7 @@ const marketingExp = experiences.filter(e => e.category === 'marketing');
       skills={marketingSkills}
       contact={contact}
       mode="marketing"
-      impactBadge="$355K+ Managed Volume in 4 months"
+      impactBadge="$355K+ Managed Volume in 4 m"
     />
 
     <section>
@@ -50,21 +50,78 @@ const marketingExp = experiences.filter(e => e.category === 'marketing');
     </section>
 
     <section class="pb-24">
-      <div class="flex items-center gap-4 mb-12">
+    <div class="flex items-center gap-4 mb-12">
         <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Creative Assets & Briefs</h2>
         <div class="h-px flex-1 bg-zinc-800/50"></div>
-      </div>
-      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-        {creativeGallery.map((asset) => (
-          <div class="relative group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
-            <img src={asset.imageUrl} alt={asset.title} class="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-500" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
-              <span class="text-[9px] font-bold text-orange-500 uppercase tracking-widest mb-1">{asset.category}</span>
-              <h3 class="text-white text-xs font-medium leading-tight">{asset.title}</h3>
+    </div>
+
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+        {creativeGallery.map((asset, index) => {
+        const prevAsset = creativeGallery[index - 1];
+        const nextAsset = creativeGallery[index + 1];
+
+        return (
+            <>
+            <div 
+                class="relative group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 cursor-zoom-in transition-all hover:border-orange-500/30"
+                data-modal-id={asset.id}
+            >
+                <img 
+                src={asset.imageUrl} 
+                alt={asset.title} 
+                class="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-500"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex flex-col justify-end">
+                <span class="text-[9px] font-bold text-orange-500 uppercase tracking-widest mb-1">{asset.category}</span>
+                <h3 class="text-white text-xs font-medium leading-tight">{asset.title}</h3>
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
+
+            <dialog id={asset.id} class="bg-transparent p-0 max-w-none max-h-none w-screen h-screen backdrop:bg-black/95 backdrop:backdrop-blur-md focus:outline-none overflow-hidden">
+                <div class="relative w-full h-full flex items-center justify-center p-4 md:p-12">
+                
+                <button class="close-modal absolute top-6 right-6 z-50 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 w-12 h-12 rounded-full flex items-center justify-center transition-all backdrop-blur-xl border border-white/10">
+                    ✕
+                </button>
+
+                {prevAsset && (
+                    <button 
+                    class="absolute left-4 md:left-8 z-50 text-white/30 hover:text-white bg-white/5 hover:bg-white/10 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all backdrop-blur-md border border-white/5"
+                    data-nav-to={prevAsset.id}
+                    data-nav-dir="prev"
+                    >
+                    ←
+                    </button>
+                )}
+
+                {nextAsset && (
+                    <button 
+                    class="absolute right-4 md:right-8 z-50 text-white/30 hover:text-white bg-white/5 hover:bg-white/10 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all backdrop-blur-md border border-white/5"
+                    data-nav-to={nextAsset.id}
+                    data-nav-dir="next"
+                    >
+                    →
+                    </button>
+                )}
+                
+                <div class="flex flex-col items-center max-w-5xl w-full">
+                    <img 
+                    src={asset.imageUrl} 
+                    alt={asset.title} 
+                    class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.8)]"
+                    />
+                    
+                    <div class="mt-8 text-center max-w-2xl">
+                    <span class="text-[10px] font-bold text-orange-500 uppercase tracking-[0.3em] mb-3 block">{asset.category}</span>
+                    <h3 class="text-2xl md:text-3xl font-semibold text-white tracking-tighter leading-tight">{asset.title}</h3>
+                    </div>
+                </div>
+                </div>
+            </dialog>
+            </>
+        );
+        })}
+    </div>
     </section>
   </main>
 

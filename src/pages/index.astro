@@ -4,68 +4,85 @@ import { name, shortBio, contact } from '../data/resume';
 ---
 
 <BaseLayout title={name}>
-  <header class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-2xl">
-    <div class="bg-zinc-950/60 backdrop-blur-md border border-zinc-800 p-4 md:p-6 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-4 md:gap-6">
+  <header class="fixed top-6 md:top-8 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-2xl pointer-events-none">
+    <div class="group/header bg-zinc-950/60 backdrop-blur-md border border-zinc-800 p-4 md:p-5 rounded-3xl shadow-2xl flex items-center gap-4 md:gap-6 pointer-events-auto transition-all hover:border-zinc-700 relative overflow-hidden">
       
+      <!-- Subtle Background Glow on Hover -->
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/5 to-orange-500/0 opacity-0 group-hover/header:opacity-100 transition-opacity rounded-3xl"></div>
+
       <img 
         src={contact.profileImage} 
         alt={name} 
-        class="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-zinc-800 shadow-inner"
+        class="relative z-10 w-12 h-12 md:w-16 md:h-16 rounded-2xl object-cover border-2 border-zinc-800 shadow-inner"
       />
 
-      <div class="text-center md:text-left flex-1">
-        <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">{name}</h1>
-        <p class="text-zinc-400 text-xs md:text-sm leading-relaxed max-w-sm">
+      <div class="relative z-10 text-left flex-1">
+        <h1 class="text-lg md:text-xl font-semibold text-white tracking-tight leading-none">{name}</h1>
+        <p class="text-zinc-400 text-[10px] md:text-xs mt-2 leading-relaxed max-w-sm line-clamp-1 md:line-clamp-none">
           {shortBio}
         </p>
       </div>
 
-      <div class="flex md:flex-col gap-3 border-t md:border-t-0 md:border-l border-zinc-800 pt-4 md:pt-0 md:pl-6">
-        <a href={`mailto:${contact.email}`} class="text-zinc-400 hover:text-white transition-colors" title="Email Me">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+      <!-- Contact Actions: Larger & Interactive -->
+      <div class="relative z-10 flex items-center gap-2 md:gap-3 border-l border-zinc-800 pl-4 md:pl-6">
+        <!-- Email: Always Visible -->
+        <a href={`mailto:${contact.email}`} class="p-3 md:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600 transition-all hover:scale-110 shadow-lg" title="Email Me">
+          <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
         </a>
-        <a href={`https://${contact.linkedin}`} target="_blank" class="text-zinc-400 hover:text-blue-400 transition-colors" title="LinkedIn">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        
+        <!-- LinkedIn: Hidden on Mobile, Visible on Desktop -->
+        <a href={`https://${contact.linkedin}`} target="_blank" class="md:flex p-3 md:p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-400 hover:text-blue-400 hover:border-zinc-600 transition-all hover:scale-110 shadow-lg" title="LinkedIn">
+          <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Split Screen Portal -->
   <div class="fixed inset-0 flex flex-col md:flex-row">
-    <a href="/software" class="group relative flex-1 flex items-end md:items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800 transition-all duration-700 hover:flex-[1.4]">
+    <a href="/software" class="group relative flex-1 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800 transition-all duration-700 hover:flex-[1.4]">
       <div class="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors"></div>
-      <div class="relative z-10 text-center p-12 md:p-8">
-        <span class="text-blue-500 font-mono mb-2 block tracking-[0.3em] text-xs uppercase">Technical Architecture</span>
-        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-none">SOFTWARE<br/><span class="text-blue-500">ENGINEER</span></h2>
-        <div class="inline-flex items-center gap-2 px-6 py-2 border border-blue-500/30 text-blue-400 rounded-full group-hover:bg-blue-500 group-hover:text-white transition-all text-sm font-bold uppercase tracking-widest">
+      <div class="relative z-10 text-center p-8">
+        <span class="text-blue-500 font-mono mb-2 block tracking-[0.3em] text-[10px] uppercase">Technical Architecture</span>
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-none tracking-tighter">SOFTWARE<br/><span class="text-blue-500">ENGINEER</span></h2>
+        <div class="inline-flex items-center gap-2 px-6 py-2 border border-blue-500/30 text-blue-400 rounded-full group-hover:bg-blue-500 group-hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest">
           Enter Lab
         </div>
       </div>
     </a>
 
-    <a href="/marketing" class="group relative flex-1 flex items-end md:items-center justify-center overflow-hidden transition-all duration-700 hover:flex-[1.4]">
+    <a href="/marketing" class="group relative flex-1 flex items-center justify-center overflow-hidden transition-all duration-700 hover:flex-[1.4]">
       <div class="absolute inset-0 bg-orange-600/5 group-hover:bg-orange-600/10 transition-colors"></div>
-      <div class="relative z-10 text-center p-12 md:p-8">
-        <span class="text-orange-500 font-mono mb-2 block tracking-[0.3em] text-xs uppercase">Growth & Scale</span>
-        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-none">CREATOR<br/><span class="text-orange-500">STRATEGIST</span></h2>
-        <div class="inline-flex items-center gap-2 px-6 py-2 border border-orange-500/30 text-orange-400 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-all text-sm font-bold uppercase tracking-widest">
+      <div class="relative z-10 text-center p-8">
+        <span class="text-orange-500 font-mono mb-2 block tracking-[0.3em] text-[10px] uppercase">Growth & Scale</span>
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 leading-none tracking-tighter">CREATOR<br/><span class="text-orange-500">STRATEGIST</span></h2>
+        <div class="inline-flex items-center gap-2 px-6 py-2 border border-orange-500/30 text-orange-400 rounded-full group-hover:bg-orange-500 group-hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest">
           Enter Studio
         </div>
       </div>
     </a>
   </div>
+  <div class="fixed bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-2xl pointer-events-none">
+    <div class="group/bar bg-zinc-950/60 backdrop-blur-md border border-zinc-800 p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-4 pointer-events-auto transition-all hover:border-zinc-700">
+      
+      <!-- Subtle Background Glow on Hover -->
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/5 to-orange-500/0 opacity-0 group-hover/bar:opacity-100 transition-opacity rounded-3xl"></div>
 
-  <!-- Bottom Trust Bar -->
-  <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-3xl pointer-events-none">
-    <div class="bg-zinc-950/40 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-4 flex flex-col items-center gap-3">
-      <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-[0.4em]">Proven Impact At</span>
-      <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-40 grayscale">
-        <!-- Text Placeholders for Logos -->
-        <span class="text-white font-black tracking-tighter text-lg italic">RIVALRY</span>
-        <span class="text-white font-black tracking-tighter text-lg italic">YOHOHO</span>
-        <span class="text-white font-black tracking-tighter text-lg italic">BLACKLIST</span>
-        <span class="text-white font-black tracking-tighter text-lg italic">ADDU</span>
+      <span class="relative z-10 text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-[0.5em]">Proven Impact At</span>
+      
+      <div class="relative z-10 flex items-center justify-center gap-8 md:gap-12 opacity-40 grayscale group-hover/bar:opacity-100 group-hover/bar:grayscale-0 transition-all duration-500">
+        
+        <!-- Placeholder Logo 1 (LinkedIn Icon) -->
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+
+        <!-- Placeholder Logo 2 -->
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+
+        <!-- Placeholder Logo 3 -->
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+
+        <!-- Placeholder Logo 4 -->
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+
       </div>
     </div>
   </div>

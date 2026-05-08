@@ -6,40 +6,47 @@ interface Props {
   results?: string;
   deliverables?: readonly string[];
   description: string;
-  media?: { type: 'video' | 'image'; url: string };
+  media?: { 
+    type: 'video' | 'image'; 
+    url: string 
+  };
+  gallery?: readonly string[];
   color: string;
 }
 
-const { id, title, role, results, deliverables = [], description, media, color } = Astro.props;
+const { id, title, role, results, deliverables = [], description, media, gallery = [], color } = Astro.props;
 ---
 
-<!-- The Card -->
 <div 
   class="group border border-zinc-800 bg-zinc-900/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:border-orange-500/50 hover:-translate-y-1 shadow-xl" 
   data-modal-id={id}
 >
   <div class="aspect-video w-full bg-zinc-800 relative overflow-hidden">
-    <!-- Play Overlay for Videos -->
     {media?.type === 'video' && (
       <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors z-10">
-         <div class="w-12 h-12 flex items-center justify-center bg-orange-600 text-white rounded-full shadow-xl group-hover:scale-110 transition-transform">▶</div>
+         <div class="w-12 h-12 flex items-center justify-center bg-orange-600 text-white rounded-full shadow-xl group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+         </div>
       </div>
     )}
     
-    <img src={media?.url} alt={title} class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+    <img 
+      src={media?.url} 
+      alt={title} 
+      class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700" 
+    />
     
-    <!-- Result Badge -->
     {results && (
-      <div class="absolute top-4 left-4 z-20 bg-orange-600 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-tighter shadow-2xl">
-        Result: {results}
+      <div class="absolute top-4 left-4 z-20 bg-orange-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tighter shadow-2xl">
+        {results}
       </div>
     )}
   </div>
 
   <div class="p-6">
     <div class="mb-4">
-      <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">{title}</h3>
-      <p class="text-orange-500 text-xs font-medium uppercase tracking-widest">{role}</p>
+      <h3 class="text-lg font-semibold text-white group-hover:text-orange-400 transition-colors tracking-tight">{title}</h3>
+      <p class="text-orange-500 text-xs font-medium uppercase tracking-widest mt-1">{role}</p>
     </div>
 
     <p class="text-sm text-zinc-400 line-clamp-2 mb-6 leading-relaxed">
@@ -47,7 +54,7 @@ const { id, title, role, results, deliverables = [], description, media, color }
     </p>
 
     <div class="flex flex-wrap gap-2">
-      {deliverables.map((item) => (
+      {deliverables.map((item: string) => (
         <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-800 px-2 py-1 rounded bg-zinc-950/50">
           {item}
         </span>
@@ -56,12 +63,14 @@ const { id, title, role, results, deliverables = [], description, media, color }
   </div>
 </div>
 
-<!-- The Modal (Dialog) -->
-<dialog id={id} class="bg-zinc-900 text-zinc-300 p-0 rounded-2xl border border-zinc-800 max-w-3xl w-[90%] backdrop:bg-black/80 backdrop:backdrop-blur-sm focus:outline-none">
-  <div class="flex flex-col relative">
-    <button class="absolute top-4 right-4 text-zinc-400 hover:text-white close-modal z-30 bg-black/50 w-10 h-10 rounded-full flex items-center justify-center transition-colors">✕</button>
+<dialog id={id} class="bg-zinc-900 text-zinc-300 p-0 rounded-3xl border border-zinc-800 max-w-3xl w-[95%] backdrop:bg-black/90 backdrop:backdrop-blur-md focus:outline-none overflow-hidden">
+  <div class="flex flex-col relative max-h-[90vh] overflow-y-auto">
     
-    <div class="w-full bg-black overflow-hidden aspect-video relative flex items-center justify-center">
+    <button class="close-modal absolute top-4 right-4 z-50 bg-black/60 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center transition-all border border-white/10">
+      ✕
+    </button>
+    
+    <div class="w-full bg-black aspect-video relative flex items-center justify-center shrink-0 border-b border-zinc-800">
       {media?.type === 'video' ? (
         <iframe 
           data-src={media.url} 
@@ -75,37 +84,56 @@ const { id, title, role, results, deliverables = [], description, media, color }
       )}
     </div>
 
-    <div class="p-8">
-      <div class="flex justify-between items-start mb-6">
-        <div>
-          <h2 class="text-3xl font-black text-white mb-1">{title}</h2>
-          <p class="text-orange-500 font-bold uppercase tracking-widest text-sm">{role}</p>
+    <div class="p-8 md:p-12">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-10">
+        <div class="flex-1">
+          <h2 class="text-3xl md:text-4xl font-semibold text-white tracking-tighter mb-2 leading-tight">{title}</h2>
+          <p class="text-orange-500 font-bold uppercase tracking-[0.2em] text-xs">{role}</p>
         </div>
         {results && (
-          <div class="text-right">
-            <span class="text-[10px] text-zinc-500 font-bold uppercase block mb-1">Campaign Outcome</span>
-            <span class="text-xl font-black text-white bg-orange-600 px-3 py-1 rounded-lg">{results}</span>
+          <div class="bg-orange-600/10 border border-orange-500/20 p-4 rounded-2xl min-w-[140px] text-center">
+            <span class="text-[10px] text-orange-500/70 font-bold uppercase block mb-1 tracking-widest">Outcome</span>
+            <span class="text-xl font-bold text-white">{results}</span>
           </div>
         )}
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid md:grid-cols-3 gap-10 mb-12">
         <div class="md:col-span-2">
-          <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Strategy & Execution</h4>
-          <p class="text-sm leading-relaxed text-zinc-300">{description}</p>
+          <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">Strategy & Execution</h4>
+          <p class="text-base leading-relaxed text-zinc-400">
+            {description}
+          </p>
         </div>
-        <div>
-          <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Deliverables</h4>
-          <ul class="space-y-2">
-            {deliverables.map(item => (
-              <li class="text-xs text-zinc-400 flex items-center gap-2">
-                <span class="w-1 h-1 bg-orange-500 rounded-full"></span>
+        <div class="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50 h-fit">
+          <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">Deliverables</h4>
+          <ul class="space-y-3">
+            {deliverables.map((item: string) => (
+              <li class="text-xs text-zinc-400 flex items-start gap-3">
+                <span class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-1.5 shrink-0"></span>
                 {item}
               </li>
             ))}
           </ul>
         </div>
       </div>
+
+      {gallery.length > 0 && (
+        <div class="border-t border-zinc-800 pt-10">
+          <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-6">Campaign Assets</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {gallery.map((img) => (
+              <div class="aspect-square rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 group/img">
+                <img 
+                  src={img} 
+                  alt="Campaign asset" 
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   </div>
 </dialog>

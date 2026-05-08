@@ -1,0 +1,125 @@
+
+const setupModals = () => {
+  const modalTriggers = document.querySelectorAll('[data-modal-id]');
+  const closeButtons = document.querySelectorAll('.close-modal');
+  const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
+
+  const stopVideo = (modal: HTMLDialogElement) => {
+    const iframe = modal.querySelector('iframe');
+    if (iframe) {
+      const currentSrc = iframe.src;
+      iframe.src = '';
+      iframe.src = currentSrc;
+    }
+  };
+
+  modalTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const modalId = trigger.getAttribute('data-modal-id');
+      if (!modalId) return;
+      const modal = document.getElementById(modalId) as HTMLDialogElement;
+      if (modal) {
+        // Lazy load video if data-src exists
+        const iframe = modal.querySelector('iframe');
+        if (iframe && iframe.getAttribute('data-src')) {
+          iframe.src = iframe.getAttribute('data-src')!;
+        }
+        modal.showModal();
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  closeButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dialog = btn.closest('dialog');
+      if (dialog) {
+        stopVideo(dialog);
+        dialog.close();
+      }
+    });
+  });
+
+  dialogs.forEach(dialog => {
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = 'auto';
+    });
+
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
+      if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+        stopVideo(dialog);
+        dialog.close();
+      }
+    });
+  });
+};
+
+const setupStickyBar = () => {
+  const stickyBar = document.getElementById('sticky-cta');
+  const heroTrigger = document.getElementById('hero-trigger');
+
+  if (!stickyBar || !heroTrigger) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        stickyBar.classList.remove('translate-y-40');
+        stickyBar.classList.add('translate-y-0');
+      } else {
+        stickyBar.classList.add('translate-y-40');
+        stickyBar.classList.remove('translate-y-0');
+      }
+    });
+  }, { threshold: 0 });
+
+  observer.observe(heroTrigger);
+};
+
+const setupGalleryNav = () => {
+  const navButtons = document.querySelectorAll('[data-nav-to]');
+  
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetId = btn.getAttribute('data-nav-to');
+      const currentDialog = btn.closest('dialog');
+      
+      if (currentDialog) {
+        currentDialog.close();
+      }
+
+      const nextTrigger = document.querySelector(`[data-modal-id="${targetId}"]`) as HTMLElement;
+      if (nextTrigger) {
+        nextTrigger.click();
+      }
+    });
+  });
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    const openDialog = document.querySelector('dialog[open]');
+    if (!openDialog) return;
+
+    if (e.key === 'ArrowRight') {
+      const nextBtn = openDialog.querySelector('[data-nav-dir="next"]') as HTMLElement;
+      nextBtn?.click();
+    } else if (e.key === 'ArrowLeft') {
+      const prevBtn = openDialog.querySelector('[data-nav-dir="prev"]') as HTMLElement;
+      prevBtn?.click();
+    }
+  };
+
+  window.removeEventListener('keydown', handleKeyDown);
+  window.addEventListener('keydown', handleKeyDown);
+};
+
+const init = () => {
+  setupModals();
+  setupStickyBar();
+  setupGalleryNav();
+};
+
+init();
+
+document.addEventListener('astro:after-swap', init);

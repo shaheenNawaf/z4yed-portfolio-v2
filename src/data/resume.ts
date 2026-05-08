@@ -9,7 +9,7 @@ export interface Project {
   date: string;
   role: string;
   color: string;
-  tags: readonly string[];
+  tags?: readonly string[];
   description: string;
   media?: { type: 'video' | 'image'; url: string };
   liveUrl?: string;
@@ -89,6 +89,26 @@ export const toolStack = {
 };
 
 export const projects: Project[] = [
+  {
+    id: 'campaign-esports-2024',
+    category: 'marketing', 
+    title: 'Esports World Cup: PH Creator Activation',
+    date: 'July 2024',
+    role: 'Lead Campaign Strategist',
+    color: '#f97316', 
+    results: '12% FTD Conversion | 3.2M Reach',
+    deliverables: [
+      'Influencer Briefing', 
+      'Creative Direction', 
+      'Media Buying', 
+      'Performance Tracking'
+    ], 
+    description: 'Engineered a multi-channel activation for the Esports World Cup targeting the Philippine market. I managed a roster of 15 tier-2 creators, providing them with data-backed content briefs that prioritized user registration. By implementing a hybrid CPA model, we reduced the Customer Acquisition Cost (CAC) by 22% compared to previous flat-fee campaigns.',
+    media: {
+      type: 'image', // or 'video'
+      url: '/projects/ewc-campaign.jpg', // Path to your image in public/projects/
+    },
+  },
   {
     id: 'proj-gymeasy',
     category: 'software',
