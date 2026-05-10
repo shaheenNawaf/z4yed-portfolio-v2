@@ -1,4 +1,5 @@
 ---
+import "../styles/global.css";
 interface Props {
   title: string;
   description?: string;
@@ -8,10 +9,15 @@ const {
   description = "Full-stack Software Engineer & Creator Partnerships Specialist based in Davao, Philippines.",
 } = Astro.props;
 
-const siteUrl = "https://drive.google.com/drive/folders/12wgNJ3l43FH67uNM89Zn8hilQlSXiQhl?usp=sharing"; 
-const ogImage = `${siteUrl}`; 
+const siteUrl =
+  "https://drive.google.com/drive/folders/12wgNJ3l43FH67uNM89Zn8hilQlSXiQhl?usp=sharing";
+const ogImage = `${siteUrl}`;
 ---
-<html lang="en" class="bg-zinc-950 text-zinc-300 antialiased selection:bg-blue-500/30">
+
+<html
+  lang="en"
+  class="bg-zinc-950 text-zinc-300 antialiased selection:bg-blue-500/30"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -30,86 +36,141 @@ const ogImage = `${siteUrl}`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
   </head>
-  <body class="min-h-screen bg-zinc-950 font-sans relative selection:bg-blue-500/30">
+  <body
+    class="min-h-screen bg-zinc-950 font-sans relative selection:bg-blue-500/30"
+  >
     <script>
-    const setupModals = () => {
-      const modalTriggers = document.querySelectorAll('[data-modal-id]');
-      const closeButtons = document.querySelectorAll('.close-modal');
-      const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
+      const setupModals = () => {
+        const modalTriggers = document.querySelectorAll("[data-modal-id]");
+        const closeButtons = document.querySelectorAll(".close-modal");
+        const dialogs = document.querySelectorAll(
+          "dialog",
+        ) as NodeListOf<HTMLDialogElement>;
 
-      const stopVideo = (modal: HTMLDialogElement) => {
-        const iframe = modal.querySelector('iframe');
-        if (iframe) {
-          const currentSrc = iframe.src;
-          iframe.src = '';
-          iframe.src = currentSrc;
-        }
+        const stopVideo = (modal: HTMLDialogElement) => {
+          const iframe = modal.querySelector("iframe");
+          if (iframe) {
+            const currentSrc = iframe.src;
+            iframe.src = "";
+            iframe.src = currentSrc;
+          }
+        };
+
+        modalTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", () => {
+            const modalId = trigger.getAttribute("data-modal-id");
+            if (!modalId) return;
+            const modal = document.getElementById(modalId) as HTMLDialogElement;
+            if (modal) {
+              modal.showModal();
+              document.body.style.overflow = "hidden";
+            }
+          });
+        });
+
+        closeButtons.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const dialog = btn.closest("dialog");
+            if (dialog) {
+              stopVideo(dialog);
+              dialog.close();
+            }
+          });
+        });
+
+        dialogs.forEach((dialog) => {
+          dialog.addEventListener("close", () => {
+            document.body.style.overflow = "auto";
+          });
+
+          dialog.addEventListener("click", (e) => {
+            const dialogDimensions = dialog.getBoundingClientRect();
+            if (
+              e.clientX < dialogDimensions.left ||
+              e.clientX > dialogDimensions.right ||
+              e.clientY < dialogDimensions.top ||
+              e.clientY > dialogDimensions.bottom
+            ) {
+              stopVideo(dialog);
+              dialog.close();
+            }
+          });
+        });
       };
 
-      modalTriggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-          const modalId = trigger.getAttribute('data-modal-id');
-          if (!modalId) return;
-          const modal = document.getElementById(modalId) as HTMLDialogElement;
-          if (modal) {
-            modal.showModal();
-            document.body.style.overflow = 'hidden';
-          }
-        });
-      });
-
-      closeButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const dialog = btn.closest('dialog');
-          if (dialog) {
-            stopVideo(dialog);
-            dialog.close();
-          }
-        });
-      });
-
-      dialogs.forEach(dialog => {
-        dialog.addEventListener('close', () => {
-          document.body.style.overflow = 'auto';
-        });
-
-        dialog.addEventListener('click', (e) => {
-          const dialogDimensions = dialog.getBoundingClientRect();
-          if (
-            e.clientX < dialogDimensions.left ||
-            e.clientX > dialogDimensions.right ||
-            e.clientY < dialogDimensions.top ||
-            e.clientY > dialogDimensions.bottom
-          ) {
-            stopVideo(dialog);
-            dialog.close();
-          }
-        });
-      });
-    };
-
-    setupModals();
-    document.addEventListener('astro:after-swap', setupModals);
+      setupModals();
+      document.addEventListener("astro:after-swap", setupModals);
     </script>
-    <slot /> 
+    <slot />
     <script src="../scripts/main.ts"></script>
   </body>
 </html>
 
 <style is:global>
-  dialog[open] { animation: fadeIn 0.3s ease-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  dialog {
+    position: fixed !important;
+    inset: 0 !important;
+    margin: auto !important;
+    max-height: 90vh;
+    max-height: 90dvh;
+  }
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: backdropFade 0.3s ease-out;
+  }
+
+  dialog[open] {
+    animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes backdropFade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  dialog[open] {
+    animation: fadeIn 0.3s ease-out;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 
   body {
-    background-image: 
+    background-image:
       linear-gradient(to right, #18181b 1px, transparent 1px),
       linear-gradient(to bottom, #18181b 1px, transparent 1px);
     background-size: 40px 40px;
   }
   body::before {
-    content: ""; position: fixed; inset: 0;
+    content: "";
+    position: fixed;
+    inset: 0;
     background: radial-gradient(circle at center, transparent 0%, #09090b 80%);
-    pointer-events: none; z-index: -1;
+    pointer-events: none;
+    z-index: -1;
   }
 </style>
