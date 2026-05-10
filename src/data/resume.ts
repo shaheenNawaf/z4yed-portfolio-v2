@@ -90,24 +90,123 @@ export const toolStack = {
 
 export const projects: Project[] = [
   {
-    id: 'campaign-esports-2024',
-    category: 'marketing', 
-    title: 'Esports World Cup: PH Creator Activation',
-    date: 'July 2024',
-    role: 'Lead Campaign Strategist',
-    color: '#f97316', 
-    results: '12% FTD Conversion | 3.2M Reach',
+    id: 'campaign-rivalry-tribe-main',
+    category: 'marketing',
+    title: 'Rivalry Tribe: The Gated D2C Powerhouse',
+    date: '2021 - 2024',
+    role: 'Community Marketing Specialist',
+    color: '#3b82f6',
+    results: '83% Peak DAU | 100% KYC-Verified',
     deliverables: [
-      'Influencer Briefing', 
-      'Creative Direction', 
-      'Media Buying', 
-      'Performance Tracking'
-    ], 
-    description: 'Engineered a multi-channel activation for the Esports World Cup targeting the Philippine market. I managed a roster of 15 tier-2 creators, providing them with data-backed content briefs that prioritized user registration. By implementing a hybrid CPA model, we reduced the Customer Acquisition Cost (CAC) by 22% compared to previous flat-fee campaigns.',
-    media: {
-      type: 'image', // or 'video'
-      url: '/projects/ewc-campaign.jpg', // Path to your image in public/projects/
-    },
+      'KYC-Gated Onboarding Funnel',
+      'Community Resilience Strategy',
+      'D2C Retention Architecture',
+      'High-Intent Audience Filtering'
+    ],
+    description: 'Architected and scaled "Rivalry Tribe," a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members with a 68% Daily Active User (DAU) rate. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while optimizing engagement density to a peak 83% DAU—turning the community into Rivalry’s most efficient retention and support channel.',
+    media: { type: 'image', url: '/rivalry/new-tribe.jpg' }
+  },
+  {
+    id: 'campaign-rivalry-evergreen',
+    category: 'marketing',
+    title: 'Tribe Evergreen: KYC & Education Infrastructure',
+    date: '2023 - 2024',
+    role: 'Community Marketing Specialist',
+    color: '#10b981',
+    results: '60% Reg-to-KYC Conversion',
+    deliverables: [
+      'Responsible Gambling Framework',
+      'Product Education Infographics',
+      'CS Load Reduction Strategy',
+      'User Security Training'
+    ],
+    description: 'Developed a permanent educational content infrastructure to optimize the user lifecycle. By deploying strategic infographics on account security and withdrawal workflows, I achieved a 60% conversion rate from registration to KYC-verified status. This "first line of defense" strategy significantly reduced Customer Support ticket volume while ensuring that 100% of verified community members remained active, high-intent users.',
+    media: { type: 'image', url: '/rivalry/evergreen-cover.jpg' }
+  },
+  {
+    id: 'campaign-slamdunk-slips',
+    category: 'marketing',
+    title: 'Slamdunk Slips: NBA Seasonal Scale',
+    date: 'NBA Season 2023-24',
+    role: 'Marketing & Influencer Specialist',
+    color: '#f59e0b',
+    results: '+$7.5K Daily Profit | +15% Daily NGR',
+    deliverables: [
+      'Copy-Bet Workflow Optimization',
+      'Influencer Content Calendar',
+      'Market-Specific Activation',
+      'ROI Tracking'
+    ],
+    description: 'Capitalized on the high-volume NBA market by launching "Slamdunk Slips," a campaign centered on "copy-bet" mechanics. I managed a calendar of influencer posts where creators shared exclusive NBA SGC bets via direct URLs. This streamlined user journey led to a sustained 15% increase in daily average NGR throughout the season, translating to an additional $5,000 - $7,500 in daily profit.',
+    media: { type: 'image', url: '/rivalry/nba-slips.jpg' }
+  },
+  {
+    id: 'campaign-kuyanic-ti',
+    category: 'marketing',
+    title: 'Rivalry x KuyaNic: O2O Watch Party',
+    date: 'The International (TI)',
+    role: 'Campaigns & Affiliate Specialist',
+    color: '#6366f1',
+    results: '1,000+ New Verified Users in 5 Days',
+    deliverables: [
+      'O2O (Offline-to-Online) Strategy',
+      'Experiential Booth Design',
+      'High-Barrier UA Funnel',
+      'B2B Partnership Management'
+    ],
+    description: 'Orchestrated an Offline-to-Online (O2O) acquisition strategy during the KuyaNic TI Watch Party. I designed a high-barrier entry funnel where attendees could only access Rivalry perks by joining the Tribe and completing a 300PHP deposit. This experiential activation resulted in 1,000+ new high-value, verified users within a 5-day window. I also managed the on-site influencer meet-and-greets and designed all physical brand assets.',
+    media: { type: 'image', url: '/rivalry/ti-watchparty.jpg' }
+  },
+  {
+    id: 'campaign-sgc-launch',
+    category: 'marketing',
+    title: 'Same Game Combos: Feature GTM Strategy',
+    date: 'Feature Launch',
+    role: 'Marketing & Influencer Specialist',
+    color: '#ef4444',
+    results: '+20% MoM Volume | +5% NGR',
+    deliverables: [
+      'Go-To-Market (GTM) Strategy',
+      'Viral Content Engineering',
+      'Influencer Education Briefs',
+      'Cross-Channel Feature Promotion'
+    ],
+    description: 'Spearheaded the regional launch of "Same Game Combos" (SGC), Rivalry’s proprietary parlay feature. I engineered a viral educational campaign across Facebook and Telegram, leveraging influencers to explain the high-upside potential of the product. The campaign resulted in a 20% Month-over-Month increase in transaction volume and a 5% boost in Net Gaming Revenue (NGR), maintaining the Philippines as Rivalry’s #1 global region.',
+    media: { type: 'image', url: '/rivalry/sgc-launch.jpg' }
+  },
+  {
+    id: 'campaign-rampage-report',
+    category: 'marketing',
+    title: 'Rampage Report: Dota 2 Market Stimulation',
+    date: 'Weekly Series',
+    role: 'Community Marketing Specialist',
+    color: '#ef4444',
+    results: '+15% Market Activity | 900 Peak CCV',
+    deliverables: [
+      'Livestream Programming',
+      'Influencer Briefing & Spiels',
+      'Real-time Market Activation',
+      'Interactive Code Drops'
+    ],
+    description: 'Produced and managed a weekly community livestream show featuring top-tier Dota 2 influencers. The program focused on live product demonstrations where influencers shared bet-slips and predictions in real-time. This interactive format drove a consistent 10-15% surge in Dota 2 market activity during broadcasts and reached peak concurrent viewership of 900+ high-intent bettors.',
+    media: { type: 'video', url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0' }
+  },
+  {
+    id: 'campaign-valentines-parlay',
+    category: 'marketing',
+    title: 'The Parlay That Got Away: Seasonal Activation',
+    date: 'Feb 2024',
+    role: 'Marketing & Influencer Specialist',
+    color: '#ec4899',
+    results: '+$1K Daily NGR | +150 Verified Members',
+    deliverables: [
+      'Influencer Talent Management',
+      'Seasonal Giveaway Architecture',
+      'SGC Feature Integration',
+      'Rapid Community Growth'
+    ],
+    description: 'Executed a high-impact 3-day Valentine’s Day activation featuring influencer Kayla Heredia. By gating giveaway entry behind the use of the Same Game Combo feature, the campaign drove a 3% increase in daily NGR and acquired 150+ new KYC-verified members for the Rivalry Tribe community in just 72 hours.',
+    media: { type: 'image', url: '/rivalry/valentines.jpg' }
   },
   {
     id: 'proj-gymeasy',
