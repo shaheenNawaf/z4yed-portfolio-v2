@@ -5,6 +5,7 @@ export interface Project {
   category: Category;
   results?: string;
   deliverables?: string[];
+  gallery?: string[];
   title: string;
   date: string;
   role: string;
@@ -104,7 +105,10 @@ export const projects: Project[] = [
       'High-Intent Audience Filtering'
     ],
     description: 'Architected and scaled "Rivalry Tribe," a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members with a 68% Daily Active User (DAU) rate. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while optimizing engagement density to a peak 83% DAU—turning the community into Rivalry’s most efficient retention and support channel.',
-    media: { type: 'image', url: '/rivalry/new-tribe.jpg' }
+    media: { type: 'image', url: '/rivalry/new-tribe.jpg' },
+    gallery: [
+
+    ],
   },
   {
     id: 'campaign-rivalry-evergreen',
@@ -121,7 +125,22 @@ export const projects: Project[] = [
       'User Security Training'
     ],
     description: 'Developed a permanent educational content infrastructure to optimize the user lifecycle. By deploying strategic infographics on account security and withdrawal workflows, I achieved a 60% conversion rate from registration to KYC-verified status. This "first line of defense" strategy significantly reduced Customer Support ticket volume while ensuring that 100% of verified community members remained active, high-intent users.',
-    media: { type: 'image', url: '/rivalry/evergreen-cover.jpg' }
+    media: { type: 'image', url: '/rivalry/guide.jpg' },
+    gallery: [
+      '/rivalry/viber-announcement.png',
+      '/rivalry/info-tribe-1.png',
+      '/rivalry/info-tribe-2.png',
+      '/rivalry/tribe-4.png',
+      '/rivalry/tribe-3.png',
+      '/rivalry/matchups.jpg',
+      '/rivalry/bbc.jpg',
+      '/rivalry/guide.jpg',
+      '/rivalry/tribe-5.png',
+      '/rivalry/tribe-6.png',
+      '/rivalry/tribe-7.jpg',
+      '/rivalry/tribe-8.png',
+      '/rivalry/tt.jpg',
+    ]
   },
   {
     id: 'campaign-slamdunk-slips',
@@ -138,13 +157,19 @@ export const projects: Project[] = [
       'ROI Tracking'
     ],
     description: 'Capitalized on the high-volume NBA market by launching "Slamdunk Slips," a campaign centered on "copy-bet" mechanics. I managed a calendar of influencer posts where creators shared exclusive NBA SGC bets via direct URLs. This streamlined user journey led to a sustained 15% increase in daily average NGR throughout the season, translating to an additional $5,000 - $7,500 in daily profit.',
-    media: { type: 'image', url: '/rivalry/nba-slips.jpg' }
+    media: { type: 'image', url: '/rivalry/sgc-announcement.jpg' },
+    gallery: [
+      '/rivalry/sgc-420.png',
+      '/rivalry/sgc-tribe-giveaway.png',
+      '/rivalry/sgc-mus.jpg',
+
+    ],
   },
   {
     id: 'campaign-kuyanic-ti',
     category: 'marketing',
     title: 'Rivalry x KuyaNic: O2O Watch Party',
-    date: 'The International (TI)',
+    date: 'The International (TI) 11 - 2022',
     role: 'Campaigns & Affiliate Specialist',
     color: '#6366f1',
     results: '1,000+ New Verified Users in 5 Days',
@@ -155,7 +180,16 @@ export const projects: Project[] = [
       'B2B Partnership Management'
     ],
     description: 'Orchestrated an Offline-to-Online (O2O) acquisition strategy during the KuyaNic TI Watch Party. I designed a high-barrier entry funnel where attendees could only access Rivalry perks by joining the Tribe and completing a 300PHP deposit. This experiential activation resulted in 1,000+ new high-value, verified users within a 5-day window. I also managed the on-site influencer meet-and-greets and designed all physical brand assets.',
-    media: { type: 'image', url: '/rivalry/ti-watchparty.jpg' }
+    media: { type: 'video', url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0' },
+    gallery: [
+      '/rivalry/watchparty-1.jpg',
+      '/rivalry/watchparty-2.jpg',
+      '/rivalry/watchparty-3.jpg',
+      '/rivalry/watchparty-4.jpg',
+      '/rivalry/watchparty-5.jpg',
+      '/rivalry/watchparty-cover.jpg',
+      '/rivalry/watchparty-cover-1.jpg',
+    ]
   },
   {
     id: 'campaign-sgc-launch',
@@ -172,7 +206,18 @@ export const projects: Project[] = [
       'Cross-Channel Feature Promotion'
     ],
     description: 'Spearheaded the regional launch of "Same Game Combos" (SGC), Rivalry’s proprietary parlay feature. I engineered a viral educational campaign across Facebook and Telegram, leveraging influencers to explain the high-upside potential of the product. The campaign resulted in a 20% Month-over-Month increase in transaction volume and a 5% boost in Net Gaming Revenue (NGR), maintaining the Philippines as Rivalry’s #1 global region.',
-    media: { type: 'image', url: '/rivalry/sgc-launch.jpg' }
+    media: { type: 'image', url: '/rivalry/sgc-cover.png' },
+    gallery: [
+      
+      '/rivalry/sgc-cover.png',
+      '/rivalry/sgc-1.png',
+      '/rivalry/sgc-2.png',
+      '/rivalry/sgc-3.png',
+      '/rivalry/sgc-4.png',
+      '/rivalry/sgc-420.png',
+      '/rivalry/sgc-tribe-giveaway.png',
+      '/rivalry/bbc.jpg',
+    ],
   },
   {
     id: 'campaign-rampage-report',
@@ -189,7 +234,14 @@ export const projects: Project[] = [
       'Interactive Code Drops'
     ],
     description: 'Produced and managed a weekly community livestream show featuring top-tier Dota 2 influencers. The program focused on live product demonstrations where influencers shared bet-slips and predictions in real-time. This interactive format drove a consistent 10-15% surge in Dota 2 market activity during broadcasts and reached peak concurrent viewership of 900+ high-intent bettors.',
-    media: { type: 'video', url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0' }
+    media: { type: 'image', url: '/rivalry/rr-3.png' },
+    gallery: [
+      '/rivalry/rr.jpg',
+      '/rivalry/rr-2.jpg',
+      '/rivalry/rr.png',
+      '/rivalry/rr-3.png',
+      '/rivalry/rr-4.png',
+    ],
   },
   {
     id: 'campaign-valentines-parlay',
@@ -206,7 +258,12 @@ export const projects: Project[] = [
       'Rapid Community Growth'
     ],
     description: 'Executed a high-impact 3-day Valentine’s Day activation featuring influencer Kayla Heredia. By gating giveaway entry behind the use of the Same Game Combo feature, the campaign drove a 3% increase in daily NGR and acquired 150+ new KYC-verified members for the Rivalry Tribe community in just 72 hours.',
-    media: { type: 'image', url: '/rivalry/valentines.jpg' }
+    media: { type: 'image', url: '/rivalry/parlay-1.png' },
+    gallery: [
+      '/rivalry/thread.png',
+      '/rivalry/thread-2.png', 
+      '/rivalry/thread-3.jpg', 
+    ]
   },
   {
     id: 'proj-gymeasy',
@@ -383,17 +440,17 @@ export const experiences: Experience[] = [
   },
 ]
 
-export const creativeGallery: CreativeAsset[] = [
-  {
-    id: 'gfx-1',
-    title: 'Rivalry Bali Major Campaign Overlay',
-    category: 'Graphic',
-    imageUrl: '/rivalry/bali-1.jpg',
-  },
-  {
-    id: 'gfx-2',
-    title: 'Yohoho Influencer Onboarding Flow',
-    category: 'Brief',
-    imageUrl: '/yohoho/yohoho-1.png',
-  },
-];
+// export const creativeGallery: CreativeAsset[] = [
+//   {
+//     id: 'gfx-1',
+//     title: 'Rivalry Bali Major Campaign Overlay',
+//     category: 'Graphic',
+//     imageUrl: '/rivalry/bali-1.jpg',
+//   },
+//   {
+//     id: 'gfx-2',
+//     title: 'Yohoho Influencer Onboarding Flow',
+//     category: 'Brief',
+//     imageUrl: '/yohoho/yohoho-1.png',
+//   },
+// ];
