@@ -57,7 +57,7 @@ export const contact = {
 };
 
 export const softwareSkills = [
-  'Astra (Framework)',
+  'Astro (Framework)',
   'Flutter & Dart (Advanced)',
   'Python (Data Pipelines)',
   'JavaScript & TypeScript',
