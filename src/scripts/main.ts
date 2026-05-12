@@ -1,4 +1,3 @@
-
 const setupModals = () => {
   const modalTriggers = document.querySelectorAll('[data-modal-id]');
   const closeButtons = document.querySelectorAll('.close-modal');
@@ -14,8 +13,12 @@ const setupModals = () => {
   };
 
   modalTriggers.forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      const modalId = trigger.getAttribute('data-modal-id');
+    // Remove old listener to prevent stacking
+    trigger.replaceWith(trigger.cloneNode(true));
+    const newTrigger = document.querySelector(`[data-modal-id="${trigger.getAttribute('data-modal-id')}"]`);
+    
+    newTrigger?.addEventListener('click', () => {
+      const modalId = newTrigger.getAttribute('data-modal-id');
       if (!modalId) return;
       const modal = document.getElementById(modalId) as HTMLDialogElement;
       if (modal) {
@@ -64,6 +67,7 @@ const setupStickyBar = () => {
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      // If hero is NOT visible (scrolled past), show the bar
       if (!entry.isIntersecting) {
         stickyBar.classList.remove('translate-y-40');
         stickyBar.classList.add('translate-y-0');
@@ -107,6 +111,9 @@ const setupGalleryNav = () => {
     } else if (e.key === 'ArrowLeft') {
       const prevBtn = openDialog.querySelector('[data-nav-dir="prev"]') as HTMLElement;
       prevBtn?.click();
+    } else if (e.key === 'Escape') {
+        const closeBtn = openDialog.querySelector('.close-modal') as HTMLElement;
+        closeBtn?.click();
     }
   };
 
@@ -114,12 +121,35 @@ const setupGalleryNav = () => {
   window.addEventListener('keydown', handleKeyDown);
 };
 
+const setupTheme = () => {
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return;
+
+  const newToggle = toggle.cloneNode(true) as HTMLButtonElement;
+  toggle.parentNode?.replaceChild(newToggle, toggle);
+
+  newToggle.addEventListener('click', () => {
+    const html = document.documentElement;
+    const isLight = html.classList.toggle('light');
+    
+    const theme = isLight ? 'light' : 'dark';
+    localStorage.setItem('theme', theme);
+    
+    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
+  });
+};
+
 const init = () => {
   setupModals();
   setupStickyBar();
   setupGalleryNav();
+  setupTheme();
 };
 
-init();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
 
 document.addEventListener('astro:after-swap', init);

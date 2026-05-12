@@ -17,7 +17,8 @@ interface Props {
 const { id, title, date, role, color, tags = [], description, media, liveUrl, repoUrl } = Astro.props;
 ---
 <div 
-  class="group border border-zinc-800 bg-zinc-900/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-zinc-700 hover:shadow-[0_0_30px_-10px_rgba(59,130,246,0.3)] hover:-translate-y-1" 
+  style="background-color: var(--card-bg); border-color: var(--border-color);"
+  class="group backdrop-blur-md border rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1 shadow-xl"
   data-modal-id={id}
 >
   <div class="h-40 w-full" style={`background-color: ${color}`}>
@@ -34,7 +35,8 @@ const { id, title, date, role, color, tags = [], description, media, liveUrl, re
   </div>
 </div>
 
-<dialog id={id} class="bg-zinc-900 text-zinc-300 p-0 rounded-2xl border border-zinc-800 max-w-2xl w-[90%] backdrop:bg-black/60 backdrop:backdrop-blur-sm focus:outline-none">
+<dialog id={id} style="background-color: var(--bg-color); border-color: var(--border-color);"
+  class="fixed inset-0 m-auto backdrop-blur-xl border rounded-3xl max-w-3xl w-[95%] focus:outline-none overflow-hidden shadow-2xl">
   <div class="flex flex-col relative">
     <button class="absolute top-4 right-4 text-zinc-400 hover:text-white close-modal z-20 bg-black/50 w-8 h-8 rounded-full flex items-center justify-center transition-colors">✕</button>
     

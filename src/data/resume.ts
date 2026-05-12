@@ -12,7 +12,7 @@ export interface Project {
   color: string;
   tags?: readonly string[];
   description: string;
-  media?: { type: 'video' | 'image'; url: string };
+  media?: { type: 'video' | 'image'; url: string; thumbnail?: string};
   liveUrl?: string;
   repoUrl?: string;
 }
@@ -56,22 +56,24 @@ export const contact = {
   profileImage: "/og-image.jpg",
 };
 
+
 export const softwareSkills = [
-  'Astro (Framework)',
+  // Languages & Frameworks
   'Flutter & Dart (Advanced)',
-  'Python (Data Pipelines)',
   'JavaScript & TypeScript',
+  'Python (Data Pipelines)',
+  'Astro (Framework)',
+  // Platforms & Tools
   'Bubble.io (Advanced)',
   'Wordpress & PHP (Advanced)',
-  'GoHighLevel and Framer',
+  'GoHighLevel & Framer',
   'Figma (Advanced)',
+  // Engineering Competencies
   'RAG Pipelines & LLM Integration',
   'REST API Integration',
   'Supabase & Firebase',
-  'SaaS Product Development',
-  'Systems Analysis & Design',
+  'Git & Version Control',
   'Agile & Scrum Methodology',
-  'Git & Version Control'
 ];
 
 export const marketingSkills = [
@@ -81,17 +83,22 @@ export const marketingSkills = [
   'Hybrid CPA & Rev-Share Models',
   'Contract Negotiation',
   'Growth Strategy & UA',
+  'Lifecycle Campaign Management (Email, SMS, Push)',
+  'KPI Reporting & Dashboard Building',
+  'Partner Onboarding & Automation',
   'SEA & Philippine Market Expertise',
   'Content Strategy & Briefing',
   'Community Building',
-  'Campaign Analytics'
+  'Campaign Analytics',
 ];
 
+
 export const toolStack = {
-  technical: ['VS Code', 'Cursor', 'Postman', 'Android Studio', 'Firebase', 'Docker', 'Wordpress', 'Bubble.IO', 'Wix','GoHighLevel'],
-  marketing: ['Meta Business Suite', 'Figma', 'Canva', 'Notion', 'Airtable', 'HubSpot', 'Google Workspace'],
-  ai: ['ChatGPT', 'Claude', 'Gemini', 'Grok', 'n8n', 'Prompt Engineering']
+  technical: ['Cursor', 'VS Code', 'Postman', 'Android Studio', 'Firebase', 'Supabase', 'Docker', 'Bubble.IO', 'GoHighLevel', 'Wordpress'],
+  marketing: ['Meta Business Suite', 'Telegram', 'Figma', 'Canva', 'Notion', 'Airtable', 'HubSpot', 'Google Workspace', 'Viber'],
+  ai: ['Claude', 'ChatGPT', 'Gemini', 'Grok', 'n8n', 'Prompt Engineering'],
 };
+
 
 export const projects: Project[] = [
   {
@@ -108,7 +115,7 @@ export const projects: Project[] = [
       'D2C Retention Architecture',
       'High-Intent Audience Filtering'
     ],
-    description: 'Architected and scaled "Rivalry Tribe," a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members with a 68% Daily Active User (DAU) rate. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while optimizing engagement density to a peak 83% DAU—turning the community into Rivalry’s most efficient retention and support channel.',
+    description: "Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members with a 68% Daily Active User (DAU) rate. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while optimizing engagement density to a peak 83% DAU—turning the community into Rivalry's most efficient retention and support channel.",
     media: { type: 'image', url: '/rivalry/new-tribe.jpg' },
     gallery: [
 
@@ -169,6 +176,7 @@ export const projects: Project[] = [
 
     ],
   },
+  
   {
     id: 'campaign-kuyanic-ti',
     category: 'marketing',
@@ -184,7 +192,11 @@ export const projects: Project[] = [
       'B2B Partnership Management'
     ],
     description: 'Orchestrated an Offline-to-Online (O2O) acquisition strategy during the KuyaNic TI Watch Party. I designed a high-barrier entry funnel where attendees could only access Rivalry perks by joining the Tribe and completing a 300PHP deposit. This experiential activation resulted in 1,000+ new high-value, verified users within a 5-day window. I also managed the on-site influencer meet-and-greets and designed all physical brand assets.',
-    media: { type: 'video', url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0' },
+    media: {
+      type: 'video',
+      url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0',
+      thumbnail: '/rivalry/watchparty-cover.jpg', // or whichever image fits best
+    },
     gallery: [
       '/rivalry/watchparty-1.jpg',
       '/rivalry/watchparty-2.jpg',
@@ -209,7 +221,7 @@ export const projects: Project[] = [
       'Influencer Education Briefs',
       'Cross-Channel Feature Promotion'
     ],
-    description: 'Spearheaded the regional launch of "Same Game Combos" (SGC), Rivalry’s proprietary parlay feature. I engineered a viral educational campaign across Facebook and Telegram, leveraging influencers to explain the high-upside potential of the product. The campaign resulted in a 20% Month-over-Month increase in transaction volume and a 5% boost in Net Gaming Revenue (NGR), maintaining the Philippines as Rivalry’s #1 global region.',
+    description: "Spearheaded the regional launch of 'Same Game Combos' (SGC), Rivalry's proprietary parlay feature. I engineered a viral educational campaign across Facebook and Telegram, leveraging influencers to explain the high-upside potential of the product. The campaign resulted in a 20% Month-over-Month increase in transaction volume and a 5% boost in Net Gaming Revenue (NGR), maintaining the Philippines as Rivalry's #1 global region.",
     media: { type: 'image', url: '/rivalry/sgc-cover.png' },
     gallery: [
       
@@ -261,7 +273,7 @@ export const projects: Project[] = [
       'SGC Feature Integration',
       'Rapid Community Growth'
     ],
-    description: 'Executed a high-impact 3-day Valentine’s Day activation featuring influencer Kayla Heredia. By gating giveaway entry behind the use of the Same Game Combo feature, the campaign drove a 3% increase in daily NGR and acquired 150+ new KYC-verified members for the Rivalry Tribe community in just 72 hours.',
+    description: "Executed a high-impact 3-day Valentine's Day activation featuring influencer Kayla Heredia. By gating giveaway entry behind the use of the Same Game Combo feature, the campaign drove a 3% increase in daily NGR and acquired 150+ new KYC-verified members for the Rivalry Tribe community in just 72 hours.",
     media: { type: 'image', url: '/rivalry/parlay-1.png' },
     gallery: [
       '/rivalry/thread.png',
@@ -335,7 +347,38 @@ export const projects: Project[] = [
   },
 ]
 
+
 export const experiences: Experience[] = [
+  {
+    id: 'exp-gymeasy-dev',
+    category: 'software',
+    title: 'Back-End Developer & Project Manager',
+    company: 'GymEasy',
+    date: '2025 - Present',
+    location: 'Davao, Philippines',
+    color: '#3b82f6',
+    description: 'Leading back-end architecture and project coordination for a full-service gym management SaaS targeting MSME gym owners.',
+    details: [
+      'Architected the Spring Boot back-end and database schema, handling member management, attendance tracking, and billing workflows.',
+      'Coordinated a cross-functional team using Agile sprints, maintaining a staging deployment at gymeasy.app throughout active development.',
+      'Integrated REST APIs between the Next.js front-end and Spring Boot services, with Supabase handling real-time data sync.',
+    ],
+  },
+  {
+    id: 'exp-addu-cs',
+    category: 'software',
+    title: 'B.S. Computer Science — Dean\'s List',
+    company: 'Ateneo de Davao University',
+    date: '2021 - 2026',
+    location: 'Davao, Philippines',
+    color: '#6366f1',
+    description: 'Graduating Computer Science student with a focus on full-stack development, AI systems, and software engineering methodology.',
+    details: [
+      'Completed major projects in Flutter (mobile/web), Python data pipelines, and RAG-based AI systems — all deployed to production or staging.',
+      'Dean\'s List recognition (2021-2022) reflecting consistent academic performance alongside active industry work.',
+      'Applied Systems Analysis & Design and Agile methodology across team capstone projects, including GymEasy.',
+    ],
+  },
   {
     id: 'exp-yohoho-lead',
     category: 'marketing',
@@ -416,7 +459,7 @@ export const experiences: Experience[] = [
       '/rivalry/viber.jpg',
       '/rivalry/bbc.jpg',
       '/rivalry/nsns.jpg',
-      '/rivalry/ttkover.jpg',
+      '/rivalry/tt.jpg',
     ], 
     video: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0',
   },

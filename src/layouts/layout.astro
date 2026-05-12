@@ -1,28 +1,47 @@
 ---
 import "../styles/global.css";
+import ThemeToggle from "../components/theme_toggle.astro";
+
 interface Props {
   title: string;
   description?: string;
 }
+
 const {
   title,
-  description = "Full-stack Software Engineer & Creator Partnerships Specialist based in Davao, Philippines.",
+  description = "Full-stack Software Engineer & Growth Marketer based in Davao, Philippines.",
 } = Astro.props;
 
-const siteUrl =
-  "https://drive.google.com/drive/folders/12wgNJ3l43FH67uNM89Zn8hilQlSXiQhl?usp=sharing";
-const ogImage = `${siteUrl}`;
+const siteUrl = "https://shaheen.works"; 
+const ogImage = `${siteUrl}/og-image.jpg`; 
 ---
 
-<html
-  lang="en"
-  class="bg-zinc-950 text-zinc-300 antialiased selection:bg-blue-500/30"
->
+<html lang="en" class="antialiased selection:bg-blue-500/30">
   <head>
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
+        }
+        return 'dark';
+      })();
+      
+      if (theme === 'light') {
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+      }
+    </script>
+
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
 
     <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
 
     <meta property="og:type" content="website" />
@@ -31,90 +50,48 @@ const ogImage = `${siteUrl}`;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={siteUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
   </head>
-  <body
-    class="min-h-screen bg-zinc-950 font-sans relative selection:bg-blue-500/30"
-  >
-    <script>
-      const setupModals = () => {
-        const modalTriggers = document.querySelectorAll("[data-modal-id]");
-        const closeButtons = document.querySelectorAll(".close-modal");
-        const dialogs = document.querySelectorAll(
-          "dialog",
-        ) as NodeListOf<HTMLDialogElement>;
+  
+  <body class="min-h-screen font-sans relative transition-colors duration-300">
+    <ThemeToggle />
 
-        const stopVideo = (modal: HTMLDialogElement) => {
-          const iframe = modal.querySelector("iframe");
-          if (iframe) {
-            const currentSrc = iframe.src;
-            iframe.src = "";
-            iframe.src = currentSrc;
-          }
-        };
-
-        modalTriggers.forEach((trigger) => {
-          trigger.addEventListener("click", () => {
-            const modalId = trigger.getAttribute("data-modal-id");
-            if (!modalId) return;
-            const modal = document.getElementById(modalId) as HTMLDialogElement;
-            if (modal) {
-              modal.showModal();
-              document.body.style.overflow = "hidden";
-            }
-          });
-        });
-
-        closeButtons.forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const dialog = btn.closest("dialog");
-            if (dialog) {
-              stopVideo(dialog);
-              dialog.close();
-            }
-          });
-        });
-
-        dialogs.forEach((dialog) => {
-          dialog.addEventListener("close", () => {
-            document.body.style.overflow = "auto";
-          });
-
-          dialog.addEventListener("click", (e) => {
-            const dialogDimensions = dialog.getBoundingClientRect();
-            if (
-              e.clientX < dialogDimensions.left ||
-              e.clientX > dialogDimensions.right ||
-              e.clientY < dialogDimensions.top ||
-              e.clientY > dialogDimensions.bottom
-            ) {
-              stopVideo(dialog);
-              dialog.close();
-            }
-          });
-        });
-      };
-
-      setupModals();
-      document.addEventListener("astro:after-swap", setupModals);
-    </script>
     <slot />
+
     <script src="../scripts/main.ts"></script>
   </body>
 </html>
 
 <style is:global>
+  body {
+    background-image: 
+      linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  body::before {
+    content: ""; 
+    position: fixed; 
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, var(--bg-color) 90%);
+    pointer-events: none; 
+    z-index: -1;
+  }
+
   dialog {
     position: fixed !important;
     inset: 0 !important;
     margin: auto !important;
     max-height: 90vh;
     max-height: 90dvh;
+    outline: none;
   }
+
   dialog::backdrop {
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(8px);
@@ -127,50 +104,30 @@ const ogImage = `${siteUrl}`;
   }
 
   @keyframes modalFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes backdropFade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  dialog[open] {
-    animation: fadeIn 0.3s ease-out;
-  }
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
-  body {
-    background-image:
-      linear-gradient(to right, #18181b 1px, transparent 1px),
-      linear-gradient(to bottom, #18181b 1px, transparent 1px);
-    background-size: 40px 40px;
+  ::-webkit-scrollbar {
+    width: 8px;
   }
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at center, transparent 0%, #09090b 80%);
-    pointer-events: none;
-    z-index: -1;
+  ::-webkit-scrollbar-track {
+    background: var(--bg-color);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+  }
+
+  body:has(dialog[open]) {
+    overflow: hidden;
   }
 </style>
