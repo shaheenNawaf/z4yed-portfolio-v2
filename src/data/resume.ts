@@ -191,9 +191,10 @@ export const projects: Project[] = [
     description: 'Orchestrated an Offline-to-Online (O2O) acquisition strategy during the KuyaNic TI Watch Party. I designed a high-barrier entry funnel where attendees could only access Rivalry perks by joining the Tribe and completing a 300PHP deposit. This experiential activation resulted in 1,000+ new high-value, verified users within a 5-day window. I also managed the on-site influencer meet-and-greets and designed all physical brand assets.',
     media: {
       type: 'video',
-      url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0',
+      url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531%2F&show_text=0&width=560',
       thumbnail: '/rivalry/watchparty-cover.jpg',
     },
+    
     gallery: [
       '/rivalry/watchparty-1.jpg',
       '/rivalry/watchparty-2.jpg',

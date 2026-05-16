@@ -5,9 +5,7 @@ const setupModals = () => {
   const stopVideo = (modal: HTMLDialogElement) => {
     const iframe = modal.querySelector('iframe');
     if (iframe) {
-      const currentSrc = iframe.src;
       iframe.src = '';
-      iframe.src = currentSrc;
     }
   };
 
@@ -19,6 +17,12 @@ const setupModals = () => {
       if (dialog) {
         dialog.showModal();
         document.body.style.overflow = 'hidden';
+
+        // Load deferred iframes on open
+        const iframe = dialog.querySelector('iframe[data-src]') as HTMLIFrameElement | null;
+        if (iframe && !iframe.src) {
+          iframe.src = iframe.dataset.src ?? '';
+        }
       }
     });
   });
