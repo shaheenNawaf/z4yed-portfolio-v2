@@ -19,7 +19,6 @@ const setupModals = () => {
         dialog.showModal();
         document.body.style.overflow = 'hidden';
 
-        // Load deferred iframes on open
         const iframe = dialog.querySelector('iframe[data-src]') as HTMLIFrameElement | null;
         if (iframe && !iframe.src) {
           iframe.src = iframe.dataset.src ?? '';
