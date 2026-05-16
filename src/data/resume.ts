@@ -286,7 +286,7 @@ export const projects: Project[] = [
     category: 'software',
     title: 'GymEasy: A Full-Service Gym Management Software',
     date: '2025-',
-    role: 'Back-End Developer & Project Manager',
+    role: 'Project Manager & Back-end Developer',
     color: '#3b82f6',
     tags: ['Next.JS', 'Spring Boot', 'Desktop/Mobile'],
     description: 'A Full-Service Gym Management Software that provides MSME Gym Owners complete control of the business without breaking the bank',
@@ -352,7 +352,7 @@ export const experiences: Experience[] = [
   {
     id: 'exp-gymeasy-dev',
     category: 'software',
-    title: 'Back-End Developer & Project Manager',
+    title: 'Project Manager & Back-end Developer',
     company: 'GymEasy',
     date: '2025 - Present',
     location: 'Davao, Philippines',
