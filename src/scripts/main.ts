@@ -1,6 +1,5 @@
 const setupModals = () => {
   const modalTriggers = document.querySelectorAll('[data-modal-id]');
-  const closeButtons = document.querySelectorAll('.close-modal');
   const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
 
   const stopVideo = (modal: HTMLDialogElement) => {
@@ -13,33 +12,24 @@ const setupModals = () => {
   };
 
   modalTriggers.forEach(trigger => {
-    // Remove old listener to prevent stacking
-    trigger.replaceWith(trigger.cloneNode(true));
-    const newTrigger = document.querySelector(`[data-modal-id="${trigger.getAttribute('data-modal-id')}"]`);
-    
-    newTrigger?.addEventListener('click', () => {
-      const modalId = newTrigger.getAttribute('data-modal-id');
+    trigger.addEventListener('click', () => {
+      const modalId = trigger.getAttribute('data-modal-id');
       if (!modalId) return;
-      const modal = document.getElementById(modalId) as HTMLDialogElement;
-      if (modal) {
-        // Lazy load video if data-src exists
-        const iframe = modal.querySelector('iframe');
-        if (iframe && iframe.getAttribute('data-src')) {
-          iframe.src = iframe.getAttribute('data-src')!;
-        }
-        modal.showModal();
+      const dialog = document.getElementById(modalId) as HTMLDialogElement | null;
+      if (dialog) {
+        dialog.showModal();
         document.body.style.overflow = 'hidden';
       }
     });
   });
 
-  closeButtons.forEach(btn => {
+  document.querySelectorAll('.close-modal').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const dialog = btn.closest('dialog');
       if (dialog) {
         stopVideo(dialog);
-        dialog.close();
+        (dialog as HTMLDialogElement).close();
       }
     });
   });
@@ -62,18 +52,20 @@ const setupModals = () => {
 const setupStickyBar = () => {
   const stickyBar = document.getElementById('sticky-cta');
   const heroTrigger = document.getElementById('hero-trigger');
+  const siteHeader = document.getElementById('site-header');
 
   if (!stickyBar || !heroTrigger) return;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      // If hero is NOT visible (scrolled past), show the bar
       if (!entry.isIntersecting) {
         stickyBar.classList.remove('translate-y-40');
         stickyBar.classList.add('translate-y-0');
+        siteHeader?.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
       } else {
         stickyBar.classList.add('translate-y-40');
         stickyBar.classList.remove('translate-y-0');
+        siteHeader?.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
       }
     });
   }, { threshold: 0 });

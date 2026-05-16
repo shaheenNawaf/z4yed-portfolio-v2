@@ -40,7 +40,7 @@ export interface CreativeAsset {
 
 export const name = "Shaheen Al Adwani";
 export const pronouns = "he/him";
-export const shortBio = "Full-stack Software Engineer & Creator Partnerships Specialist";
+export const shortBio = "Full-stack Software Engineer & Digital Growth Marketer";
 
 
 
