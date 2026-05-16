@@ -1,17 +1,25 @@
 ---
-import BaseLayout from '../layouts/layout.astro';
-import IdentityHero from '../components/identity_hero.astro';
-import MarketingCard from '../components/marketing_card.astro';
-import ExperienceCard from '../components/experience_card.astro';
-import StickyBar from '../components/sticky_bar.astro';
-import { name, marketingSummary, projects, experiences, marketingSkills, contact } from '../data/resume';
+import BaseLayout from "../layouts/layout.astro";
+import IdentityHero from "../components/identity_hero.astro";
+import MarketingCard from "../components/marketing_card.astro";
+import ExperienceCard from "../components/experience_card.astro";
+import StickyBar from "../components/sticky_bar.astro";
+import {
+  name,
+  marketingSummary,
+  projects,
+  experiences,
+  marketingSkills,
+  contact,
+} from "../data/resume";
 
-const marketingProjects = projects.filter(p => p.category === 'marketing');
-const marketingExp = experiences.filter(e => e.category === 'marketing');
+const marketingProjects = projects.filter((p) => p.category === "marketing");
+const marketingExp = experiences.filter((e) => e.category === "marketing");
 ---
 
 <BaseLayout title="Shaheen | Creator Partnerships">
-  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none"></div>
+  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
+  </div>
 
   <main class="max-w-4xl mx-auto w-full flex flex-col gap-16 py-12 px-6">
     <nav>
@@ -19,14 +27,23 @@ const marketingExp = experiences.filter(e => e.category === 'marketing');
         href="/"
         class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm text-zinc-400 hover:text-orange-400 hover:border-orange-500/30 hover:bg-zinc-800/60 transition-all text-[10px] font-bold uppercase tracking-[0.2em] group"
       >
-        <svg class="w-3 h-3 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        <svg
+          class="w-3 h-3 transition-transform group-hover:-translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M15 19l-7-7 7-7"></path>
         </svg>
         Back to Portal
       </a>
     </nav>
 
-    <IdentityHero 
+    <IdentityHero
       name={name}
       headline="Growth Marketing"
       image={contact.profileImage}
@@ -39,27 +56,35 @@ const marketingExp = experiences.filter(e => e.category === 'marketing');
 
     <section>
       <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Campaign Case Studies</h2>
+        <h2
+          class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]"
+        >
+          Campaign Case Studies
+        </h2>
         <div class="h-px flex-1 bg-zinc-800/50"></div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {marketingProjects.map(project => <MarketingCard {...project} />)}
+        {marketingProjects.map((project) => <MarketingCard {...project} />)}
       </div>
     </section>
 
     <section class="pb-21">
       <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Professional History</h2>
+        <h2
+          class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]"
+        >
+          Professional History
+        </h2>
         <div class="h-px flex-1 bg-zinc-800/50"></div>
       </div>
       <div class="flex flex-col gap-4">
-        {marketingExp.map(exp => <ExperienceCard {...exp} />)}
+        {marketingExp.map((exp) => <ExperienceCard {...exp} />)}
       </div>
     </section>
   </main>
 
-  <StickyBar 
-    ctaText="Let's talk" 
+  <StickyBar
+    ctaText="Let's talk"
     contactEmail={contact.email}
     linkedinUrl={contact.linkedin}
     profileImage={contact.profileImage}

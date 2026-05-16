@@ -42,7 +42,7 @@ export const name = "Shaheen Al Adwani";
 export const pronouns = "he/him";
 export const shortBio = "Full-stack Software Engineer & Creator Partnerships Specialist";
 
-// export const introParagraph = "I'm a Product Engineer and Marketing Specialist based in Davao, Philippines. I bridge the gap between technical infrastructure and high-scale digital advertising. With four years of experience in the creator economy, I've managed B2B relationships and scaled creator contracts that delivered $355K in transaction volume. Currently pursuing a B.S. in Computer Science at Ateneo de Davao University, I focus on building the systems that drive measurable user acquisition.";
+
 
 export const softwareSummary = "Computer Science graduate at Ateneo de Davao. I build full-stack applications with a focus on performance and real-world utility. My background in marketing taught me to build systems that don't just work, but actually drive business results.";
 
@@ -58,17 +58,14 @@ export const contact = {
 
 
 export const softwareSkills = [
-  // Languages & Frameworks
   'Flutter & Dart (Advanced)',
   'JavaScript & TypeScript',
   'Python (Data Pipelines)',
   'Astro (Framework)',
-  // Platforms & Tools
   'Bubble.io (Advanced)',
   'Wordpress & PHP (Advanced)',
   'GoHighLevel & Framer',
   'Figma (Advanced)',
-  // Engineering Competencies
   'RAG Pipelines & LLM Integration',
   'REST API Integration',
   'Supabase & Firebase',
@@ -195,7 +192,7 @@ export const projects: Project[] = [
     media: {
       type: 'video',
       url: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0',
-      thumbnail: '/rivalry/watchparty-cover.jpg', // or whichever image fits best
+      thumbnail: '/rivalry/watchparty-cover.jpg',
     },
     gallery: [
       '/rivalry/watchparty-1.jpg',
@@ -486,18 +483,3 @@ export const experiences: Experience[] = [
     video: '',
   },
 ]
-
-// export const creativeGallery: CreativeAsset[] = [
-//   {
-//     id: 'gfx-1',
-//     title: 'Rivalry Bali Major Campaign Overlay',
-//     category: 'Graphic',
-//     imageUrl: '/rivalry/bali-1.jpg',
-//   },
-//   {
-//     id: 'gfx-2',
-//     title: 'Yohoho Influencer Onboarding Flow',
-//     category: 'Brief',
-//     imageUrl: '/yohoho/yohoho-1.png',
-//   },
-// ];

@@ -12,8 +12,8 @@ const {
   description = "Full-stack Software Engineer & Growth Marketer based in Davao, Philippines.",
 } = Astro.props;
 
-const siteUrl = "https://shaheen.works"; 
-const ogImage = `${siteUrl}/og-image.jpg`; 
+const siteUrl = "https://shaheen.works";
+const ogImage = `${siteUrl}/og-image.jpg`;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 ---
 
@@ -21,19 +21,22 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
   <head>
     <script is:inline>
       const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
         }
-        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-          return 'light';
+        if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+          return "light";
         }
-        return 'dark';
+        return "dark";
       })();
-      
-      if (theme === 'light') {
-        document.documentElement.classList.add('light');
+
+      if (theme === "light") {
+        document.documentElement.classList.add("light");
       } else {
-        document.documentElement.classList.remove('light');
+        document.documentElement.classList.remove("light");
       }
     </script>
 
@@ -42,7 +45,6 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={canonicalURL} />
-
 
     <title>{title}</title>
     <meta name="title" content={title} />
@@ -62,7 +64,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
   </head>
-  
+
   <body class="min-h-screen font-sans relative transition-colors duration-300">
     <ThemeToggle />
 
@@ -74,18 +76,22 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 
 <style is:global>
   body {
-    background-image: 
+    background-image:
       linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   body::before {
-    content: ""; 
-    position: fixed; 
+    content: "";
+    position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 0%, var(--bg-color) 90%);
-    pointer-events: none; 
+    background: radial-gradient(
+      circle at center,
+      transparent 0%,
+      var(--bg-color) 90%
+    );
+    pointer-events: none;
     z-index: -1;
   }
 
@@ -110,13 +116,23 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
   }
 
   @keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @keyframes backdropFade {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   ::-webkit-scrollbar {

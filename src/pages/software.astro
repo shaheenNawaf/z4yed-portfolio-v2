@@ -1,27 +1,43 @@
 ---
-import BaseLayout from '../layouts/layout.astro';
-import IdentityHero from '../components/identity_hero.astro';
-import ProjectCard from '../components/project_card.astro';
-import ExperienceCard from '../components/experience_card.astro';
-import StickyBar from '../components/sticky_bar.astro';
-import { name, softwareSummary, projects, experiences, softwareSkills, contact } from '../data/resume';
+import BaseLayout from "../layouts/layout.astro";
+import IdentityHero from "../components/identity_hero.astro";
+import ProjectCard from "../components/project_card.astro";
+import ExperienceCard from "../components/experience_card.astro";
+import StickyBar from "../components/sticky_bar.astro";
+import {
+  name,
+  softwareSummary,
+  projects,
+  experiences,
+  softwareSkills,
+  contact,
+} from "../data/resume";
 
-const softwareProjects = projects.filter(p => p.category === 'software');
-const softwareExp      = experiences.filter(e => e.category === 'software');
+const softwareProjects = projects.filter((p) => p.category === "software");
+const softwareExp = experiences.filter((e) => e.category === "software");
 ---
 
 <BaseLayout title="Shaheen | Software Engineering">
-  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none"></div>
+  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
+  </div>
 
   <main class="max-w-4xl mx-auto w-full flex flex-col gap-16 py-12 px-6">
-
     <nav>
       <a
         href="/"
         class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm text-zinc-400 hover:text-blue-400 hover:border-blue-500/30 hover:bg-zinc-800/60 transition-all text-[10px] font-bold uppercase tracking-[0.2em] group"
       >
-        <svg class="w-3 h-3 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        <svg
+          class="w-3 h-3 transition-transform group-hover:-translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M15 19l-7-7 7-7"></path>
         </svg>
         Back to Portal
       </a>
@@ -38,28 +54,35 @@ const softwareExp      = experiences.filter(e => e.category === 'software');
       impactBadge="Dean's List · Ateneo de Davao"
     />
 
-    <!-- Featured Projects -->
+    {/* Featured Projects */}
     <section>
       <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] whitespace-nowrap">Featured Projects</h2>
+        <h2
+          class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] whitespace-nowrap"
+        >
+          Featured Projects
+        </h2>
         <div class="h-px flex-1 bg-zinc-800/50"></div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {softwareProjects.map(project => <ProjectCard {...project} />)}
+        {softwareProjects.map((project) => <ProjectCard {...project} />)}
       </div>
     </section>
 
-    <!-- Engineering Experience -->
+    {/* Engineering Experience */}
     <section class="pb-21">
       <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] whitespace-nowrap">Engineering History & Experience</h2>
+        <h2
+          class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] whitespace-nowrap"
+        >
+          Engineering History & Experience
+        </h2>
         <div class="h-px flex-1 bg-zinc-800/50"></div>
       </div>
       <div class="flex flex-col gap-4">
-        {softwareExp.map(exp => <ExperienceCard {...exp} />)}
+        {softwareExp.map((exp) => <ExperienceCard {...exp} />)}
       </div>
     </section>
-
   </main>
 
   <StickyBar
@@ -71,9 +94,8 @@ const softwareExp      = experiences.filter(e => e.category === 'software');
   />
 </BaseLayout>
 
-
 <style>
   :global(.software-page .group:hover) {
-    border-color: rgba(59,130,246,0.5);
+    border-color: rgba(59, 130, 246, 0.5);
   }
 </style>
