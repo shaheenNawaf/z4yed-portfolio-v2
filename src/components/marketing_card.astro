@@ -125,18 +125,9 @@ const cardImage =
     >
       {
         media?.type === "video" ? (
-          <iframe
-            data-src={media.url}
-            src=""
-            width="560"
-            height="315"
-            class="w-full h-full"
-            style="border:none;overflow:hidden"
-            scrolling="no"
-            frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            allowfullscreen="true"
-          />
+          <video class="w-full h-full" controls playsinline preload="metadata">
+            <source src={media.url} type="video/mp4" />
+          </video>
         ) : media?.url ? (
           <img
             src={media.url}

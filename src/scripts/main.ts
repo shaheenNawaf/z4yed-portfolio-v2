@@ -3,11 +3,12 @@ const setupModals = () => {
   const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
 
   const stopVideo = (modal: HTMLDialogElement) => {
-    const iframe = modal.querySelector('iframe');
-    if (iframe) {
-      iframe.src = '';
-    }
-  };
+  const iframe = modal.querySelector('iframe');
+  if (iframe) iframe.src = '';
+
+  const video = modal.querySelector('video');
+  if (video) { video.pause(); video.currentTime = 0; }
+};
 
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', () => {
