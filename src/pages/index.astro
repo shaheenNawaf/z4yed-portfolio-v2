@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/layout.astro";
 import MarketingCard from "../components/marketing_card.astro";
 import ProjectCard from "../components/project_card.astro";
+import ThemeToggle from "../components/theme_toggle.astro";
 
 import { name, shortBio, contact, projects, experiences } from "../data/resume";
 
@@ -21,8 +22,6 @@ const catStyle = {
 
 const marketingProjects = projects.filter((p) => p.category === "marketing");
 const softwareProjects = projects.filter((p) => p.category === "software");
-
-// Merge + sort all experiences, most recent first
 const allExperiences = [...experiences].sort((a, b) => {
   const yearA = parseInt(a.date.match(/\d{4}/)?.[0] ?? "0");
   const yearB = parseInt(b.date.match(/\d{4}/)?.[0] ?? "0");
@@ -75,7 +74,7 @@ const stats = [
 ];
 ---
 
-<BaseLayout title={name}>
+<BaseLayout title={name} hideToggle={true}>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap");
     .font-grotesk {
@@ -156,6 +155,8 @@ const stats = [
               ></path>
             </svg>
           </a>
+
+          <ThemeToggle variant="inline" />
         </div>
       </div>
     </div>
@@ -263,7 +264,6 @@ const stats = [
         </div>
       </div>
     </a>
-
     <div
       class="absolute bottom-5 left-1/2 -translate-x-1/2 z-40 w-[88%] max-w-2xl pointer-events-none"
     >
@@ -300,437 +300,460 @@ const stats = [
         </div>
       </div>
     </div>
-  </section>
-
-  <main class="relative z-10 max-w-5xl mx-auto px-6 py-24 space-y-32">
-    <section class="reveal-section">
-      <div class="flex items-center gap-4 mb-16">
-        <span
-          class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
-          >// career</span
-        >
-        <div class="h-px flex-1 bg-zinc-800/50"></div>
-      </div>
-
-      <div class="relative">
-        <div
-          class="timeline-spine absolute left-[7px] md:left-[11px] top-3 bottom-3 w-px"
-        >
-        </div>
-        <div class="space-y-0">
-          {
-            allExperiences.map((exp) => (
-              <a
-                href={`/${exp.category}#card-${exp.id}`}
-                class="timeline-item group relative pl-8 md:pl-12 pb-10 block"
-                style={`--exp-color: ${catStyle[exp.category].color}`}
-              >
-                <div class="timeline-dot absolute left-0 top-2 w-[15px] h-[15px] md:w-[23px] md:h-[23px] rounded-full border-2 border-zinc-700 bg-zinc-950 transition-all duration-300 group-hover:scale-110" />
-                <div class="relative bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-5 md:p-6 transition-all duration-300 group-hover:border-zinc-700 group-hover:-translate-y-0.5 group-hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] overflow-hidden">
-                  <div class="timeline-accent absolute left-0 top-0 bottom-0 w-[3px] rounded-l-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div class="flex items-start justify-between gap-4 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="timeline-badge w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0">
-                        {exp.company.charAt(0)}
-                      </div>
-                      <div>
-                        <h3 class="text-sm md:text-base font-semibold text-white leading-tight">
-                          {exp.title}
-                        </h3>
-                        <p class="text-xs text-zinc-500 mt-0.5">
-                          {exp.company}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="text-right shrink-0">
-                      <span class="font-mono text-[11px] md:text-xs text-zinc-300 font-semibold uppercase tracking-wider block">
-                        {exp.date}
-                      </span>
-                      <span
-                        class="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full border mt-1 inline-block"
-                        style={`color: ${catStyle[exp.category].color}; border-color: ${catStyle[exp.category].border}; background-color: ${catStyle[exp.category].bg};`}
-                      >
-                        {exp.category}
-                      </span>
-                    </div>
-                  </div>
-                  <p class="text-xs md:text-sm text-zinc-400 leading-relaxed line-clamp-2 pl-11">
-                    {exp.description}
-                  </p>
-                  <div class="mt-3 pl-11 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <span class="font-mono text-[12px] text-zinc-600 uppercase tracking-widest">
-                      view in
-                      <span
-                        class="font-mono text-[12px] text-zinc-600 uppercase tracking-widest"
-                        style={{
-                          color: catStyle[exp.category].color,
-                          borderColor: catStyle[exp.category].border,
-                        }}
-                      >
-                        {exp.category}
-                      </span>
-                    </span>
-                    <svg
-                      class="w-2.5 h-2.5 text-zinc-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2.5"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="reveal-section">
-      <div class="flex items-center gap-4 mb-10">
-        <span
-          class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
-          >// work</span
-        >
-        <div class="h-px flex-1 bg-zinc-800/50"></div>
-      </div>
-
-      <div class="flex items-center gap-2 mb-10">
-        <button
-          class="project-tab font-mono text-xs px-5 py-2 rounded-lg border transition-all duration-200 uppercase tracking-widest"
-          data-tab="marketing"
-          data-active="true"
-          id="tab-marketing"
-        >
-          Marketing
-        </button>
-        <button
-          class="project-tab font-mono text-xs px-5 py-2 rounded-lg border transition-all duration-200 uppercase tracking-widest"
-          data-tab="software"
-          id="tab-software"
-        >
-          Software
-        </button>
-      </div>
-
-      <div id="panel-marketing" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {marketingProjects.map((project) => <MarketingCard {...project} />)}
+    <div
+      id="scroll-hint"
+      class="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-30 transition-opacity duration-500"
+    >
+      <div
+        class="md:hidden absolute inset-0 animate-pulse"
+        style="background: linear-gradient(to top, rgba(59,130,246,0.22), transparent);"
+      >
       </div>
       <div
-        id="panel-software"
-        class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden"
+        class="hidden md:block absolute inset-0 animate-pulse"
+        style="background: radial-gradient(ellipse 60% 100% at 25% 100%, rgba(249,115,22,0.22), transparent 70%), radial-gradient(ellipse 60% 100% at 75% 100%, rgba(59,130,246,0.22), transparent 70%);"
       >
-        {softwareProjects.map((project) => <ProjectCard {...project} />)}
       </div>
-    </section>
+    </div>
+  </section>
+</BaseLayout>
 
-    <section class="reveal-section">
-      <div class="flex items-center gap-4 mb-16">
-        <span
-          class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
-          >// recent achievements</span
-        >
-        <div class="h-px flex-1 bg-zinc-800/50"></div>
+<main class="relative z-10 max-w-5xl mx-auto px-6 py-24 space-y-32">
+  <section class="reveal-section">
+    <div class="flex items-center gap-4 mb-16">
+      <span
+        class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
+        >// career</span
+      >
+      <div class="h-px flex-1 bg-zinc-800/50"></div>
+    </div>
+
+    <div class="relative">
+      <div
+        class="timeline-spine absolute left-[7px] md:left-[11px] top-3 bottom-3 w-px"
+      >
       </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="space-y-0">
         {
-          stats.map((stat, i) => (
-            <div
-              class={`stat-card group relative p-6 rounded-2xl bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 stat-accent-${stat.accent}`}
+          allExperiences.map((exp) => (
+            <a
+              href={`/${exp.category}#card-${exp.id}`}
+              class="timeline-item group relative pl-8 md:pl-12 pb-10 block"
+              style={`--exp-color: ${catStyle[exp.category].color}`}
             >
-              <div
-                class={`stat-bar absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${stat.accent === "blue" ? "bg-blue-500" : "bg-orange-500"}`}
-              />
-              <span class="absolute top-4 right-4 font-mono text-[8px] text-zinc-800 group-hover:text-zinc-700 transition-colors">
-                0{i + 1}
-              </span>
-              <p class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest mb-3">
-                {stat.label}
-              </p>
-              <p
-                class={`stat-number font-mono text-3xl md:text-4xl font-black text-white tracking-tighter transition-colors duration-300 ${stat.accent === "blue" ? "group-hover:text-blue-400" : "group-hover:text-orange-400"}`}
-                data-value={stat.value}
-              >
-                {stat.value}
-              </p>
-              <p class="font-mono text-[10px] text-zinc-600 font-bold mt-2 uppercase tracking-tighter">
-                {stat.sub}
-              </p>
-            </div>
+              <div class="timeline-dot absolute left-0 top-2 w-[15px] h-[15px] md:w-[23px] md:h-[23px] rounded-full border-2 border-zinc-700 bg-zinc-950 transition-all duration-300 group-hover:scale-110" />
+              <div class="relative bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-5 md:p-6 transition-all duration-300 group-hover:border-zinc-700 group-hover:-translate-y-0.5 group-hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] overflow-hidden">
+                <div class="timeline-accent absolute left-0 top-0 bottom-0 w-[3px] rounded-l-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div class="flex items-start justify-between gap-4 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="timeline-badge w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0">
+                      {exp.company.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 class="text-sm md:text-base font-semibold text-white leading-tight">
+                        {exp.title}
+                      </h3>
+                      <p class="text-xs text-zinc-500 mt-0.5">{exp.company}</p>
+                    </div>
+                  </div>
+                  <div class="text-right shrink-0">
+                    <span class="font-mono text-[11px] md:text-xs text-zinc-300 font-semibold uppercase tracking-wider block">
+                      {exp.date}
+                    </span>
+                    <span
+                      class="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full border mt-1 inline-block"
+                      style={`color: ${catStyle[exp.category].color}; border-color: ${catStyle[exp.category].border}; background-color: ${catStyle[exp.category].bg};`}
+                    >
+                      {exp.category}
+                    </span>
+                  </div>
+                </div>
+                <p class="text-xs md:text-sm text-zinc-400 leading-relaxed line-clamp-2 pl-11">
+                  {exp.description}
+                </p>
+                <div class="mt-3 pl-11 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <span class="font-mono text-[12px] text-zinc-600 uppercase tracking-widest">
+                    view in
+                    <span
+                      class="font-mono text-[12px] text-zinc-600 uppercase tracking-widest"
+                      style={{
+                        color: catStyle[exp.category].color,
+                        borderColor: catStyle[exp.category].border,
+                      }}
+                    >
+                      {exp.category}
+                    </span>
+                  </span>
+                  <svg
+                    class="w-2.5 h-2.5 text-zinc-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2.5"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
           ))
         }
       </div>
+    </div>
+  </section>
 
-      <div
-        class="mt-16 flex flex-col items-center gap-6 border-t border-zinc-800/50 pt-16"
+  <section class="reveal-section">
+    <div class="flex items-center gap-4 mb-10">
+      <span
+        class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
+        >// work</span
       >
-        <p
-          class="font-mono text-reg font-bold text-zinc-400 uppercase tracking-[0.10em] text-center"
-        >
-          Ready to work together?
-        </p>
+      <div class="h-px flex-1 bg-zinc-800/50"></div>
+    </div>
 
-        <div class="relative">
+    <div class="flex items-center gap-2 mb-10">
+      <button
+        class="project-tab font-mono text-xs px-5 py-2 rounded-lg border transition-all duration-200 uppercase tracking-widest"
+        data-tab="marketing"
+        data-active="true"
+        id="tab-marketing"
+      >
+        Marketing
+      </button>
+      <button
+        class="project-tab font-mono text-xs px-5 py-2 rounded-lg border transition-all duration-200 uppercase tracking-widest"
+        data-tab="software"
+        id="tab-software"
+      >
+        Software
+      </button>
+    </div>
+
+    <div id="panel-marketing" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {marketingProjects.map((project) => <MarketingCard {...project} />)}
+    </div>
+    <div
+      id="panel-software"
+      class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden"
+    >
+      {softwareProjects.map((project) => <ProjectCard {...project} />)}
+    </div>
+  </section>
+
+  <section class="reveal-section">
+    <div class="flex items-center gap-4 mb-16">
+      <span
+        class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
+        >// recent achievements</span
+      >
+      <div class="h-px flex-1 bg-zinc-800/50"></div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {
+        stats.map((stat, i) => (
           <div
-            class="absolute -inset-3 rounded-2xl bg-gradient-to-r from-orange-500/30 via-blue-500/20 to-orange-500/30 blur-lg animate-pulse opacity-60 -z-10"
+            class={`stat-card group relative p-6 rounded-2xl bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 stat-accent-${stat.accent}`}
+          >
+            <div
+              class={`stat-bar absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${stat.accent === "blue" ? "bg-blue-500" : "bg-orange-500"}`}
+            />
+            <span class="absolute top-4 right-4 font-mono text-[8px] text-zinc-800 group-hover:text-zinc-700 transition-colors">
+              0{i + 1}
+            </span>
+            <p class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest mb-3">
+              {stat.label}
+            </p>
+            <p
+              class={`stat-number font-mono text-3xl md:text-4xl font-black text-white tracking-tighter transition-colors duration-300 ${stat.accent === "blue" ? "group-hover:text-blue-400" : "group-hover:text-orange-400"}`}
+              data-value={stat.value}
+            >
+              {stat.value}
+            </p>
+            <p class="font-mono text-[10px] text-zinc-600 font-bold mt-2 uppercase tracking-tighter">
+              {stat.sub}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-16 flex flex-col items-center gap-6 border-t border-zinc-800/50 pt-16"
+    >
+      <p
+        class="font-mono text-reg font-bold text-zinc-400 uppercase tracking-[0.10em] text-center"
+      >
+        Ready to work together?
+      </p>
+
+      <div class="relative">
+        <div
+          class="absolute -inset-3 rounded-2xl bg-gradient-to-r from-orange-500/30 via-blue-500/20 to-orange-500/30 blur-lg animate-pulse opacity-60 -z-10"
+        >
+        </div>
+        <a
+          href={`mailto:${contact.email}`}
+          class="group relative inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-white text-black font-bold font-mono uppercase text-xs tracking-[0.2em] overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-zinc-100 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.08)] hover:shadow-[0_0_30px_rgba(255,255,255,0.18)]"
+        >
+          <div
+            class="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500/10 via-white/5 to-blue-500/10 animate-pulse opacity-70"
           >
           </div>
-          <a
-            href={`mailto:${contact.email}`}
-            class="group relative inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-white text-black font-bold font-mono uppercase text-xs tracking-[0.2em] overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-zinc-100 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.08)] hover:shadow-[0_0_30px_rgba(255,255,255,0.18)]"
+          <div
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/10"
           >
-            <div
-              class="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500/10 via-white/5 to-blue-500/10 animate-pulse opacity-70"
-            >
-            </div>
-            <div
-              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/10"
-            >
-            </div>
-            <svg
-              class="relative z-10 w-4 h-4 shrink-0 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              ></path>
-            </svg>
-            <span class="relative z-10">Send an Email</span>
-            <svg
-              class="relative z-10 w-3.5 h-3.5 opacity-70 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2.5"
-                d="M9 5l7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
+          </div>
+          <svg
+            class="relative z-10 w-4 h-4 shrink-0 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            ></path>
+          </svg>
+          <span class="relative z-10">Send an Email</span>
+          <svg
+            class="relative z-10 w-3.5 h-3.5 opacity-70 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
 
-        <div class="flex items-center gap-6">
-          <a
-            href={`https://${contact.linkedin}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
-          >
-            LinkedIn
-          </a>
-          <span class="text-zinc-800">/</span>
-          <span
-            class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest"
-          >
-            {contact.location}
-          </span>
-        </div>
-        <span
-          class="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest"
+      <div class="flex items-center gap-6">
+        <a
+          href={`https://${contact.linkedin}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
         >
-          made with ❤ -shaheen
+          LinkedIn
+        </a>
+        <span class="text-zinc-800">/</span>
+        <span
+          class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest"
+        >
+          {contact.location}
         </span>
       </div>
-    </section>
-  </main>
+      <span
+        class="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest"
+      >
+        made with ❤ -shaheen
+      </span>
+    </div>
+  </section>
+</main>
 
-  <style>
-    .timeline-spine {
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        #27272a 8%,
-        #27272a 92%,
-        transparent
-      );
-    }
+<style>
+  .timeline-spine {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      #27272a 8%,
+      #27272a 92%,
+      transparent
+    );
+  }
 
-    .timeline-item:hover .timeline-dot {
-      border-color: var(--exp-color);
-      box-shadow: 0 0 0 3px
-        color-mix(in srgb, var(--exp-color) 15%, transparent);
-    }
-    .timeline-dot {
-      box-shadow: 0 0 0 3px #09090b;
-    }
+  .timeline-item:hover .timeline-dot {
+    border-color: var(--exp-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--exp-color) 15%, transparent);
+  }
+  .timeline-dot {
+    box-shadow: 0 0 0 3px #09090b;
+  }
 
-    .timeline-item:hover .timeline-accent {
-      background-color: var(--exp-color);
-    }
-    .timeline-badge {
-      background-color: color-mix(in srgb, var(--exp-color) 15%, transparent);
-      color: var(--exp-color);
-    }
+  .timeline-item:hover .timeline-accent {
+    background-color: var(--exp-color);
+  }
+  .timeline-badge {
+    background-color: color-mix(in srgb, var(--exp-color) 15%, transparent);
+    color: var(--exp-color);
+  }
 
-    .timeline-item:last-child {
-      padding-bottom: 0;
-    }
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
 
-    .project-tab {
-      background-color: transparent;
-      border-color: #3f3f46;
-      color: #71717a;
-    }
-    .project-tab:hover {
-      color: #a1a1aa;
-      border-color: #52525b;
-    }
-    .project-tab[data-tab="marketing"][data-active="true"] {
-      background-color: rgba(249, 115, 22, 0.1);
-      border-color: rgba(249, 115, 22, 0.45);
-      color: rgb(251, 146, 60);
-    }
-    .project-tab[data-tab="software"][data-active="true"] {
-      background-color: rgba(59, 130, 246, 0.1);
-      border-color: rgba(59, 130, 246, 0.45);
-      color: rgb(96, 165, 250);
-    }
+  .project-tab {
+    background-color: transparent;
+    border-color: #3f3f46;
+    color: #71717a;
+  }
+  .project-tab:hover {
+    color: #a1a1aa;
+    border-color: #52525b;
+  }
+  .project-tab[data-tab="marketing"][data-active="true"] {
+    background-color: rgba(249, 115, 22, 0.1);
+    border-color: rgba(249, 115, 22, 0.45);
+    color: rgb(251, 146, 60);
+  }
+  .project-tab[data-tab="software"][data-active="true"] {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.45);
+    color: rgb(96, 165, 250);
+  }
 
-    :global(html.light) .project-tab {
-      background-color: transparent;
-      border-color: #d9d6cf;
-      color: #78716c;
-    }
-    :global(html.light) .project-tab:hover {
-      border-color: #a8a29e;
-      color: #1c1917;
-    }
-    :global(html.light) .project-tab[data-tab="marketing"][data-active="true"] {
-      background-color: rgba(249, 115, 22, 0.08);
-      border-color: rgba(249, 115, 22, 0.5);
-      color: rgb(234, 88, 12);
-    }
-    :global(html.light) .project-tab[data-tab="software"][data-active="true"] {
-      background-color: rgba(59, 130, 246, 0.08);
-      border-color: rgba(59, 130, 246, 0.5);
-      color: rgb(37, 99, 235);
-    }
+  :global(html.light) .project-tab {
+    background-color: transparent;
+    border-color: #d9d6cf;
+    color: #78716c;
+  }
+  :global(html.light) .project-tab:hover {
+    border-color: #a8a29e;
+    color: #1c1917;
+  }
+  :global(html.light) .project-tab[data-tab="marketing"][data-active="true"] {
+    background-color: rgba(249, 115, 22, 0.08);
+    border-color: rgba(249, 115, 22, 0.5);
+    color: rgb(234, 88, 12);
+  }
+  :global(html.light) .project-tab[data-tab="software"][data-active="true"] {
+    background-color: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.5);
+    color: rgb(37, 99, 235);
+  }
 
-    .reveal-section {
-      opacity: 0;
-      transform: translateY(24px);
-      transition:
-        opacity 0.65s ease-out,
-        transform 0.65s ease-out;
-    }
-    .reveal-section.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.65s ease-out,
+      transform 0.65s ease-out;
+  }
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    :global(html.light) .timeline-dot {
-      box-shadow: 0 0 0 3px #f4f3f0;
-    }
-    :global(html.light) .timeline-spine {
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        #d9d6cf 8%,
-        #d9d6cf 92%,
-        transparent
-      );
-    }
-  </style>
+  :global(html.light) .timeline-dot {
+    box-shadow: 0 0 0 3px #f4f3f0;
+  }
+  :global(html.light) .timeline-spine {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      #d9d6cf 8%,
+      #d9d6cf 92%,
+      transparent
+    );
+  }
+</style>
 
-  <script>
-    const initReveal = () => {
-      const sections = document.querySelectorAll(".reveal-section");
-      const io = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add("is-visible");
-              io.unobserve(e.target);
-            }
-          }),
-        { threshold: 0.08, rootMargin: "0px 0px -48px 0px" },
-      );
-      sections.forEach((el) => io.observe(el));
-    };
+<script>
+  const hint = document.getElementById("scroll-hint");
+  if (hint) {
+    window.addEventListener(
+      "scroll",
+      () => {
+        hint.style.opacity = window.scrollY > 40 ? "0" : "1";
+      },
+      { passive: true },
+    );
+  }
 
-    const initCountUp = () => {
-      const els = document.querySelectorAll<HTMLElement>(".stat-number");
-      const io = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => {
-            if (!e.isIntersecting) return;
+  const initReveal = () => {
+    const sections = document.querySelectorAll(".reveal-section");
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
             io.unobserve(e.target);
-            const el = e.target as HTMLElement;
-            const raw = el.dataset.value ?? "";
-            const match = raw.match(/^(\$?)(\d+(?:\.\d+)?)(.*)/);
-            if (!match) return;
-            const [, prefix, numStr, suffix] = match;
-            const target = parseFloat(numStr);
-            const start = performance.now();
-            const duration = 1300;
-            const tick = (now: number) => {
-              const p = Math.min((now - start) / duration, 1);
-              const eased = 1 - Math.pow(1 - p, 3);
-              el.textContent = `${prefix}${Math.round(eased * target).toLocaleString()}${suffix}`;
-              if (p < 1) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-          }),
-        { threshold: 0.5 },
-      );
-      els.forEach((el) => io.observe(el));
-    };
-
-    const initTabs = () => {
-      const tabs = document.querySelectorAll<HTMLButtonElement>(".project-tab");
-      const panelMarketing = document.getElementById(
-        "panel-marketing",
-      ) as HTMLElement | null;
-      const panelSoftware = document.getElementById(
-        "panel-software",
-      ) as HTMLElement | null;
-
-      if (!panelMarketing || !panelSoftware) return;
-
-      const setTab = (active: "marketing" | "software") => {
-        tabs.forEach((t) => {
-          if (t.dataset.tab === active) {
-            t.dataset.active = "true";
-          } else {
-            delete t.dataset.active;
           }
-        });
-        panelMarketing.classList.toggle("hidden", active !== "marketing");
-        panelSoftware.classList.toggle("hidden", active !== "software");
-      };
+        }),
+      { threshold: 0.08, rootMargin: "0px 0px -48px 0px" },
+    );
+    sections.forEach((el) => io.observe(el));
+  };
 
-      tabs.forEach((t) =>
-        t.addEventListener("click", () =>
-          setTab(t.dataset.tab as "marketing" | "software"),
-        ),
-      );
+  const initCountUp = () => {
+    const els = document.querySelectorAll<HTMLElement>(".stat-number");
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          io.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const raw = el.dataset.value ?? "";
+          const match = raw.match(/^(\$?)(\d+(?:\.\d+)?)(.*)/);
+          if (!match) return;
+          const [, prefix, numStr, suffix] = match;
+          const target = parseFloat(numStr);
+          const start = performance.now();
+          const duration = 1300;
+          const tick = (now: number) => {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = `${prefix}${Math.round(eased * target).toLocaleString()}${suffix}`;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }),
+      { threshold: 0.5 },
+    );
+    els.forEach((el) => io.observe(el));
+  };
+
+  const initTabs = () => {
+    const tabs = document.querySelectorAll<HTMLButtonElement>(".project-tab");
+    const panelMarketing = document.getElementById(
+      "panel-marketing",
+    ) as HTMLElement | null;
+    const panelSoftware = document.getElementById(
+      "panel-software",
+    ) as HTMLElement | null;
+
+    if (!panelMarketing || !panelSoftware) return;
+
+    const setTab = (active: "marketing" | "software") => {
+      tabs.forEach((t) => {
+        if (t.dataset.tab === active) {
+          t.dataset.active = "true";
+        } else {
+          delete t.dataset.active;
+        }
+      });
+      panelMarketing.classList.toggle("hidden", active !== "marketing");
+      panelSoftware.classList.toggle("hidden", active !== "software");
     };
 
-    const init = () => {
-      initReveal();
-      initCountUp();
-      initTabs();
-    };
+    tabs.forEach((t) =>
+      t.addEventListener("click", () =>
+        setTab(t.dataset.tab as "marketing" | "software"),
+      ),
+    );
+  };
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init);
-    } else {
-      init();
-    }
-    document.addEventListener("astro:after-swap", init);
-  </script>
-</BaseLayout>
+  const init = () => {
+    initReveal();
+    initCountUp();
+    initTabs();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+  document.addEventListener("astro:after-swap", init);
+</script>

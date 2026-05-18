@@ -5,11 +5,13 @@ import ThemeToggle from "../components/theme_toggle.astro";
 interface Props {
   title: string;
   description?: string;
+  hideToggle?: boolean;
 }
 
 const {
   title,
   description = "Full-stack Software Engineer & Growth Marketer based in Davao, Philippines.",
+  hideToggle = false,
 } = Astro.props;
 
 const siteUrl = "https://shaheen.works";
@@ -66,7 +68,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
   </head>
 
   <body class="min-h-screen font-sans relative transition-colors duration-300">
-    <ThemeToggle />
+    {!hideToggle && <ThemeToggle />}
 
     <slot />
 
