@@ -46,7 +46,7 @@ export const shortBio = "Full-stack Software Engineer & Digital Growth Marketer"
 
 export const softwareSummary = "Computer Science graduate at Ateneo de Davao. I build full-stack applications with a focus on performance and real-world utility. My background in marketing taught me to build systems that don't just work, but actually drive business results.";
 
-export const marketingSummary = "Growth Marketer with 4 years of experience. I've managed $355K in transaction volume and structured 20+ high-performance creator deals. I combine data-driven strategy with technical automation to scale influencer networks and businesses.";
+export const marketingSummary = "In 4 months, I took a market's monthly transaction volume from under $4K to $355K. That's the short version. The longer one: 4+ years of growth marketing, 20+ structured creator partnerships, a 4:1 ROAS across every influencer I've onboarded, and a habit of building the systems behind the results — not just running the plays.";
 
 export const contact = {
   email: "contact.shaheenaladwani@gmail.com",
@@ -56,21 +56,21 @@ export const contact = {
   profileImage: "/og-image.jpg",
 };
 
-
 export const softwareSkills = [
-  'Flutter & Dart (Advanced)',
+  'Java & Spring Boot (Back-end)',
   'JavaScript & TypeScript',
+  'Next.js (Web Framework)',
+  'Flutter & Dart (Mobile Dev)',
+  'PostgreSQL & Supabase (Databases)',
+  'AWS & Docker (Cloud & DevOps)',
+  'Bubble.io (No-Code Development)',
+  'Wordpress and PHP (Customized Websites)',
+  'Agile/Scrum (Scrum Master)',
+  'Cisco Networking (CCNA & CCSA)',
+  'Figma (UI/UX Design)',
   'Python (Data Pipelines)',
   'Astro (Framework)',
-  'Bubble.io (Advanced)',
-  'Wordpress & PHP (Advanced)',
-  'GoHighLevel & Framer',
-  'Figma (Advanced)',
-  'RAG Pipelines & LLM Integration',
-  'REST API Integration',
-  'Supabase & Firebase',
-  'Git & Version Control',
-  'Agile & Scrum Methodology',
+  'Postman (API Testing)',
 ];
 
 export const marketingSkills = [
@@ -282,12 +282,13 @@ export const projects: Project[] = [
   {
     id: 'proj-gymeasy',
     category: 'software',
-    title: 'GymEasy: A Full-Service Gym Management Software',
-    date: '2025-',
-    role: 'Project Manager & Back-end Developer',
+    title: 'GymEasy - SaaS Gym Management Platform',
+    date: 'June 2025 -',
+    role: 'Founder · Project Manager, Back-end Developer',
     color: '#3b82f6',
-    tags: ['Next.JS', 'Spring Boot', 'Desktop/Mobile'],
-    description: 'A Full-Service Gym Management Software that provides MSME Gym Owners complete control of the business without breaking the bank',
+    results: '67% Staff Reduction',
+    tags: ['Next.js', 'Spring Boot', 'PostgreSQL', 'AWS'],
+    description: 'A full end-to-end SaaS gym management system currently live in paid beta with active users. Automates complete front-desk workflows including QR-based attendance, digitalized POS, coach-client pipelines, and scheduling, delivering a 67% reduction in required front-desk workforce through platform automation.',
     media: {
       type: 'image' as const,
       url: '/gymeasy/attend1.png',
@@ -328,14 +329,30 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/shaheenNawaf/StaySafe',
   },
   {
+    id: 'proj-friendslop',
+    category: 'software',
+    title: 'Friendslop - Game Discovery App',
+    date: 'March 2026 -',
+    role: 'Developer',
+    color: '#6366f1',
+    tags: ['Next.js', 'Steam API', 'Google Drive'],
+    description: "Building a TikTok-style game discovery platform for Steam users, surfacing personalized game recommendations based on existing library data and integrating Steam login to filter already-owned games from the discovery feed without third-party data sharing.",
+    media: {
+      type: 'image' as const,
+      url: '/friendslop/cover.png',
+    },
+    liveUrl: '',
+    repoUrl: '',
+  },
+  {
     id: 'proj-JCSD',
     category: 'software',
-    title: 'JCSD: A Full-Service Booking Management System',
-    date: 'Aug 2024',
-    role: 'Full Stack Developer',
+    title: 'JCSD Booking Website - Computer Shop Booking & Management App',
+    date: 'March 2025',
+    role: 'Developer',
     color: '#ec4899',
-    tags: ['Flutter', 'UI/UX', 'Full-Stack'],
-    description: 'A Full-service booking management application completely done via Flutter',
+    tags: ['Flutter', 'Supabase', 'Full-Stack'],
+    description: 'A full end-to-end booking and management application built for a computer service and repair shop. Features customer-facing maintenance booking, serialized inventory tracking with stock in/out monitoring, and automated HR functionality covering payroll, leave, and absence management.',
     media: {
       type: 'image' as const,
       url: '/jcsd/dash.png',
@@ -352,7 +369,7 @@ export const experiences: Experience[] = [
     category: 'software',
     title: 'Project Manager & Back-end Developer',
     company: 'GymEasy',
-    date: '2025 - Present',
+    date: 'June 2025 - Present',
     location: 'Davao, Philippines',
     color: '#3b82f6',
     description: 'Leading back-end architecture and project coordination for a full-service gym management SaaS targeting MSME gym owners.',
@@ -360,6 +377,22 @@ export const experiences: Experience[] = [
       'Architected the Spring Boot back-end and database schema, handling member management, attendance tracking, and billing workflows.',
       'Coordinated a cross-functional team using Agile sprints, maintaining a staging deployment at gymeasy.app throughout active development.',
       'Integrated REST APIs between the Next.js front-end and Spring Boot services, with Supabase handling real-time data sync.',
+    ],
+  },
+  {
+    id: 'exp-jairosoft-intern',
+    category: 'software',
+    title: 'Bubble.io Web Developer - Internship',
+    company: 'JairoSoft',
+    date: 'May 2025 - June 2025',
+    location: 'Davao, Philippines (On-site)',
+    color: '#10b981',
+    description: 'Developed core pages and corrected structural database design flaws within JairoSoft Institutes Learning Management System.',
+    details: [
+      'Developed 6 core pages for JairoSoft Institute of Technology\'s LMS, including Faculty, Course Edit/Add, and Admin Dashboards.',
+      'Built reusable, high-performance UI components including an image carousel with dynamic link structures.',
+      'Restructured and corrected the platform\'s relational database ERD after identifying critical design flaws from previous development cycles.',
+      'Completed all software deliverables within 200 hours while serving as Scrum Master for 100 hours of the internship period.',
     ],
   },
   {
@@ -382,7 +415,7 @@ export const experiences: Experience[] = [
     category: 'marketing',
     title: 'Philippines Team Lead',
     company: 'Yohoho.bet',
-    date: 'June 2025 - Oct 2025',
+    date: 'June 2025 - October 2025',
     location: 'Remote',
     color: '#f97316',
     description: 'Kept running costs down while ensuring a strict-4:1 ROAS.',
@@ -401,7 +434,7 @@ export const experiences: Experience[] = [
     category: 'marketing',
     title: 'Influencer Specialist',
     company: 'Yohoho.bet',
-    date: 'June 2025 - Oct 2025',
+    date: 'June 2025 - October 2025',
     location: 'Remote',
     color: '#B5F916',
     description: 'Directed rapid-scale influencer recruitment and social expansion, driving $355K in bet volume.',

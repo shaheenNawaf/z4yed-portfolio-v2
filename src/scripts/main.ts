@@ -1,15 +1,23 @@
+/*
+ * Global Interactions: Controls site-wide modals, theme toggling logic,
+ * and the floating dynamic CTA sticky bar.
+ */
+
+// Controls modal displaying logic, video lifecycle pauses, and backdrop lockdowns
 const setupModals = () => {
   const modalTriggers = document.querySelectorAll('[data-modal-id]');
   const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
 
+  // Halts playing audio/video feeds within modals upon closing
   const stopVideo = (modal: HTMLDialogElement) => {
-  const iframe = modal.querySelector('iframe');
-  if (iframe) iframe.src = '';
+    const iframe = modal.querySelector('iframe');
+    if (iframe) iframe.src = '';
 
-  const video = modal.querySelector('video');
-  if (video) { video.pause(); video.currentTime = 0; }
-};
+    const video = modal.querySelector('video');
+    if (video) { video.pause(); video.currentTime = 0; }
+  };
 
+  // Maps click listeners to launch designated dialog cards
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', () => {
       const modalId = trigger.getAttribute('data-modal-id');
@@ -27,6 +35,7 @@ const setupModals = () => {
     });
   });
 
+  // Closes dialog views if close components inside are clicked
   document.querySelectorAll('.close-modal').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -38,6 +47,7 @@ const setupModals = () => {
     });
   });
 
+  // Closes modal dialog boxes when clicking elements outside the modal frame boundary
   dialogs.forEach(dialog => {
     dialog.addEventListener('close', () => {
       document.body.style.overflow = 'auto';
@@ -53,6 +63,7 @@ const setupModals = () => {
   });
 };
 
+// Shows or hides the sticky floating bottom bar using IntersectionObserver on the trigger
 const setupStickyBar = () => {
   const stickyBar = document.getElementById('sticky-cta');
   const heroTrigger = document.getElementById('hero-trigger');
@@ -77,6 +88,7 @@ const setupStickyBar = () => {
   observer.observe(heroTrigger);
 };
 
+// Controls step navigation between elements inside modals using keys or relative targets
 const setupGalleryNav = () => {
   const navButtons = document.querySelectorAll('[data-nav-to]');
   
@@ -117,6 +129,7 @@ const setupGalleryNav = () => {
   window.addEventListener('keydown', handleKeyDown);
 };
 
+// Handles clicking theme buttons and setting persistent storage changes across views
 const setupTheme = () => {
   const toggle = document.getElementById('theme-toggle');
   if (!toggle) return;
@@ -135,6 +148,7 @@ const setupTheme = () => {
   });
 };
 
+// Initializes all structural UI control blocks
 const init = () => {
   setupModals();
   setupStickyBar();

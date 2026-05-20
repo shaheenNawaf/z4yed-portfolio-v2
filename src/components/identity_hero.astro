@@ -8,43 +8,76 @@ interface Props {
   contact: { email: string; linkedin: string };
   mode: "software" | "marketing";
   impactBadge?: string;
+  resumeUrl?: string;
 }
 
-const { name, headline, image, summary, skills, contact, mode, impactBadge } =
-  Astro.props;
+const {
+  name,
+  headline,
+  image,
+  summary,
+  skills,
+  contact,
+  mode,
+  impactBadge,
+  resumeUrl,
+} = Astro.props;
 const accentColor = mode === "software" ? "text-blue-500" : "text-orange-500";
 const dotColor = mode === "software" ? "bg-blue-500" : "bg-orange-500";
 ---
 
 <section
-  class="bg-zinc-950/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-sm"
+  class="bg-zinc-950/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 md:p-10 shadow-sm"
 >
-  <div class="flex flex-col md:flex-row gap-8 md:gap-12">
-    <div class="flex flex-col items-center md:items-start gap-5 shrink-0">
-      <img
-        src={image}
-        alt={name}
-        class="w-28 h-28 md:w-32 md:h-32 rounded-2xl object-cover border border-zinc-800 shadow-sm"
-      />
+  <div class="flex flex-col md:flex-row gap-6 md:gap-12">
+    {/* Profile row on mobile / Sidebar on desktop */}
+    <div class="flex flex-col gap-5 shrink-0 w-full md:w-auto">
+      <div
+        class="flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-5"
+      >
+        <img
+          src={image}
+          alt={name}
+          class="w-20 h-20 md:w-32 md:h-32 rounded-2xl object-cover border border-zinc-800 shadow-sm shrink-0"
+        />
 
-      <div class="flex gap-3">
+        {/* Mobile Header Layout */}
+        <div class="flex flex-col md:hidden text-left min-w-0 flex-1">
+          <div class="flex flex-col gap-1.5 mb-1">
+            <h1
+              class="font-grotesk text-xl font-extrabold text-white uppercase leading-tight truncate"
+            >
+              {name}
+            </h1>
+            {
+              impactBadge && (
+                <span class="inline-block px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[9px] font-bold uppercase tracking-widest w-fit">
+                  {impactBadge}
+                </span>
+              )
+            }
+          </div>
+          <p class={`${accentColor} text-xs font-semibold`}>
+            {headline}
+          </p>
+        </div>
+      </div>
+
+      {/* Desktop-only Contact Buttons (Left Sidebar) */}
+      <div class="hidden md:flex gap-3">
         <a
           href={`mailto:${contact.email}`}
           class="p-2 rounded-xl border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all bg-zinc-950/20"
           title="Email"
         >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            ></path></svg
-          >
+          {/* High-density solid envelope matching LinkedIn's visual weight */}
+          <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+            ></path>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+            ></path>
+          </svg>
         </a>
         <a
           href={`https://${contact.linkedin}`}
@@ -52,26 +85,121 @@ const dotColor = mode === "software" ? "bg-blue-500" : "bg-orange-500";
           class={`p-2 rounded-xl border border-zinc-800 text-zinc-400 hover:${accentColor} hover:border-zinc-700 transition-all bg-zinc-950/20`}
           title="LinkedIn"
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"
-            ><path
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
               d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-            ></path></svg
+            ></path>
+          </svg>
+        </a>
+        {
+          resumeUrl && (
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`p-2 rounded-xl border border-zinc-800 text-zinc-400 hover:${accentColor} hover:border-zinc-700 transition-all bg-zinc-950/20`}
+              title="View Resume PDF"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </a>
+          )
+        }
+      </div>
+
+      {
+        /* Larger Mobile-only Contact Buttons (Text labels hidden under 640px viewport to prevent overflow) */
+      }
+      <div class="flex md:hidden gap-3 w-full">
+        <a
+          href={`mailto:${contact.email}`}
+          class="flex-1 flex items-center justify-center p-3.5 rounded-xl border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all bg-zinc-950/20"
+          title="Email"
+        >
+          {/* High-density solid envelope matching LinkedIn's visual weight */}
+          <svg class="w-5 h-5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+            ></path>
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+            ></path>
+          </svg>
+          <span
+            class="hidden sm:inline-block ml-2 text-xs font-bold uppercase tracking-wider"
+            >Email</span
           >
         </a>
+        <a
+          href={`https://${contact.linkedin}`}
+          target="_blank"
+          class={`flex-1 flex items-center justify-center p-3.5 rounded-xl border border-zinc-800 text-zinc-400 hover:${accentColor} hover:border-zinc-700 transition-all bg-zinc-950/20`}
+          title="LinkedIn"
+        >
+          <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+            ></path>
+          </svg>
+          <span
+            class="hidden sm:inline-block ml-2 text-xs font-bold uppercase tracking-wider"
+            >LinkedIn</span
+          >
+        </a>
+        {
+          resumeUrl && (
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`flex-1 flex items-center justify-center p-3.5 rounded-xl border border-zinc-800 text-zinc-400 hover:${accentColor} hover:border-zinc-700 transition-all bg-zinc-950/20`}
+              title="View Resume PDF"
+            >
+              <svg
+                class="w-5 h-5 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              <span class="hidden sm:inline-block ml-2 text-xs font-bold uppercase tracking-wider">
+                Resume
+              </span>
+            </a>
+          )
+        }
       </div>
     </div>
 
-    <div class="flex-1 text-center md:text-left">
-      <div class="mb-6">
-        <div class="flex flex-col md:flex-row md:items-center gap-3 mb-1">
+    {/* Primary profile description and skill set listings */}
+    <div class="flex-1 text-left">
+      {/* Desktop-only Header (Hidden on mobile) */}
+      <div class="hidden md:block mb-6">
+        <div class="flex items-center gap-3 mb-1">
           <h1
-            class="text-3xl md:text-4xl font-semibold text-white tracking-tight"
+            class="font-grotesk text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
           >
             {name}
           </h1>
           {
             impactBadge && (
-              <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-widest w-fit mx-auto md:mx-0">
+              <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-widest w-fit">
                 {impactBadge}
               </span>
             )
@@ -86,13 +214,14 @@ const dotColor = mode === "software" ? "bg-blue-500" : "bg-orange-500";
         {summary}
       </p>
 
+      {/* Left-aligned Expertise container */}
       <div class="border-zinc-800/50">
         <h2
           class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-3"
         >
           Expertise
         </h2>
-        <div class="flex flex-wrap justify-center md:justify-start gap-2">
+        <div class="flex flex-wrap justify-start gap-2">
           {
             skills.map((skill) => (
               <span class="px-3 py-1 bg-zinc-950/30 border border-zinc-800 rounded-lg text-[11px] text-zinc-400 font-medium">
@@ -103,29 +232,31 @@ const dotColor = mode === "software" ? "bg-blue-500" : "bg-orange-500";
         </div>
       </div>
 
+      {/* Left-aligned Tools & Stack container */}
       <div class="mt-6 border-zinc-800/50">
         <h2
           class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-3"
         >
           Tools & Stack
         </h2>
-        <div
-          class="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-2"
-        >
+        <div class="flex flex-wrap justify-start gap-x-5 gap-y-2">
           {
             mode === "software" ? (
               <>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Cursor & VS Code
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Cursor &
+                  VS Code
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Android Studio
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Android
+                  Studio
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
                   <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Postman
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Firebase & Supabase
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Firebase &
+                  Supabase
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
                   <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Bubble.io
@@ -137,16 +268,20 @@ const dotColor = mode === "software" ? "bg-blue-500" : "bg-orange-500";
             ) : (
               <>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Meta Business Suite
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Meta
+                  Business Suite
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Telegram & Viber
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Telegram &
+                  Viber
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Figma & Canva
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Figma &
+                  Canva
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Notion & Airtable
+                  <span class={`w-1 h-1 ${dotColor} rounded-full`} /> Notion &
+                  Airtable
                 </span>
                 <span class="text-[11px] text-zinc-500 flex items-center gap-2">
                   <span class={`w-1 h-1 ${dotColor} rounded-full`} /> HubSpot
@@ -155,7 +290,8 @@ const dotColor = mode === "software" ? "bg-blue-500" : "bg-orange-500";
             )
           }
           <span class="text-[11px] text-zinc-500 flex items-center gap-2">
-            <span class="w-1 h-1 bg-zinc-600 rounded-full"></span> Claude, ChatGPT & n8n
+            <span class="w-1 h-1 bg-zinc-600 rounded-full"></span> Claude, ChatGPT
+            & n8n
           </span>
         </div>
       </div>

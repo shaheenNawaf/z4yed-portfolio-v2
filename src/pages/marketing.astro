@@ -4,6 +4,7 @@ import IdentityHero from "../components/identity_hero.astro";
 import MarketingCard from "../components/marketing_card.astro";
 import ExperienceCard from "../components/experience_card.astro";
 import StickyBar from "../components/sticky_bar.astro";
+import ThemeToggle from "../components/theme_toggle.astro";
 import {
   name,
   marketingSummary,
@@ -17,18 +18,19 @@ const marketingProjects = projects.filter((p) => p.category === "marketing");
 const marketingExp = experiences.filter((e) => e.category === "marketing");
 ---
 
-<BaseLayout title="Shaheen | Creator Partnerships">
+<BaseLayout title="Shaheen | Creator Partnerships" hideToggle={true}>
   <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
   </div>
 
-  <main class="max-w-4xl mx-auto w-full flex flex-col gap-16 py-12 px-6">
-    <nav>
+  <main class="max-w-4xl mx-auto w-full flex flex-col py-12 px-6">
+    {/* Navigation row with reduced bottom margin to pull Hero card closer */}
+    <nav class="flex justify-between items-center w-full mb-6 md:mb-10">
       <a
         href="/"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm text-zinc-400 hover:text-orange-400 hover:border-orange-500/30 hover:bg-zinc-800/60 transition-all text-[10px] font-bold uppercase tracking-[0.2em] group"
+        class="inline-flex items-center gap-2 py-2 md:py-0 px-4 md:px-6 h-auto md:h-[54px] rounded-xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm text-zinc-400 hover:text-orange-400 hover:border-orange-500/30 hover:bg-zinc-800/60 transition-all text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] group shrink-0"
       >
         <svg
-          class="w-3 h-3 transition-transform group-hover:-translate-x-0.5"
+          class="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover:-translate-x-0.5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -41,46 +43,57 @@ const marketingExp = experiences.filter((e) => e.category === "marketing");
         </svg>
         Back to Portal
       </a>
+      <ThemeToggle variant="inline" />
     </nav>
 
-    <IdentityHero
-      name={name}
-      headline="Growth Marketing"
-      image={contact.profileImage}
-      summary={marketingSummary}
-      skills={marketingSkills}
-      contact={contact}
-      mode="marketing"
-      impactBadge="$355K+ Managed Volume in 4 m"
-    />
+    {/* Layout content stack wrapper */}
+    <div class="flex flex-col gap-16">
+      <IdentityHero
+        name={name}
+        headline="Growth Marketing"
+        image={contact.profileImage}
+        summary={marketingSummary}
+        skills={marketingSkills}
+        contact={contact}
+        mode="marketing"
+        impactBadge="$355K+ Managed Volume in 4 m"
+        resumeUrl="https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf"
+      />
 
-    <section>
-      <div class="flex items-center gap-4 mb-8">
-        <h2
-          class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]"
-        >
-          Campaign Case Studies
-        </h2>
-        <div class="h-px flex-1 bg-zinc-800/50"></div>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {marketingProjects.map((project) => <MarketingCard {...project} />)}
-      </div>
-    </section>
+      <section>
+        {
+          /* Adjusted tracking & added wrapping support to avoid mobile overflow */
+        }
+        <div class="flex items-center gap-4 mb-8">
+          <span
+            class="font-mono text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] md:tracking-[0.35em] whitespace-normal break-words leading-relaxed"
+          >
+            // campaign case studies
+          </span>
+          <div class="h-px flex-1 bg-zinc-800/50"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {marketingProjects.map((project) => <MarketingCard {...project} />)}
+        </div>
+      </section>
 
-    <section class="pb-21">
-      <div class="flex items-center gap-4 mb-8">
-        <h2
-          class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]"
-        >
-          Professional History
-        </h2>
-        <div class="h-px flex-1 bg-zinc-800/50"></div>
-      </div>
-      <div class="flex flex-col gap-4">
-        {marketingExp.map((exp) => <ExperienceCard {...exp} />)}
-      </div>
-    </section>
+      <section class="pb-21">
+        {
+          /* Adjusted tracking & added wrapping support to avoid mobile overflow */
+        }
+        <div class="flex items-center gap-4 mb-8">
+          <span
+            class="font-mono text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] md:tracking-[0.35em] whitespace-normal break-words leading-relaxed"
+          >
+            // professional history
+          </span>
+          <div class="h-px flex-1 bg-zinc-800/50"></div>
+        </div>
+        <div class="flex flex-col gap-4">
+          {marketingExp.map((exp) => <ExperienceCard {...exp} />)}
+        </div>
+      </section>
+    </div>
   </main>
 
   <StickyBar
@@ -89,5 +102,7 @@ const marketingExp = experiences.filter((e) => e.category === "marketing");
     linkedinUrl={contact.linkedin}
     profileImage={contact.profileImage}
     name={name}
+    statusText="Avalable for marketing roles"
+    resumeUrl="https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf"
   />
 </BaseLayout>

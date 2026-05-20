@@ -6,7 +6,6 @@ import ThemeToggle from "../components/theme_toggle.astro";
 
 import { name, shortBio, contact, projects, experiences } from "../data/resume";
 
-// Category pill styles — fixed to brand colours, NOT per-company exp.color
 const catStyle = {
   marketing: {
     color: "rgb(251,146,60)",
@@ -75,13 +74,7 @@ const stats = [
 ---
 
 <BaseLayout title={name} hideToggle={true}>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap");
-    .font-grotesk {
-      font-family: "Space Grotesk", sans-serif;
-    }
-  </style>
-
+  {/* Sticky Navigation Header */}
   <header
     class="fixed top-4 md:top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-2xl pointer-events-none"
   >
@@ -162,6 +155,7 @@ const stats = [
     </div>
   </header>
 
+  {/* Portal Split Landing Section */}
   <section class="relative h-screen flex flex-col md:flex-row overflow-hidden">
     <a
       href="/marketing"
@@ -264,54 +258,57 @@ const stats = [
         </div>
       </div>
     </a>
+
+    {/* Floating Trust Bar with synchronized float and border glow */}
     <div
       class="absolute bottom-5 left-1/2 -translate-x-1/2 z-40 w-[88%] max-w-2xl pointer-events-none"
     >
-      <div
-        class="group/bar bg-zinc-950/70 backdrop-blur-md border border-zinc-800 px-4 py-3 md:p-5 rounded-xl md:rounded-3xl shadow-2xl flex flex-row md:flex-col items-center justify-center gap-4 pointer-events-auto transition-all hover:border-zinc-700"
-      >
-        <span
-          class="relative z-10 font-mono text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-[0.4em] shrink-0"
-          >Proven Impact At</span
-        >
+      <div class="animate-bob pointer-events-auto">
         <div
-          class="relative z-10 flex items-center justify-center gap-5 md:gap-12 opacity-60 grayscale group-hover/bar:opacity-100 group-hover/bar:grayscale-0 transition-all duration-500"
+          class="group/bar animate-border-sync bg-zinc-950/70 backdrop-blur-md border border-zinc-800 px-4 py-3 md:p-5 rounded-xl md:rounded-3xl shadow-2xl flex flex-row md:flex-col items-center justify-center gap-4 transition-all hover:border-zinc-700"
         >
-          <img
-            src="/logos/rivalry.png"
-            alt="Rivalry"
-            class="h-4 md:h-10 w-auto object-contain"
-          />
-          <img
-            src="/logos/yohoho.png"
-            alt="Yohoho"
-            class="h-4 md:h-10 w-auto object-contain"
-          />
-          <img
-            src="/logos/epulze.png"
-            alt="Epuzle"
-            class="h-4 md:h-10 w-auto object-contain"
-          />
-          <img
-            src="/logos/ncgc.png"
-            alt="NCGC"
-            class="h-4 md:h-10 w-auto object-contain"
-          />
+          <span
+            class="relative z-10 font-mono text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-[0.4em] shrink-0"
+            >Proven Impact At</span
+          >
+          <div
+            class="relative z-10 flex items-center justify-center gap-5 md:gap-12 opacity-60 grayscale group-hover/bar:opacity-100 group-hover/bar:grayscale-0 transition-all duration-500"
+          >
+            <img
+              src="/logos/rivalry.png"
+              alt="Rivalry"
+              class="h-4 md:h-10 w-auto object-contain"
+            />
+            <img
+              src="/logos/yohoho.png"
+              alt="Yohoho"
+              class="h-4 md:h-10 w-auto object-contain"
+            />
+            <img
+              src="/logos/epulze.png"
+              alt="Epuzle"
+              class="h-4 md:h-10 w-auto object-contain"
+            />
+            <img
+              src="/logos/ncgc.png"
+              alt="NCGC"
+              class="h-4 md:h-10 w-auto object-contain"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div
-      id="scroll-hint"
-      class="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-30 transition-opacity duration-500"
-    >
+
+    {/* Synchronized Ambient Glow System */}
+    <div class="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-30">
       <div
-        class="md:hidden absolute inset-0 animate-pulse"
-        style="background: linear-gradient(to top, rgba(59,130,246,0.22), transparent);"
+        class="md:hidden absolute inset-0 animate-bg-sync"
+        style="background: linear-gradient(to top, rgba(59, 130, 246, 0.22), transparent);"
       >
       </div>
       <div
-        class="hidden md:block absolute inset-0 animate-pulse"
-        style="background: radial-gradient(ellipse 60% 100% at 25% 100%, rgba(249,115,22,0.22), transparent 70%), radial-gradient(ellipse 60% 100% at 75% 100%, rgba(59,130,246,0.22), transparent 70%);"
+        class="hidden md:block absolute inset-0 animate-bg-sync"
+        style="background: radial-gradient(ellipse 60% 100% at 25% 100%, rgba(249, 115, 22, 0.22), transparent 70%), radial-gradient(ellipse 60% 100% at 75% 100%, rgba(59, 130, 246, 0.22), transparent 70%);"
       >
       </div>
     </div>
@@ -319,6 +316,7 @@ const stats = [
 </BaseLayout>
 
 <main class="relative z-10 max-w-5xl mx-auto px-6 py-24 space-y-32">
+  {/* Professional History Timeline section */}
   <section class="reveal-section">
     <div class="flex items-center gap-4 mb-16">
       <span
@@ -406,6 +404,7 @@ const stats = [
     </div>
   </section>
 
+  {/* Filterable Case Studies & Projects section */}
   <section class="reveal-section">
     <div class="flex items-center gap-4 mb-10">
       <span
@@ -444,62 +443,44 @@ const stats = [
     </div>
   </section>
 
+  {/* Unified, high-contrast Contact Card Section */}
   <section class="reveal-section">
-    <div class="flex items-center gap-4 mb-16">
-      <span
-        class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
-        >// recent achievements</span
-      >
-      <div class="h-px flex-1 bg-zinc-800/50"></div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {
-        stats.map((stat, i) => (
-          <div
-            class={`stat-card group relative p-6 rounded-2xl bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 stat-accent-${stat.accent}`}
-          >
-            <div
-              class={`stat-bar absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${stat.accent === "blue" ? "bg-blue-500" : "bg-orange-500"}`}
-            />
-            <span class="absolute top-4 right-4 font-mono text-[8px] text-zinc-800 group-hover:text-zinc-700 transition-colors">
-              0{i + 1}
-            </span>
-            <p class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest mb-3">
-              {stat.label}
-            </p>
-            <p
-              class={`stat-number font-mono text-3xl md:text-4xl font-black text-white tracking-tighter transition-colors duration-300 ${stat.accent === "blue" ? "group-hover:text-blue-400" : "group-hover:text-orange-400"}`}
-              data-value={stat.value}
-            >
-              {stat.value}
-            </p>
-            <p class="font-mono text-[10px] text-zinc-600 font-bold mt-2 uppercase tracking-tighter">
-              {stat.sub}
-            </p>
-          </div>
-        ))
-      }
-    </div>
-
     <div
-      class="mt-16 flex flex-col items-center gap-6 border-t border-zinc-800/50 pt-16"
+      class="mt-2 bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-3xl p-8 md:p-5 flex flex-col items-center gap-5 text-center relative overflow-hidden"
     >
-      <p
-        class="font-mono text-reg font-bold text-zinc-400 uppercase tracking-[0.10em] text-center"
+      {/* Soft background radial grid light overlay */}
+      <div
+        class="absolute inset-0 bg-radial-gradient from-zinc-800/5 via-transparent to-transparent -z-10"
       >
-        Ready to work together?
-      </p>
+      </div>
+
+      <span
+        class="font-mono text-[10px] md:text-xs font-bold text-zinc-500 uppercase tracking-[0.35em] whitespace-nowrap"
+      >
+        // contact
+      </span>
+
+      <h2
+        class="font-grotesk text-[19px] xs:text-[21px] sm:text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight max-w-sm sm:max-w-2xl leading-tight"
+      >
+        Your <span class="text-orange-500 dark:text-orange-400"
+          >next best hire is already here</span
+        >.<br class="block sm:hidden" /> Let's <span
+          class="text-blue-500 dark:text-blue-400">make it official</span
+        >.
+      </h2>
 
       <div class="relative">
+        {/* Dynamic backdrop breathing scale-and-pulse glow */}
         <div
-          class="absolute -inset-3 rounded-2xl bg-gradient-to-r from-orange-500/30 via-blue-500/20 to-orange-500/30 blur-lg animate-pulse opacity-60 -z-10"
+          class="animate-cta-glow absolute -inset-3 rounded-2xl bg-gradient-to-r from-orange-500/30 via-blue-500/20 to-orange-500/30 -z-10"
         >
         </div>
         <a
           href={`mailto:${contact.email}`}
-          class="group relative inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-white text-black font-bold font-mono uppercase text-xs tracking-[0.2em] overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-zinc-100 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.08)] hover:shadow-[0_0_30px_rgba(255,255,255,0.18)]"
+          class="cta-button-contrast group relative inline-flex items-center gap-3 px-10 py-4 rounded-xl font-bold font-mono uppercase text-xs tracking-[0.2em] overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.08)] hover:shadow-[0_0_30px_rgba(255,255,255,0.18)]"
         >
+          {/* Inner animating hover gradient overlay */}
           <div
             class="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500/10 via-white/5 to-blue-500/10 animate-pulse opacity-70"
           >
@@ -508,8 +489,10 @@ const stats = [
             class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/10"
           >
           </div>
+
+          {/* Restored envelope icon with custom wiggling animation */}
           <svg
-            class="relative z-10 w-4 h-4 shrink-0 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+            class="relative z-10 w-4 h-4 shrink-0 transition-transform duration-300 animate-envelope"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -522,6 +505,8 @@ const stats = [
             ></path>
           </svg>
           <span class="relative z-10">Send an Email</span>
+
+          {/* Arrow indicator */}
           <svg
             class="relative z-10 w-3.5 h-3.5 opacity-70 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
             fill="none"
@@ -537,21 +522,33 @@ const stats = [
         </a>
       </div>
 
-      <div class="flex items-center gap-6">
+      <div class="flex items-center gap-6 mt-4">
         <a
           href={`https://${contact.linkedin}`}
           target="_blank"
           rel="noopener noreferrer"
-          class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
+          class="font-mono text-[11px] md:text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
         >
           LinkedIn
         </a>
         <span class="text-zinc-800">/</span>
-        <span
-          class="font-mono text-[12px] font-bold text-zinc-500 uppercase tracking-widest"
+        <a
+          href={`https://docs.google.com/document/d/1fegmtrlKvyum3vJwKF9Vs8ELC9p7o4DuK4RyrKNJpno/export?format=pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-[11px] md:text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
         >
-          {contact.location}
-        </span>
+          MKT RSME
+        </a>
+        <span class="text-zinc-800">/</span>
+        <a
+          href={`https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-[11px] md:text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
+        >
+          SFT RSME
+        </a>
       </div>
       <span
         class="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest"
@@ -562,198 +559,7 @@ const stats = [
   </section>
 </main>
 
-<style>
-  .timeline-spine {
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      #27272a 8%,
-      #27272a 92%,
-      transparent
-    );
-  }
-
-  .timeline-item:hover .timeline-dot {
-    border-color: var(--exp-color);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--exp-color) 15%, transparent);
-  }
-  .timeline-dot {
-    box-shadow: 0 0 0 3px #09090b;
-  }
-
-  .timeline-item:hover .timeline-accent {
-    background-color: var(--exp-color);
-  }
-  .timeline-badge {
-    background-color: color-mix(in srgb, var(--exp-color) 15%, transparent);
-    color: var(--exp-color);
-  }
-
-  .timeline-item:last-child {
-    padding-bottom: 0;
-  }
-
-  .project-tab {
-    background-color: transparent;
-    border-color: #3f3f46;
-    color: #71717a;
-  }
-  .project-tab:hover {
-    color: #a1a1aa;
-    border-color: #52525b;
-  }
-  .project-tab[data-tab="marketing"][data-active="true"] {
-    background-color: rgba(249, 115, 22, 0.1);
-    border-color: rgba(249, 115, 22, 0.45);
-    color: rgb(251, 146, 60);
-  }
-  .project-tab[data-tab="software"][data-active="true"] {
-    background-color: rgba(59, 130, 246, 0.1);
-    border-color: rgba(59, 130, 246, 0.45);
-    color: rgb(96, 165, 250);
-  }
-
-  :global(html.light) .project-tab {
-    background-color: transparent;
-    border-color: #d9d6cf;
-    color: #78716c;
-  }
-  :global(html.light) .project-tab:hover {
-    border-color: #a8a29e;
-    color: #1c1917;
-  }
-  :global(html.light) .project-tab[data-tab="marketing"][data-active="true"] {
-    background-color: rgba(249, 115, 22, 0.08);
-    border-color: rgba(249, 115, 22, 0.5);
-    color: rgb(234, 88, 12);
-  }
-  :global(html.light) .project-tab[data-tab="software"][data-active="true"] {
-    background-color: rgba(59, 130, 246, 0.08);
-    border-color: rgba(59, 130, 246, 0.5);
-    color: rgb(37, 99, 235);
-  }
-
-  .reveal-section {
-    opacity: 0;
-    transform: translateY(24px);
-    transition:
-      opacity 0.65s ease-out,
-      transform 0.65s ease-out;
-  }
-  .reveal-section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  :global(html.light) .timeline-dot {
-    box-shadow: 0 0 0 3px #f4f3f0;
-  }
-  :global(html.light) .timeline-spine {
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      #d9d6cf 8%,
-      #d9d6cf 92%,
-      transparent
-    );
-  }
-</style>
-
-<script>
-  const hint = document.getElementById("scroll-hint");
-  if (hint) {
-    window.addEventListener(
-      "scroll",
-      () => {
-        hint.style.opacity = window.scrollY > 40 ? "0" : "1";
-      },
-      { passive: true },
-    );
-  }
-
-  const initReveal = () => {
-    const sections = document.querySelectorAll(".reveal-section");
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
-            io.unobserve(e.target);
-          }
-        }),
-      { threshold: 0.08, rootMargin: "0px 0px -48px 0px" },
-    );
-    sections.forEach((el) => io.observe(el));
-  };
-
-  const initCountUp = () => {
-    const els = document.querySelectorAll<HTMLElement>(".stat-number");
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          io.unobserve(e.target);
-          const el = e.target as HTMLElement;
-          const raw = el.dataset.value ?? "";
-          const match = raw.match(/^(\$?)(\d+(?:\.\d+)?)(.*)/);
-          if (!match) return;
-          const [, prefix, numStr, suffix] = match;
-          const target = parseFloat(numStr);
-          const start = performance.now();
-          const duration = 1300;
-          const tick = (now: number) => {
-            const p = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = `${prefix}${Math.round(eased * target).toLocaleString()}${suffix}`;
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }),
-      { threshold: 0.5 },
-    );
-    els.forEach((el) => io.observe(el));
-  };
-
-  const initTabs = () => {
-    const tabs = document.querySelectorAll<HTMLButtonElement>(".project-tab");
-    const panelMarketing = document.getElementById(
-      "panel-marketing",
-    ) as HTMLElement | null;
-    const panelSoftware = document.getElementById(
-      "panel-software",
-    ) as HTMLElement | null;
-
-    if (!panelMarketing || !panelSoftware) return;
-
-    const setTab = (active: "marketing" | "software") => {
-      tabs.forEach((t) => {
-        if (t.dataset.tab === active) {
-          t.dataset.active = "true";
-        } else {
-          delete t.dataset.active;
-        }
-      });
-      panelMarketing.classList.toggle("hidden", active !== "marketing");
-      panelSoftware.classList.toggle("hidden", active !== "software");
-    };
-
-    tabs.forEach((t) =>
-      t.addEventListener("click", () =>
-        setTab(t.dataset.tab as "marketing" | "software"),
-      ),
-    );
-  };
-
-  const init = () => {
-    initReveal();
-    initCountUp();
-    initTabs();
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-  document.addEventListener("astro:after-swap", init);
-</script>
+{
+  /* Attaches home-specific interactive features like count-ups and dynamic filters */
+}
+<script src="../scripts/index-page.ts"></script>

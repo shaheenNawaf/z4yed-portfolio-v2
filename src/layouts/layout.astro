@@ -21,30 +21,12 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 
 <html lang="en" class="antialiased selection:bg-blue-500/30">
   <head>
-    <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
-        }
-        if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-          return "light";
-        }
-        return "dark";
-      })();
-
-      if (theme === "light") {
-        document.documentElement.classList.add("light");
-      } else {
-        document.documentElement.classList.remove("light");
-      }
-    </script>
+    {}
+    <script src="../scripts/theme-init.ts"></script>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link class="rounded" rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={canonicalURL} />
 
@@ -72,86 +54,9 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 
     <slot />
 
+    {
+      /* Loads general site-wide interactives including modals and CTA tracking */
+    }
     <script src="../scripts/main.ts"></script>
   </body>
 </html>
-
-<style is:global>
-  body {
-    background-image:
-      linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(
-      circle at center,
-      transparent 0%,
-      var(--bg-color) 90%
-    );
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  dialog {
-    position: fixed !important;
-    inset: 0 !important;
-    margin: auto !important;
-    max-height: 90vh;
-    max-height: 90dvh;
-    outline: none;
-  }
-
-  dialog::backdrop {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    animation: backdropFade 0.3s ease-out;
-  }
-
-  dialog[open] {
-    animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes modalFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes backdropFade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--bg-color);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #52525b;
-  }
-
-  body:has(dialog[open]) {
-    overflow: hidden;
-  }
-</style>
