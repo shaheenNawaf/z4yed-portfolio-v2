@@ -178,7 +178,37 @@ main > section {
 /* ─────────────────────────────────────────────────────────────────────────────
    4. LIGHT THEME COMPATIBILITY OVERRIDES (Global & Layout Overrides)
    ────────────────────────────────────────────────────────────────────────── */
-html.light .bg-zinc-900\/20,
+/* Back to Portal Button (Light Mode) */
+html.light nav a {
+  background-color: rgba(255, 255, 255, 0.85) !important; /* Matches theme toggle background */
+  border-color: var(--border-color) !important;           /* Clean #d9d6cf border */
+  color: var(--text-muted) !important;                    /* Soft contrast text (#78716c) */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light nav a:hover {
+  background-color: rgba(255, 255, 255, 1) !important;
+  border-color: #a8a29e !important;
+  color: var(--text-main) !important;                     /* Dark #1c1917 on hover */
+}
+
+/* Email, LinkedIn, & Resume Buttons inside IdentityHero (Light Mode) */
+html.light .bg-zinc-950\/20,
+html.light .bg-zinc-950\/30 {
+  background-color: rgba(255, 255, 255, 0.85) !important; /* Matches theme toggle background */
+  border-color: var(--border-color) !important;           /* Clean #d9d6cf border */
+  color: var(--text-muted) !important;                    /* Soft contrast icon color (#78716c) */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .bg-zinc-950\/20:hover,
+html.light .bg-zinc-950\/30:hover {
+  background-color: rgba(255, 255, 255, 1) !important;
+  border-color: #a8a29e !important;
+  /* Omit color !important here to let the dynamic hover:text-blue-500/text-orange-500 class shine */
+}
+
+   html.light .bg-zinc-900\/20,
 html.light .bg-zinc-950\/60,
 html.light .bg-zinc-950\/40 {
   background-color: var(--card-bg) !important;
@@ -232,28 +262,41 @@ html.light .group\/bar img[alt="Epuzle"] {
   filter: brightness(0) !important;
 }
 
-/* Dialog container light mode adjustments (Used in: experience_card, marketing_card, project_card) */
+/* Light Mode Dialog Modal Overrides (Used in: experience_card, marketing_card, project_card) */
 html.light dialog {
-  background-color: rgba(255, 255, 255, 0.92) !important;
+  background-color: rgba(255, 255, 255, 0.96) !important; /* Clear solid light background */
   border-color: var(--border-color) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08) !important;
 }
 
-html.light .bg-zinc-950\/20 {
-  background-color: rgba(255, 255, 255, 0.6) !important;
+/* Force dark charcoal (zinc-700) on all description and list-item texts inside modals */
+html.light dialog .text-zinc-300,
+html.light dialog .text-zinc-400 {
+  color: #3f3f46 !important; /* Premium high-contrast readable text */
 }
 
-/* Back button navigation (Used in: marketing.astro, software.astro) */
-html.light nav a {
-  background-color: rgba(255, 255, 255, 0.6) !important;
-  border-color: var(--border-color) !important;
-  color: var(--text-muted) !important;
-}
-html.light nav a:hover {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  border-color: #a8a29e !important;
+/* Ensure headings remain fully dark */
+html.light dialog h2,
+html.light dialog h3 {
   color: var(--text-main) !important;
 }
 
+/* Soften the highlighted quote/description box underlay in light mode */
+html.light dialog .bg-blue-600\/5,
+html.light dialog .bg-orange-600\/5 {
+  background-color: rgba(59, 130, 246, 0.06) !important; /* Soft, readable underlay */
+  border-left-color: #2563eb !important;
+}
+
+/* Re-style close modal buttons to look clean and integrated on light layouts */
+html.light dialog .close-modal {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-main) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+html.light dialog .close-modal:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
 /* ─────────────────────────────────────────────────────────────────────────────
    5. COMPONENT-SPECIFIC STYLES
    ────────────────────────────────────────────────────────────────────────── */
