@@ -140,7 +140,7 @@ main > section {
   }
 }
 .animate-bob {
-  animation: bob 3.5s ease-in-out infinite;
+  animation: bob 3s ease-in-out infinite;
 }
 
 /* 2. Trust Bar Border Glow Pulse (Dark Mode) */

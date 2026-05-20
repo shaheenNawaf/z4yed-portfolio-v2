@@ -1,6 +1,6 @@
 /*
  * Coordinates home page interactions including structural reveal
- * animations, stats counter ticking, and active panels.
+ * animations, stats counter ticking, active panels, and native scroll peeking.
  */
 
 // Employs an IntersectionObserver to show page sections smoothly as they scroll in
@@ -75,11 +75,40 @@ const initTabs = () => {
   );
 };
 
+// Performs a gentle, native scroll down and up on page load to reveal the career section
+const initScrollPeek = () => {
+  // Guard rail: If the recruiter manually scrolls immediately, cancel the automatic peek
+  if (window.scrollY > 10) return;
+
+  setTimeout(() => {
+    // Double check guard rail before starting scroll down
+    if (window.scrollY > 10) return;
+
+    // Smoothly scroll down by 400px to fully expose the timeline
+    window.scrollTo({
+      top: 400,
+      behavior: "smooth",
+    });
+
+    // Wait for scroll down to settle, then smoothly scroll back to top
+    setTimeout(() => {
+      // Guard rail: If the user took over and scrolled further, do not pull them back up
+      if (window.scrollY > 500 || window.scrollY < 200) return;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 1200); // Duration to hold view of the career section
+  }, 500); // Brief initial load delay
+};
+
 // Unique index initialization entry point
 const initIndex = () => {
   initReveal();
   initCountUp();
   initTabs();
+  initScrollPeek(); // Invokes the native scroll peek on load
 };
 
 if (document.readyState === "loading") {
@@ -89,5 +118,4 @@ if (document.readyState === "loading") {
 }
 document.addEventListener("astro:after-swap", initIndex);
 
-// Force TypeScript to treat this file as an isolated module
 export {};
