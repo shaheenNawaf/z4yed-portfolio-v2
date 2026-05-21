@@ -420,9 +420,9 @@ export const experiences: Experience[] = [
     color: '#f97316',
     description: 'Kept running costs down while ensuring a strict-4:1 ROAS.',
     details: [
-      'Built a Telegram community from 0 to 1,000 active members in 2 weeks as a retention channel.',
-      'Navigated CICC regulatory changes by pivoting strategy from acquisition to community-building.',
-      'Structured macro-influencer contracts with milestone-based payments, maintaining a 4:1 ROAS. (Pictured below)',
+      'Deployed a rapid-scale multi-channel campaign playbook across email, SMS, push notiﬁcations, and community platforms, driving $355K in transaction volume and $100K in user acquisition revenue while building a Telegram retention channel from 0 to 1,000 members in 2 weeks.',
+      'Rapidly identified and responded to an emerging market risk by shifting campaign focus from acquisition to retention, recovering monthly transaction volume to $95K with minimal revenue disruption',
+      'Coordinated campaign asset delivery, payment scheduling, and KPI milestone tracking across macro-creator partnerships (1M+ followers), maintaining predictable spend and a 4:1 campaign ROAS throughout.',
     ],
     gallery: [
       '/yohoho/initial-contracts.jpg',
@@ -439,7 +439,7 @@ export const experiences: Experience[] = [
     color: '#B5F916',
     description: 'Directed rapid-scale influencer recruitment and social expansion, driving $355K in bet volume.',
     details: [
-      'Applied a strict kill-or-scale framework to audit the existing portfolio, cutting underperforming flat-fee partners and restructuring 23 partnerships (8M+ followers) into hybrid CPA deals. This reallocated spend to pure conversion-focused creators, capping costs at 25% of revenue per partner and sustaining a validated 4:1 ROAS.',
+      'Audited and restructured 23 campaign partnerships into performance-based models, reallocating spend toward conversion-focused creators and capping costs at 25% of revenue per partner while sustaining a 4:1 ROAS.',
       'Drove a record $133K transaction volume and $46K deposit volume in a single month (September 2025) by launching a Partner Referral Program, scaling the network to 10+ CPA-only micro-influencers to drive down overall Customer Acquisition Cost (CAC).',
       'Engineered an automated onboarding pipeline and centralized document tracking system using templated workflows, cutting administrative bottlenecks and reducing partner activation time from 14 days to 3 days (a 78% reduction).',
     ],
@@ -481,8 +481,9 @@ export const experiences: Experience[] = [
     color: '#3b82f6',
     description: 'Scaled direct-to-consumer marketing communities through Facebook and Viber',
     details: [
-      'Rebuilt a 12,000-member Facebook community with 30-40% active engagement after platform strikes.',
-      'Produced weekly tournament shows that pushed betting activity from 2% to 20% during peak LCK/Worlds events.',
+      'Built and scaled two Facebook communities using the same content playbook after the ﬁrst 22,000-member group was shut down by Meta, rebuilding to 12,000 members and sustaining 30 to 40% active engagement across both.',
+      'Planned and executed weekly campaign activations tied to key cultural moments, coordinating content scheduling, audience targeting, and engagement tracking — pushing platform activity from 2% to 20% during peak events.',
+      'Managed lifecycle engagement campaigns, including exclusive offer drops and re-engagement sequences across Viber (1,200 members), driving repeat user activation.',
       'Launched "Bring Me" activations that accelerated KYC completion through recurring content formats.',
     ],
     gallery: [

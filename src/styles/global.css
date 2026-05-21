@@ -78,6 +78,7 @@ body::before {
 /* ─────────────────────────────────────────────────────────────────────────────
    2. DIALOG & MODAL OVERLAYS (Used in: experience_card, marketing_card, project_card)
    ────────────────────────────────────────────────────────────────────────── */
+
 dialog {
   position: fixed !important;
   inset: 0 !important;
@@ -110,6 +111,28 @@ main > section {
   transition: all 0.8s ease-out;
 }
 
+/* === MODAL TEXT COLOR SAFETY OVERRIDES (Ensures perfect Dark/Light contrast) === */
+
+/* 1. Dark Mode (Default) Modal Text Colors */
+dialog .text-zinc-300 {
+  color: #d4d4d8 !important; /* High-contrast light silver-grey */
+}
+dialog .text-zinc-400 {
+  color: #a1a1aa !important; /* High-contrast light grey */
+}
+
+dialog p.border-l-4 {
+  color: #d4d4d8 !important; 
+}
+
+/* 2. Light Mode Modal Text Colors (Only active when html.light class is present) */
+html.light dialog .text-zinc-300 {
+  color: #3f3f46 !important; /* High-contrast dark charcoal */
+}
+html.light dialog .text-zinc-400 p.border-l-4 {
+  color: #3f3f46 !important; /* High-contrast dark charcoal */
+}
+
 /* Keyframes for modal and layout fade transitions */
 @keyframes reveal {
   from { opacity: 0; transform: translateY(30px); }
@@ -125,7 +148,6 @@ main > section {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 /* ─────────────────────────────────────────────────────────────────────────────
    3. SYNCHRONIZED TIMELINE ANIMATIONS (Used in: index.astro)
    ────────────────────────────────────────────────────────────────────────── */

@@ -10,18 +10,27 @@ interface Props {
   liveUrl?: string;
   repoUrl?: string;
   media?: {
-    type: 'video' | 'image';
+    type: "video" | "image";
     url: string;
     thumbnail?: string;
   };
 }
 
-const { id, title, date, role, color, tags = [], description, media, liveUrl, repoUrl } = Astro.props;
+const {
+  id,
+  title,
+  date,
+  role,
+  color,
+  tags = [],
+  description,
+  media,
+  liveUrl,
+  repoUrl,
+} = Astro.props;
 
-// Resolve card thumbnail — same logic as marketing_card
-const cardImage = media?.type === 'video' && media.thumbnail
-  ? media.thumbnail
-  : media?.url;
+const cardImage =
+  media?.type === "video" && media.thumbnail ? media.thumbnail : media?.url;
 ---
 
 <!-- ─── CARD ──────────────────────────────────────────────────────────────── -->
@@ -29,45 +38,83 @@ const cardImage = media?.type === 'video' && media.thumbnail
   class="group bg-zinc-950/40 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:border-blue-500/50 hover:-translate-y-1 shadow-xl"
   data-modal-id={id}
 >
-  <!-- Thumbnail / color block -->
-  <div class="aspect-video w-full relative overflow-hidden" style={`background-color: ${color}18`}>
-    {media?.type === 'video' && (
-      <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors z-10">
-        <div class="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-xl group-hover:scale-110 transition-transform">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
+  <div
+    class="aspect-video w-full relative overflow-hidden"
+    style={`background-color: ${color}18`}
+  >
+    {
+      media?.type === "video" && (
+        <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors z-10">
+          <div class="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-xl group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
-    {cardImage ? (
-      <img
-        src={cardImage}
-        alt={title}
-        class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
-      />
-    ) : (
-      <!-- No media: solid color fill with a subtle grid pattern -->
-      <div class="absolute inset-0" style={`background-color: ${color}22`}>
-        <div class="absolute inset-0 opacity-20"
-             style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 20px 20px;"></div>
-      </div>
-    )}
+    {
+      cardImage ? (
+        /* Wrapped inside relative image protection container with vector watermark overlay */
+        <div class="relative w-full h-full overflow-hidden protected-image select-none">
+          <img
+            src={cardImage}
+            alt={title}
+            class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+          />
 
-    {/* Date badge — mirrors marketing_card's results badge, blue instead of orange */}
-    <div class="badge-software absolute top-4 left-4 z-20 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tighter shadow-2xl">
+          {/* SVG Watermark overlay */}
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-20">
+            <svg
+              class="w-3/4 h-auto"
+              viewBox="0 0 200 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <text
+                x="50%"
+                y="50%"
+                dominant-baseline="middle"
+                text-anchor="middle"
+                font-family="monospace"
+                font-size="7"
+                fill="#ffffff"
+                font-weight="bold"
+                letter-spacing="2"
+              >
+                property of shaheen al adwani
+              </text>
+            </svg>
+          </div>
+        </div>
+      ) : (
+        <div class="absolute inset-0" style={`background-color: ${color}22`}>
+          <div
+            class="absolute inset-0 opacity-20"
+            style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 20px 20px;"
+          />
+        </div>
+      )
+    }
+
+    <div
+      class="absolute top-4 left-4 z-20 bg-blue-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tighter shadow-2xl"
+    >
       {date}
     </div>
   </div>
 
-  <!-- Card body -->
   <div class="p-6">
     <div class="mb-4">
-      <h3 class="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors tracking-tight">
+      <h3
+        class="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors tracking-tight"
+      >
         {title}
       </h3>
-      <p class="text-blue-500 text-xs font-medium uppercase tracking-widest mt-1">
+      <p
+        class="text-blue-500 text-xs font-medium uppercase tracking-widest mt-1"
+      >
         {role}
       </p>
     </div>
@@ -76,17 +123,17 @@ const cardImage = media?.type === 'video' && media.thumbnail
       {description}
     </p>
 
-    <!-- Tags — mirrors deliverables row -->
     <div class="flex flex-wrap gap-2">
-      {tags.map((tag: string) => (
-        <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-800 px-2 py-1 rounded bg-zinc-950/50">
-          {tag}
-        </span>
-      ))}
+      {
+        tags.map((tag: string) => (
+          <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest border border-zinc-800 px-2 py-1 rounded bg-zinc-950/50">
+            {tag}
+          </span>
+        ))
+      }
     </div>
   </div>
 </div>
-
 
 <!-- ─── MODAL ─────────────────────────────────────────────────────────────── -->
 <dialog
@@ -100,102 +147,170 @@ const cardImage = media?.type === 'video' && media.thumbnail
       ✕
     </button>
 
-    <!-- Media header -->
-    <div class="w-full bg-black aspect-video relative flex items-center justify-center shrink-0 border-b border-zinc-800">
-      {media ? (
-        media.type === 'video' ? (
-          <iframe
-            data-src={media.url}
-            src=""
-            class="w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          />
+    <div
+      class="w-full bg-black aspect-video relative flex items-center justify-center shrink-0 border-b border-zinc-800"
+    >
+      {
+        media ? (
+          media.type === "video" ? (
+            <iframe
+              data-src={media.url}
+              src=""
+              class="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          ) : (
+            /* Wrapped inside relative image protection container with vector watermark overlay */
+            <div class="relative w-full h-full overflow-hidden protected-image select-none">
+              <img
+                src={media.url}
+                alt={title}
+                class="w-full h-full object-cover"
+              />
+
+              {/* SVG Watermark overlay */}
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-20">
+                <svg
+                  class="w-3/4 h-auto"
+                  viewBox="0 0 200 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <text
+                    x="50%"
+                    y="50%"
+                    dominant-baseline="middle"
+                    text-anchor="middle"
+                    font-family="monospace"
+                    font-size="7"
+                    fill="#ffffff"
+                    font-weight="bold"
+                    letter-spacing="2"
+                  >
+                    property of shaheen al adwani
+                  </text>
+                </svg>
+              </div>
+            </div>
+          )
         ) : (
-          <img src={media.url} alt={title} class="w-full h-full object-cover" />
+          <div
+            class="w-full h-full flex items-center justify-center"
+            style={`background-color: ${color}22`}
+          >
+            <div
+              class="opacity-20"
+              style="position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);background-size:24px 24px;"
+            />
+            <span class="font-mono text-zinc-600 text-xs uppercase tracking-widest relative z-10">
+              No preview available
+            </span>
+          </div>
         )
-      ) : (
-        <div class="w-full h-full flex items-center justify-center" style={`background-color: ${color}22`}>
-          <div class="opacity-20"
-               style="position:absolute;inset:0;background-image:radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);background-size:24px 24px;"></div>
-          <span class="font-mono text-zinc-600 text-xs uppercase tracking-widest relative z-10">No preview available</span>
-        </div>
-      )}
+      }
     </div>
 
-    <!-- Modal body -->
     <div class="p-8 md:p-12">
-      <!-- Title + date badge row -->
-      <div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-10">
+      <div
+        class="flex flex-col md:flex-row justify-between items-start gap-6 mb-10"
+      >
         <div class="flex-1">
-          <h2 class="text-3xl md:text-4xl font-semibold text-white tracking-tighter mb-2 leading-tight">
+          <h2
+            class="text-3xl md:text-4xl font-semibold text-white tracking-tighter mb-2 leading-tight"
+          >
             {title}
           </h2>
           <p class="text-blue-500 font-bold uppercase tracking-[0.2em] text-xs">
             {role}
           </p>
         </div>
-        <!-- Date — mirrors marketing_card's Outcome badge -->
-        <div class="bg-blue-600/10 border border-blue-500/20 p-4 rounded-2xl min-w-[140px] text-center">
-          <span class="text-[10px] text-blue-500/70 font-bold uppercase block mb-1 tracking-widest">
+        <div
+          class="bg-blue-600/10 border border-blue-500/20 p-4 rounded-2xl min-w-[140px] text-center"
+        >
+          <span
+            class="text-[10px] text-blue-500/70 font-bold uppercase block mb-1 tracking-widest"
+          >
             Shipped
           </span>
           <span class="text-xl font-bold text-white">{date}</span>
         </div>
       </div>
 
-      <!-- Description + tags panel — mirrors Strategy & Execution / Deliverables -->
       <div class="grid md:grid-cols-3 gap-10 mb-12">
         <div class="md:col-span-2">
-          <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">
+          <h4
+            class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4"
+          >
             Project Overview
           </h4>
           <p class="text-base leading-relaxed text-zinc-400">
             {description}
           </p>
         </div>
-        <div class="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50 h-fit">
-          <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">
+        <div
+          class="bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50 h-fit"
+        >
+          <h4
+            class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4"
+          >
             Stack & Tags
           </h4>
           <ul class="space-y-3">
-            {tags.map((tag: string) => (
-              <li class="text-xs text-zinc-400 flex items-start gap-3">
-                <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 shrink-0" />
-                {tag}
-              </li>
-            ))}
+            {
+              tags.map((tag: string) => (
+                <li class="text-xs text-zinc-400 flex items-start gap-3">
+                  <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 shrink-0" />
+                  {tag}
+                </li>
+              ))
+            }
           </ul>
         </div>
       </div>
 
-      <!-- Live / repo links — software-specific, no marketing equivalent -->
-      {(liveUrl || repoUrl) && (
-        <div class="border-t border-zinc-800 pt-8 flex flex-wrap gap-3">
-          {liveUrl && liveUrl.length > 0 && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition-all hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              Visit Live Site
-            </a>
-          )}
-          {repoUrl && repoUrl.length > 0 && (
-            <a
-              href={repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl text-sm font-semibold transition-colors active:scale-95"
-            >
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-              View Code
-            </a>
-          )}
-        </div>
-      )}
+      {
+        (liveUrl || repoUrl) && (
+          <div class="border-t border-zinc-800 pt-8 flex flex-wrap gap-3">
+            {liveUrl && liveUrl.length > 0 && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition-all hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+                Visit Live Site
+              </a>
+            )}
+            {repoUrl && repoUrl.length > 0 && (
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl text-sm font-semibold transition-colors active:scale-95"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                </svg>
+                View Code
+              </a>
+            )}
+          </div>
+        )
+      }
     </div>
   </div>
 </dialog>

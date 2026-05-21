@@ -1,14 +1,14 @@
 /*
- * Global Interactions: Controls site-wide modals, theme toggling logic,
- * and the floating dynamic CTA sticky bar.
+ * Global Scripts: Manages modal dialogues, theme toggle syncing, 
+ * image-security, and the floating sticky CTA banner.
  */
 
-// Controls modal displaying logic, video lifecycle pauses, and backdrop lockdowns
+// Handles showing and hiding modals, as well as pausing running media on close
 const setupModals = () => {
   const modalTriggers = document.querySelectorAll('[data-modal-id]');
   const dialogs = document.querySelectorAll('dialog') as NodeListOf<HTMLDialogElement>;
 
-  // Halts playing audio/video feeds within modals upon closing
+  // Halts video playbacks to avoid background audio when closing a modal
   const stopVideo = (modal: HTMLDialogElement) => {
     const iframe = modal.querySelector('iframe');
     if (iframe) iframe.src = '';
@@ -17,7 +17,7 @@ const setupModals = () => {
     if (video) { video.pause(); video.currentTime = 0; }
   };
 
-  // Maps click listeners to launch designated dialog cards
+  // Registers click events to open specific dialog elements
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', () => {
       const modalId = trigger.getAttribute('data-modal-id');
@@ -35,7 +35,7 @@ const setupModals = () => {
     });
   });
 
-  // Closes dialog views if close components inside are clicked
+  // Registers handlers for closing active dialogs via close buttons
   document.querySelectorAll('.close-modal').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -47,7 +47,7 @@ const setupModals = () => {
     });
   });
 
-  // Closes modal dialog boxes when clicking elements outside the modal frame boundary
+  // Closes the modal dialogue when clicking outside its bounds or pressing Escape
   dialogs.forEach(dialog => {
     dialog.addEventListener('close', () => {
       document.body.style.overflow = 'auto';
@@ -63,7 +63,7 @@ const setupModals = () => {
   });
 };
 
-// Shows or hides the sticky floating bottom bar using IntersectionObserver on the trigger
+// Displays or hides the bottom floating contact CTA based on scroll position
 const setupStickyBar = () => {
   const stickyBar = document.getElementById('sticky-cta');
   const heroTrigger = document.getElementById('hero-trigger');
@@ -88,7 +88,7 @@ const setupStickyBar = () => {
   observer.observe(heroTrigger);
 };
 
-// Controls step navigation between elements inside modals using keys or relative targets
+// Manages keyboard navigation (Arrow keys and Escape) within gallery views and modals
 const setupGalleryNav = () => {
   const navButtons = document.querySelectorAll('[data-nav-to]');
   
@@ -148,18 +148,38 @@ const setupTheme = () => {
   });
 };
 
-// Initializes all structural UI control blocks
-const init = () => {
+// Prevents right-click context menu and drag downloads on site-wide protected image elements
+const setupImageProtection = () => {
+  document.addEventListener('contextmenu', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'IMG' || target.closest('.protected-image')) {
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('dragstart', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'IMG' || target.closest('.protected-image')) {
+      e.preventDefault();
+    }
+  });
+};
+
+// Initialization runner
+const initMain = () => {
   setupModals();
   setupStickyBar();
   setupGalleryNav();
   setupTheme();
+  setupImageProtection(); // Invokes global image security
 };
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', initMain);
 } else {
-    init();
+    initMain();
 }
 
-document.addEventListener('astro:after-swap', init);
+document.addEventListener('astro:after-swap', initMain);
+
+export {};
