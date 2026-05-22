@@ -139,7 +139,7 @@ const initPortalEgg = () => {
       "Hello and again welcome to the Aperture Science computer-aided enrichment center.",
       "The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak.",
       "Please note that we have added a consequence for failure. Any contact with the chamber floor will result in an unsatisfactory mark.",
-      "The cake is a lie. But Shaheen's full-stack architecture is 100% certified."
+      "The cake is a lie. But Shaheen's marketing experience and full-stack architecture is 100% certified."
     ];
 
     const selectedQuote = quotes[Math.floor(Math.random() * quotes.length)];
