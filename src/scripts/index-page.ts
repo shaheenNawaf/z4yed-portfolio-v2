@@ -14,7 +14,7 @@ const initReveal = () => {
           io.unobserve(e.target);
         }
       }),
-    { threshold: 0.08, rootMargin: "0px 0px -48px 0px" },
+    { threshold: 0.02, rootMargin: "0px 0px -48px 0px" }, // Lowered threshold to 0.02 for robust mobile compatibility
   );
   sections.forEach((el) => io.observe(el));
 };
@@ -75,32 +75,82 @@ const initTabs = () => {
   );
 };
 
-// Performs a gentle, native scroll down and up on page load to reveal the career section
+// Custom scroll physics rendering engine
+const customScrollTo = (
+  targetY: number,
+  duration: number,
+  easeType: "heavy" | "snap",
+  callback?: () => void
+) => {
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+
+  let activeAnimation = true;
+
+  // Kill scroll animation if user interacts or scrolls manually
+  const cancelScroll = () => {
+    activeAnimation = false;
+    window.removeEventListener("wheel", cancelScroll);
+    window.removeEventListener("touchmove", cancelScroll);
+  };
+
+  window.addEventListener("wheel", cancelScroll, { passive: true });
+  window.addEventListener("touchmove", cancelScroll, { passive: true });
+
+  const renderScroll = (currentTime: number) => {
+    if (!activeAnimation) return;
+
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    let position = 0;
+    if (easeType === "heavy") {
+      // Standard cubic ease-out for a smooth, luxury-deceleration glide
+      position = 1 - Math.pow(1 - progress, 3);
+    } else {
+      // Standard cubic ease-in-out for a fluid, seamless snap back
+      position = progress < 0.5 
+        ? 4 * progress * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    }
+
+    window.scrollTo(0, startY + distance * position);
+
+    if (progress < 1) {
+      requestAnimationFrame(renderScroll);
+    } else {
+      window.removeEventListener("wheel", cancelScroll);
+      window.removeEventListener("touchmove", cancelScroll);
+      if (callback) callback();
+    }
+  };
+
+  requestAnimationFrame(renderScroll);
+};
+
+// Performs a synchronized scroll peek utilizing custom physics on page load
 const initScrollPeek = () => {
-  // Guard rail: If the recruiter manually scrolls immediately, cancel the automatic peek
+  // Guard rail: Cancel if user already scrolled
   if (window.scrollY > 10) return;
 
   setTimeout(() => {
-    // Double check guard rail before starting scroll down
+    // Double check guard rail before starting
     if (window.scrollY > 10) return;
 
-    // Smoothly scroll down by 400px to fully expose the timeline
-    window.scrollTo({
-      top: 400,
-      behavior: "smooth",
+    // Step 1: Smooth luxury glide down by 280px (reliably triggers intersection fade-in)
+    customScrollTo(280, 1500, "heavy", () => {
+      
+      // Step 2: Hold still for 1.2 seconds to allow visual registration
+      setTimeout(() => {
+        // Guard rail: If user has taken over (scrolled deeper or back up), cancel return
+        if (window.scrollY > 330 || window.scrollY < 180) return;
+
+        // Step 3: Graceful, fluid return to top fold (1.2s)
+        customScrollTo(0, 1200, "snap");
+      }, 1200);
     });
-
-    // Wait for scroll down to settle, then smoothly scroll back to top
-    setTimeout(() => {
-      // Guard rail: If the user took over and scrolled further, do not pull them back up
-      if (window.scrollY > 500 || window.scrollY < 200) return;
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }, 1200); // Duration to hold view of the career section
-  }, 500); // Brief initial load delay
+  }, 1500); // Calibrated delay after page load completes
 };
 
 // Unique index initialization entry point
@@ -108,7 +158,7 @@ const initIndex = () => {
   initReveal();
   initCountUp();
   initTabs();
-  initScrollPeek(); // Invokes the native scroll peek on load
+  initScrollPeek();
 };
 
 if (document.readyState === "loading") {
