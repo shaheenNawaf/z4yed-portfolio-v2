@@ -46,7 +46,7 @@ export const shortBio = "Full-stack Software Engineer & Digital Growth Marketer"
 
 export const softwareSummary = "Computer Science graduate at Ateneo de Davao. I build full-stack applications with a focus on performance and real-world utility. My background in marketing taught me to build systems that don't just work, but actually drive business results.";
 
-export const marketingSummary = "In 4 months, I took a market's monthly transaction volume from under $4K to $355K. That's the short version. The longer one: 4+ years of growth marketing, 20+ structured creator partnerships, a 4:1 ROAS across every influencer I've onboarded, and a habit of building the systems behind the results — not just running the plays.";
+export const marketingSummary = "In 4 months, I scaled a market from under $4K to $133K in peak monthly transaction volume, with $355K in total volume across the campaign period. The longer version: 4+ years of growth marketing, 20+ structured creator partnerships, a 4:1 ROAS across every influencer I've onboarded, and a track record of building the systems behind the results, not just running the plays.";
 
 export const contact = {
   email: "contact.shaheenaladwani@gmail.com",
@@ -87,12 +87,18 @@ export const marketingSkills = [
   'Content Strategy & Briefing',
   'Community Building',
   'Campaign Analytics',
+  'A/B Testing & Creative Optimization',
+  'Content Calendar Management',
+  'User Segmentation & CRM',
+  'Cross-functional Stakeholder Management',
+  'Event-Based Campaign Planning',
+  'Agile/Scrum',
 ];
 
 
 export const toolStack = {
   technical: ['Cursor', 'VS Code', 'Postman', 'Android Studio', 'Firebase', 'Supabase', 'Docker', 'Bubble.IO', 'GoHighLevel', 'Wordpress'],
-  marketing: ['Meta Business Suite', 'Telegram', 'Figma', 'Canva', 'Notion', 'Airtable', 'HubSpot', 'Google Workspace', 'Viber'],
+  marketing: ['Meta Business Suite', 'Telegram', 'Figma', 'Canva', 'Photoshop', 'Miro', 'Notion', 'Airtable', 'HubSpot', 'Google Workspace', 'Viber', 'Trello', 'Monday.com', 'Jira', 'Confluence', 'Slack', 'Microsoft Teams'],
   ai: ['Claude', 'ChatGPT', 'Gemini', 'Grok', 'n8n', 'Prompt Engineering'],
 };
 
@@ -105,14 +111,14 @@ export const projects: Project[] = [
     date: '2021 - 2024',
     role: 'Community Marketing Specialist',
     color: '#3b82f6',
-    results: '83% Peak DAU | 100% KYC-Verified',
+    results: '12-16K Peak DAU | 100% KYC-Verified',
     deliverables: [
       'KYC-Gated Onboarding Funnel',
       'Community Resilience Strategy',
       'D2C Retention Architecture',
       'High-Intent Audience Filtering'
     ],
-    description: "Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members with a 68% Daily Active User (DAU) rate. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while optimizing engagement density to a peak 83% DAU—turning the community into Rivalry's most efficient retention and support channel.",
+    description: "Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members averaging 12,000-16,000 daily active users. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while maintaining 6,000-9,000 daily active users — turning the community into Rivalry's most efficient retention and support channel.",
     media: { type: 'image', url: '/rivalry/new-tribe.jpg' },
     gallery: [
 
@@ -188,7 +194,7 @@ export const projects: Project[] = [
       'High-Barrier UA Funnel',
       'B2B Partnership Management'
     ],
-    description: 'Orchestrated an Offline-to-Online (O2O) acquisition strategy during the KuyaNic TI Watch Party. I designed a high-barrier entry funnel where attendees could only access Rivalry perks by joining the Tribe and completing a 300PHP deposit. This experiential activation resulted in 1,000+ new high-value, verified users within a 5-day window. I also managed the on-site influencer meet-and-greets and designed all physical brand assets.',
+    description: 'Took full ownership of the KuyaNic TI Watch Party as the primary on-ground lead, stepping in to manage the event end-to-end from planning through execution. Designed and produced all physical brand assets including GFX photo frames and the Rivalry photobooth, coordinated on-site influencer schedules and meet-and-greets, delegated roles across the activation team, and built an IRL prize-claim funnel gated by Tribe membership and a deposit requirement, converting walk-in attendees to verified depositors on the spot. The activation resulted in 1,000+ new verified users within 5 days at a 60-70% on-site conversion rate.',
     media: {
       type: 'video',
       url: "https://res.cloudinary.com/dvjnueacb/video/upload/q_auto/f_auto/v1778967295/AQOQnj--KjMtP0_opa50TV397WOlJ2f3JPLZ1XnkuRzH9XPvHHi-c2iwg9QGWYfExp0fKZGXd5-JwCYObWXQ0J2T-DE3MtwILRfz14cL2B5vsw_itgrfd.mp4",
@@ -420,9 +426,9 @@ export const experiences: Experience[] = [
     color: '#f97316',
     description: 'Kept running costs down while ensuring a strict-4:1 ROAS.',
     details: [
-      'Deployed a rapid-scale multi-channel campaign playbook across email, SMS, push notiﬁcations, and community platforms, driving $355K in transaction volume and $100K in user acquisition revenue while building a Telegram retention channel from 0 to 1,000 members in 2 weeks.',
-      'Rapidly identified and responded to an emerging market risk by shifting campaign focus from acquisition to retention, recovering monthly transaction volume to $95K with minimal revenue disruption',
-      'Coordinated campaign asset delivery, payment scheduling, and KPI milestone tracking across macro-creator partnerships (1M+ followers), maintaining predictable spend and a 4:1 campaign ROAS throughout.',
+      'Generated $355K in transaction volume and $100K in user acquisition revenue across 4 months by running coordinated campaigns across email, SMS, push, influencers, and Telegram, scaling the retention channel from 0 to 1,000 members in 2 weeks.',
+      'Grew monthly transaction volume to a record $133K from a $72.8K August low by pivoting campaign focus from acquisition to retention at first sign of market volatility, rebounding 83% in a single month.',
+      'Maintained a 4:1 ROAS across macro-creator partnerships (1M+ followers) by coordinating campaign asset delivery, payment scheduling, and KPI milestone tracking throughout the campaign period.',
     ],
     gallery: [
       '/yohoho/initial-contracts.jpg',
@@ -439,9 +445,9 @@ export const experiences: Experience[] = [
     color: '#B5F916',
     description: 'Directed rapid-scale influencer recruitment and social expansion, driving $355K in bet volume.',
     details: [
-      'Audited and restructured 23 campaign partnerships into performance-based models, reallocating spend toward conversion-focused creators and capping costs at 25% of revenue per partner while sustaining a 4:1 ROAS.',
-      'Drove a record $133K transaction volume and $46K deposit volume in a single month (September 2025) by launching a Partner Referral Program, scaling the network to 10+ CPA-only micro-influencers to drive down overall Customer Acquisition Cost (CAC).',
-      'Engineered an automated onboarding pipeline and centralized document tracking system using templated workflows, cutting administrative bottlenecks and reducing partner activation time from 14 days to 3 days (a 78% reduction).',
+      'Sustained a 4:1 ROAS while capping partner costs at 25% of generated revenue by restructuring 23 creator partnerships into performance-based models.',
+      'Drove a record $133K transaction volume and $46K deposit volume in September 2025 by launching a Partner Referral Program that scaled the network to 10+ CPA-only partners, reducing overall CAC.',
+      'Reduced partner activation time by 78% (14 days to 3 days) by building an automated onboarding pipeline with templated workflows and centralized document tracking.',
     ],
     gallery: [
       '/yohoho/yohoho-1.png'
@@ -458,10 +464,11 @@ export const experiences: Experience[] = [
     color: '#ef4444',
     description: 'Managed end-to-end lifecycle influencer marketing campaigns and management for 10 VIP influencers (total 37M+ followers) bringing in 10M USD in Monthly Deposits.',
     details: [
-      'Spearheaded the B2B pitch for the Tier One Entertainment deal, birthing the "Blacklist Rivalry" Dota 2 team.',
-      'Achieved 40% growth in affiliate-driven revenue and 15-20% QoQ growth in FTDs.',
-      'Coordinated co-branded activations with agencies like CBZN, achieving 60-70% conversion rates.',
-      'Crafted 40+ Content Briefs and Managed day-to-day executions of creator campaigns which covers postings, video content, livestreams, and client-produced content (e.g. PighaTI - our DOTA TI Companion series last 2022; linked below).',
+      'Closed the Tier One Entertainment B2B deal by leading the pitch process, securing the Blacklist Rivalry Dota 2 partnership.',
+      'Grew affiliate-driven revenue 40% and new user conversions 15-20% QoQ by managing full campaign lifecycle for 10 VIP partners (37M+ combined followers).',
+      'Converted 60-70% of 500+ watch party attendees to verified depositors on-site by running full on-ground execution of the KuyaNic and V33Wise activations: GFX production, photobooth setup, influencer coordination, and a live prize-claim/KYC funnel.',
+      'Processed $240K+ in agency spend across 20 invoices by drafting contracts, managing retainer and project-based billing for CBZN and LuponWXC, and reconciling each payment against contract terms and performance bonuses.',
+      'Wrote 40+ content briefs and managed daily execution across posts, video, and livestreams, contributing to consistent 5-9% MoM performance gains across the partner portfolio.',
     ],
     gallery: [
       '/rivalry/rivalry-tribe.jpg',
@@ -481,10 +488,10 @@ export const experiences: Experience[] = [
     color: '#3b82f6',
     description: 'Scaled direct-to-consumer marketing communities through Facebook and Viber',
     details: [
-      'Built and scaled two Facebook communities using the same content playbook after the ﬁrst 22,000-member group was shut down by Meta, rebuilding to 12,000 members and sustaining 30 to 40% active engagement across both.',
-      'Planned and executed weekly campaign activations tied to key cultural moments, coordinating content scheduling, audience targeting, and engagement tracking — pushing platform activity from 2% to 20% during peak events.',
-      'Managed lifecycle engagement campaigns, including exclusive offer drops and re-engagement sequences across Viber (1,200 members), driving repeat user activation.',
-      'Launched "Bring Me" activations that accelerated KYC completion through recurring content formats.',
+      'Rebuilt a 22,000-member Facebook community to 12,000 members after a platform strike by replicating the same content playbook into a new group, sustaining 30-40% active engagement throughout.',
+      'Pushed platform activity from 2% to 20% during peak events by running weekly campaign activations tied to cultural moments, coordinating content scheduling, audience targeting, and engagement tracking.',
+      'Ran lifecycle offer drops and re-engagement sequences across a 1,200-member Viber channel, with limited code drops of 200 claimed in under 60 seconds per release.',
+      'Increased Daily Deposit Amount by 5-8% per activation window by running recurring "Bring Me" deposit campaigns gated by minimum bet requirements, with the League of Legends activation hitting the 8% peak.',
     ],
     gallery: [
       '/rivalry/new-tribe.jpg',
@@ -505,9 +512,9 @@ export const experiences: Experience[] = [
     color: '#643BF6',
     description: "Created a proper lead-generating and end-to-end management pipeline for Rivalry's initial PH Affiliate Network.",
     details: [
-      "Built Rivalry's initial Philippine affiliate and micro-influencer network from scratch (20+ partners across Valorant, Dota 2, CS2, and League of Legends), establishing the early-stage user acquisition foundation that subsequent campaigns were layered on top of.",
-      'Introduced a CAC-obsessed, performance-based spend allocation model against First-Time Depositor (FTD) and revenue data from the outset, setting the data-first marketing culture that contributed to 15-20% QoQ FTD growth.',
-      'Created and ran Rivalry Philippines initial campaigns (e.g. giveaways, local tournaments, livestream events) that bolstered the brands visibility across key influencers and micro-influencers communities. (Pictured below)',
+      "Built Rivalry's Philippine affiliate network from zero to 20+ partners across Valorant, Dota 2, CS2, and League of Legends through manual cold outreach, setting the onboarding and tracking framework all subsequent campaigns ran on.",
+      'Established performance-based spend allocation tied to conversion and revenue data from the first campaign, building the foundation that sustained 15-20% QoQ growth over 3 years.',
+      "Ran Rivalry Philippines' first campaigns including giveaways, local tournaments, and livestream events, establishing early brand presence across Valorant, Dota 2, and League of Legends influencer communities.",
     ],
     gallery: [
       '/rivalry/initial-edits.jpg',
