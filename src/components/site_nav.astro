@@ -1,0 +1,139 @@
+---
+import ThemeToggle from "./theme_toggle.astro";
+import { hub, name, contact } from "../data/resume";
+
+interface Props {
+  active?: string;
+}
+
+const { active } = Astro.props;
+
+const links: { id: string; label: string }[] = [
+  { id: "work", label: "Work" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "why", label: "Why me" },
+];
+---
+
+<header
+  id="site-nav"
+  class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-4xl"
+>
+  <div
+    class="floating-glass rounded-2xl overflow-visible relative group transition-colors"
+  >
+    <!-- Dual-accent hover sheen -->
+    <div
+      class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style="background-image: linear-gradient(to right, color-mix(in srgb, var(--mkt) 35%, transparent), transparent 50%, color-mix(in srgb, var(--sw) 35%, transparent));"
+    >
+    </div>
+
+    <div
+      class="relative z-10 flex items-center gap-2.5 md:gap-3 p-2 md:p-2.5"
+    >
+      <a
+        href="/"
+        class="flex items-center gap-2.5 shrink-0 group/brand"
+        aria-label={`${name} - home`}
+      >
+        <img
+          src={contact.profileImage}
+          alt={name}
+          class="w-8 h-8 md:w-11 md:h-11 rounded-xl object-cover border hairline shadow-sm"
+        />
+        <span
+          class="hidden sm:block font-grotesk text-sm md:text-base font-extrabold text-[color:var(--text)] tracking-tight leading-none"
+        >
+          {name.split(" ")[0]}
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-0.5 ml-1">
+        {
+          links.map((l) => (
+            <a
+              href={`#${l.id}`}
+              class:list={[
+                "px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors",
+                active === l.id
+                  ? "text-[color:var(--text)] bg-[color:var(--card-bg-2)]"
+                  : "muted hover:text-[color:var(--text)]",
+              ]}
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex-1" />
+
+      <div
+        class="hidden md:flex items-center gap-1 border-l hairline pl-2 md:pl-3"
+      >
+        <a
+          href="/software"
+          class="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold uppercase tracking-wider transition-colors accent-software hover:bg-[color:var(--sw-soft)]"
+        >
+          Engineering
+        </a>
+        <a
+          href="/marketing"
+          class="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold uppercase tracking-wider transition-colors accent-marketing hover:bg-[color:var(--mkt-soft)]"
+        >
+          Growth
+        </a>
+      </div>
+
+      <!-- Mobile anchor menu -->
+      <details class="lg:hidden relative">
+        <summary
+          class="panel rounded-lg p-2 cursor-pointer list-none flex items-center text-[color:var(--text-muted)] hover:text-[color:var(--text)] transition-colors"
+          aria-label="Open menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </summary>
+        <div
+          class="absolute right-0 top-full mt-2 floating-glass rounded-2xl p-2 w-44 flex flex-col gap-0.5"
+        >
+          {
+            links.map((l) => (
+              <a
+                href={`#${l.id}`}
+                class="px-3 py-2 rounded-lg text-sm font-medium muted hover:text-[color:var(--text)] hover:bg-[color:var(--card-bg-2)] transition-colors"
+              >
+                {l.label}
+              </a>
+            ))
+          }
+          <div class="h-px hairline my-1"></div>
+          <a
+            href="/software"
+            class="px-3 py-2 rounded-lg text-sm font-semibold accent-software hover:bg-[color:var(--sw-soft)] transition-colors"
+          >
+            Engineering →
+          </a>
+          <a
+            href="/marketing"
+            class="px-3 py-2 rounded-lg text-sm font-semibold accent-marketing hover:bg-[color:var(--mkt-soft)] transition-colors"
+          >
+            Growth →
+          </a>
+        </div>
+      </details>
+
+      <a
+        href="#contact"
+        class="track-btn px-3.5 py-2 md:px-4 rounded-lg text-[11px] md:text-[12px] font-bold uppercase tracking-wider transition-all active:scale-95 shrink-0"
+      >
+        {hub.ctaPrimary}
+      </a>
+
+      <ThemeToggle variant="inline" />
+    </div>
+  </div>
+</header>

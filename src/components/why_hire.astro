@@ -1,0 +1,47 @@
+---
+const points = [
+  "2 live SaaS products designed and built end-to-end.",
+  "$355K+ generated, 4:1 ROAS, 22K-member communities built.",
+  "One owner means faster decisions, less handoff, lower cost.",
+];
+---
+
+<section id="why" class="relative py-16 md:py-24">
+  <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <div class="flex items-center gap-3 mb-10">
+      <h2
+        class="font-grotesk text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--text)]"
+      >
+        Why hire one person who does both
+      </h2>
+      <div class="h-px flex-1 hairline"></div>
+    </div>
+
+    <div class="panel radius-card p-6 md:p-10">
+      <div class="grid md:grid-cols-[1fr_1fr] gap-8 md:gap-12 items-start">
+        <div>
+          <p
+            class="font-grotesk text-2xl md:text-3xl font-extrabold text-[color:var(--text)] tracking-tight leading-[1.2]"
+          >
+            Most engineers can build. Most marketers can grow.
+            <span class="bg-gradient-to-r from-[color:var(--mkt)] to-[color:var(--sw)] bg-clip-text text-transparent">I do both.</span>
+            I can take a product from design and code to launch and scale.
+          </p>
+        </div>
+        <ul class="space-y-4">
+          {
+            points.map((p) => (
+              <li class="flex items-start gap-3 text-[15px] muted leading-relaxed">
+                <span
+                  class="mt-2 w-1.5 h-1.5 rounded-full shrink-0"
+                  style={`background-color: var(--accent)`}
+                />
+                {p}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

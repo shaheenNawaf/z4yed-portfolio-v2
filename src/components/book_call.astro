@@ -1,0 +1,225 @@
+---
+import { contact, hub } from "../data/resume";
+
+interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  defaultInterest?: "hybrid" | "software" | "marketing";
+}
+
+const {
+  id = "book-call",
+  title = "Book a 15-min intro call",
+  subtitle = "Short form first. Then pick a time on Google Appointments.",
+  defaultInterest = "hybrid",
+} = Astro.props;
+
+const appointmentUrl = hub.appointmentUrl?.trim() ?? "";
+---
+
+<section
+  id={id}
+  class="zone-surface relative overflow-hidden p-8 md:p-10"
+  data-appointment-url={appointmentUrl}
+  data-contact-email={contact.email}
+>
+  <div
+    class="pointer-events-none absolute inset-0 opacity-40"
+    style="background: radial-gradient(ellipse 70% 60% at 50% 0%, var(--accent-soft), transparent 70%);"
+  >
+  </div>
+
+  <div class="relative z-10">
+    <div class="mb-6 md:mb-8 max-w-xl">
+      <h2
+        class="zone-heading font-grotesk text-2xl md:text-3xl font-extrabold tracking-tight"
+      >
+        {title}
+      </h2>
+      <p class="mt-2 muted text-sm leading-relaxed max-w-prose">
+        {subtitle}
+      </p>
+    </div>
+
+    <form id={`${id}-form`} class="grid gap-4 md:grid-cols-2" novalidate>
+      <div class="md:col-span-1">
+        <label class="book-label" for={`${id}-name`}>Name</label>
+        <input
+          id={`${id}-name`}
+          name="name"
+          type="text"
+          required
+          autocomplete="name"
+          class="book-field track-ring"
+          placeholder="Your name"
+        />
+      </div>
+
+      <div class="md:col-span-1">
+        <label class="book-label" for={`${id}-email`}>Work email</label>
+        <input
+          id={`${id}-email`}
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          class="book-field track-ring"
+          placeholder="you@company.com"
+        />
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="book-label" for={`${id}-interest`}>Hiring for</label>
+        <select
+          id={`${id}-interest`}
+          name="interest"
+          class="book-field track-ring"
+          required
+        >
+          <option value="hybrid" selected={defaultInterest === "hybrid"}
+            >Hybrid / either track</option
+          >
+          <option value="software" selected={defaultInterest === "software"}
+            >Software / product</option
+          >
+          <option value="marketing" selected={defaultInterest === "marketing"}
+            >Growth / marketing</option
+          >
+        </select>
+      </div>
+
+      <div class="md:col-span-2">
+        <label class="book-label" for={`${id}-note`}>Context (optional)</label>
+        <textarea
+          id={`${id}-note`}
+          name="note"
+          rows="3"
+          class="book-field track-ring resize-y min-h-[80px]"
+          placeholder="Role, timeline, or anything useful before the call"
+        ></textarea>
+      </div>
+
+      <div
+        class="md:col-span-2 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pt-1"
+      >
+        <button
+          type="submit"
+          id={`${id}-submit`}
+          class="track-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-[0.15em] transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          <span class="btn-label">{hub.ctaPrimary}</span>
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+        <p class="text-[11px] muted leading-snug max-w-xs">
+          {
+            appointmentUrl
+              ? "Opens Google Appointments after you submit."
+              : "Sends a structured email so we can schedule (add your Google Appointments link in config when ready)."
+          }
+        </p>
+      </div>
+
+      <p
+        id={`${id}-status`}
+        class="md:col-span-2 text-sm muted hidden"
+        role="status"
+        aria-live="polite"
+      >
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const bindBookForms = () => {
+    document.querySelectorAll("section[id][data-contact-email]").forEach((section) => {
+      const form = section.querySelector("form");
+      if (!form || form.dataset.bound === "true") return;
+      form.dataset.bound = "true";
+
+      const status = section.querySelector("[role='status']") as HTMLElement | null;
+      const appointmentUrl = (section as HTMLElement).dataset.appointmentUrl ?? "";
+      const contactEmail = (section as HTMLElement).dataset.contactEmail ?? "";
+      const submitBtn = form.querySelector("button[type='submit']") as HTMLButtonElement | null;
+      const label = submitBtn?.querySelector(".btn-label") as HTMLElement | null;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const name = String(data.get("name") ?? "").trim();
+        const email = String(data.get("email") ?? "").trim();
+        const interest = String(data.get("interest") ?? "hybrid");
+        const note = String(data.get("note") ?? "").trim();
+
+        if (!name || !email) {
+          if (status) {
+            status.classList.remove("hidden");
+            status.textContent = "Name and work email are required.";
+          }
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          if (status) {
+            status.classList.remove("hidden");
+            status.textContent = "Please enter a valid work email.";
+          }
+          return;
+        }
+
+        if (submitBtn) { submitBtn.disabled = true; if (label) label.textContent = "Sending..."; }
+
+        const subject = encodeURIComponent(
+          `Intro call request - ${interest} - ${name}`,
+        );
+        const body = encodeURIComponent(
+          [
+            `Name: ${name}`,
+            `Email: ${email}`,
+            `Interest: ${interest}`,
+            note ? `Note: ${note}` : null,
+            "",
+            "Sent from shaheen.works book-call form.",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        );
+
+        if (appointmentUrl) {
+          window.open(appointmentUrl, "_blank", "noopener,noreferrer");
+          window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+        } else {
+          window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+        }
+
+        if (status) {
+          status.classList.remove("hidden");
+          status.textContent = appointmentUrl
+            ? "Opening calendar and email draft. Pick a slot, then send if needed."
+            : "Opening your email client with the intro request.";
+        }
+        if (submitBtn) { submitBtn.disabled = false; if (label) label.textContent = "Book intro call"; }
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindBookForms);
+  } else {
+    bindBookForms();
+  }
+  document.addEventListener("astro:after-swap", bindBookForms);
+</script>

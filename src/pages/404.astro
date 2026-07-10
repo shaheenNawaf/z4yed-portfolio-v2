@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/layout.astro";
+import SiteNav from "../components/site_nav.astro";
+import StickyBar from "../components/sticky_bar.astro";
+import { name, contact, hub, resumes } from "../data/resume";
+---
+
+<BaseLayout
+  title={`Page not found · ${name}`}
+  description="The page you are looking for does not exist."
+  track="hub"
+  hideToggle={true}
+>
+  <SiteNav />
+
+  <main
+    id="main"
+    class="relative min-h-[80dvh] flex items-center justify-center px-5 md:px-8"
+  >
+    <div class="max-w-xl w-full text-center py-20">
+      <p
+        class="font-mono text-[10px] font-bold uppercase tracking-[0.35em] text-[color:var(--accent)] mb-4"
+      >
+        404
+      </p>
+      <h1
+        class="font-grotesk text-4xl md:text-5xl font-extrabold text-[color:var(--text)] tracking-tight leading-[1.1]"
+      >
+        Page not found
+      </h1>
+      <p
+        class="mt-5 muted text-base md:text-lg leading-relaxed max-w-md mx-auto"
+      >
+        The page you are looking for does not exist or has been moved. Pick a destination below.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/"
+          class="track-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-[0.15em] transition-all active:scale-[0.98] shadow-lg"
+        >
+          Back to home
+        </a>
+        <a
+          href={`https://${contact.linkedin}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="panel inline-flex items-center px-4 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+        >
+          LinkedIn
+        </a>
+        <a
+          href={resumes.software}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="panel inline-flex items-center px-4 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+        >
+          Resume
+        </a>
+      </div>
+
+      <div
+        class="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-mono uppercase tracking-widest muted"
+      >
+        <a
+          href="/software"
+          class="hover:text-[color:var(--text)] transition-colors"
+        >
+          Engineering
+        </a>
+        <span class="faint">/</span>
+        <a
+          href="/marketing"
+          class="hover:text-[color:var(--text)] transition-colors"
+        >
+          Growth
+        </a>
+        <span class="faint">/</span>
+        <a
+          href={`mailto:${contact.email}`}
+          class="hover:text-[color:var(--text)] transition-colors"
+        >
+          {contact.email}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <StickyBar
+    ctaText={hub.ctaPrimary}
+    contactEmail={contact.email}
+    linkedinUrl={contact.linkedin}
+    profileImage={contact.profileImage}
+    name={name}
+    statusText={hub.status}
+    resumeUrl={resumes.software}
+    ctaHref="/#contact"
+  />
+</BaseLayout>

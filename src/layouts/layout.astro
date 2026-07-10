@@ -6,20 +6,33 @@ interface Props {
   title: string;
   description?: string;
   hideToggle?: boolean;
+  /** Visual biome: hub (dual), software (lab), marketing (studio) */
+  track?: "hub" | "software" | "marketing";
 }
 
 const {
   title,
-  description = "Full-stack Software Engineer & Growth Marketer based in Davao, Philippines.",
+  description = "Full-stack Software Engineer & Growth Marketer based in Davao, Philippines. Remote-first SEA. Book an intro call.",
   hideToggle = false,
+  track = "hub",
 } = Astro.props;
 
 const siteUrl = "https://shaheen.works";
 const ogImage = `${siteUrl}/thumbnail.png`;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const selectionClass =
+  track === "marketing"
+    ? "selection:bg-orange-500/30"
+    : track === "software"
+      ? "selection:bg-blue-500/30"
+      : "selection:bg-blue-500/30";
 ---
 
-<html lang="en" class="antialiased selection:bg-blue-500/30">
+<html
+  lang="en"
+  class:list={["antialiased", selectionClass]}
+  data-track={track}
+>
   <head>
     <script src="../scripts/theme-init.ts"></script>
 
@@ -58,6 +71,8 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
   </head>
 
   <body class="min-h-screen font-sans relative transition-colors duration-300">
+    <a href="#main" class="skip-link">Skip to content</a>
+
     {!hideToggle && <ThemeToggle />}
 
     <slot />

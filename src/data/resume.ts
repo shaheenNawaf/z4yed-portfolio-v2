@@ -12,9 +12,13 @@ export interface Project {
   color: string;
   tags?: readonly string[];
   description: string;
-  media?: { type: 'video' | 'image'; url: string; thumbnail?: string};
+  media?: { type: 'video' | 'image'; url: string; thumbnail?: string };
   liveUrl?: string;
   repoUrl?: string;
+  problem?: string;
+  solution?: string;
+  impact?: string;
+  caseStudyHref?: string;
 }
 
 export interface Experience {
@@ -29,24 +33,26 @@ export interface Experience {
   details: readonly string[];
   gallery?: readonly string[];
   video?: string;
-}
-
-export interface CreativeAsset {
-  id: string;
-  title: string;
-  category: 'Graphic' | 'Brief' | 'Video Edit';
-  imageUrl: string;
+  tech?: readonly string[];
 }
 
 export const name = "Shaheen Al Adwani";
-export const pronouns = "he/him";
-export const shortBio = "Full-stack Software Engineer & Digital Growth Marketer";
 
+/** Conversion funnel copy + booking config */
+export const hub = {
+  headline: "I design, build, and ship software products, then run the growth systems that grow them.",
+  subtext:
+    "Full-stack engineer and growth operator. Two live SaaS products, $355K+ in campaign volume, 4:1 ROAS, 22K-member communities. Open to full-time roles and select freelance.",
+  status: "Open to full-time · Remote SEA",
+  ctaPrimary: "Book intro call",
+  appointmentUrl: "" as string,
+};
 
+export const softwareSummary =
+  "Computer Science graduate at Ateneo de Davao. I build full-stack applications with a focus on performance and real-world utility. My background in marketing taught me to build systems that don't just work, but actually drive business results.";
 
-export const softwareSummary = "Computer Science graduate at Ateneo de Davao. I build full-stack applications with a focus on performance and real-world utility. My background in marketing taught me to build systems that don't just work, but actually drive business results.";
-
-export const marketingSummary = "In 4 months, I scaled a market from under $4K to $133K in peak monthly transaction volume, with $355K in total volume across the campaign period. The longer version: 4+ years of growth marketing, 20+ structured creator partnerships, a 4:1 ROAS across every influencer I've onboarded, and a track record of building the systems behind the results, not just running the plays.";
+export const marketingSummary =
+  "In 4 months, I scaled a market from under $4K to $133K in peak monthly transaction volume, with $355K in total volume across the campaign period. The longer version: 4+ years of growth marketing, 25+ structured creator partnerships, a 4:1 ROAS across every influencer I've onboarded, and a track record of building the systems behind the results, not just running the plays.";
 
 export const contact = {
   email: "contact.shaheenaladwani@gmail.com",
@@ -56,52 +62,147 @@ export const contact = {
   profileImage: "/og-image.jpg",
 };
 
-export const softwareSkills = [
-  'Java & Spring Boot (Back-end)',
-  'JavaScript & TypeScript',
-  'Next.js (Web Framework)',
-  'Flutter & Dart (Mobile Dev)',
-  'PostgreSQL & Supabase (Databases)',
-  'AWS & Docker (Cloud & DevOps)',
-  'Bubble.io (No-Code Development)',
-  'Wordpress and PHP (Customized Websites)',
-  'Agile/Scrum (Scrum Master)',
-  'Cisco Networking (CCNA & CCSA)',
-  'Figma (UI/UX Design)',
-  'Python (Data Pipelines)',
-  'Astro (Framework)',
-  'Postman (API Testing)',
-];
-
-export const marketingSkills = [
-  'Influencer & KOL Marketing',
-  'Creator Lifecycle Management',
-  'Performance Marketing (ROAS)',
-  'Hybrid CPA & Rev-Share Models',
-  'Contract Negotiation',
-  'Growth Strategy & UA',
-  'Lifecycle Campaign Management (Email, SMS, Push)',
-  'KPI Reporting & Dashboard Building',
-  'Partner Onboarding & Automation',
-  'SEA & Philippine Market Expertise',
-  'Content Strategy & Briefing',
-  'Community Building',
-  'Campaign Analytics',
-  'A/B Testing & Creative Optimization',
-  'Content Calendar Management',
-  'User Segmentation & CRM',
-  'Cross-functional Stakeholder Management',
-  'Event-Based Campaign Planning',
-  'Agile/Scrum',
-];
-
-
-export const toolStack = {
-  technical: ['Cursor', 'VS Code', 'Postman', 'Android Studio', 'Firebase', 'Supabase', 'Docker', 'Bubble.IO', 'GoHighLevel', 'Wordpress'],
-  marketing: ['Meta Business Suite', 'Telegram', 'Figma', 'Canva', 'Photoshop', 'Miro', 'Notion', 'Airtable', 'HubSpot', 'Google Workspace', 'Viber', 'Trello', 'Monday.com', 'Jira', 'Confluence', 'Slack', 'Microsoft Teams'],
-  ai: ['Claude', 'ChatGPT', 'Gemini', 'Grok', 'n8n', 'Prompt Engineering'],
+export const resumes = {
+  software:
+    "https://docs.google.com/document/d/1fegmtrlKvyum3vJwKF9Vs8ELC9p7o4DuK4RyrKNJpno/export?format=pdf",
+  marketing:
+    "https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf",
 };
 
+/** Flagship case IDs shown first on zone pages (depth over breadth) */
+export const featuredProjectIds = {
+  marketing: [
+    "campaign-rivalry-tribe-main",
+    "campaign-kuyanic-ti",
+    "campaign-sgc-launch",
+  ],
+  software: ["proj-gymeasy", "proj-agripinoy", "proj-JCSD"],
+} as const;
+
+/** Order and selection of projects featured on the homepage */
+export const featuredHomeIds = [
+  "proj-staysafe",
+  "proj-JCSD",
+  "proj-gymeasy",
+  "proj-agripinoy",
+  "campaign-growth-automation",
+  "proj-esp32",
+] as const;
+
+/** Proof metrics shown in the hero proof band (5 stats, count-up) */
+export const hubStats = [
+  {
+    value: "$355K+",
+    label: "Campaign transaction volume",
+    sub: "Generated across creator partnerships",
+    accent: "marketing",
+  },
+  {
+    value: "22K+",
+    label: "Community members",
+    sub: "Acquired and retained, KYC-gated",
+    accent: "marketing",
+  },
+  {
+    value: "25+",
+    label: "Influencer partnerships",
+    sub: "SEA macro-creators managed end-to-end",
+    accent: "marketing",
+  },
+  {
+    value: "4:1",
+    label: "Validated ROAS",
+    sub: "Across every creator onboarded",
+    accent: "marketing",
+  },
+  {
+    value: "2",
+    label: "Live SaaS products",
+    sub: "In paid beta with real users",
+    accent: "software",
+  },
+] as const;
+
+export const softwareFit = [
+  "Full-stack / product engineering roles",
+  "SaaS and internal tools that need shipping owners",
+  "Hybrid builder seats (eng + growth adjacency)",
+] as const;
+
+export const marketingFit = [
+  "Growth, performance, and creator partnerships",
+  "SEA market operators who need systems, not just plays",
+  "Hybrid seats that pair marketing with product sense",
+] as const;
+
+export const trustLogos = [
+  { src: "/logos/rivalry.png", alt: "Rivalry" },
+  { src: "/logos/yohoho.png", alt: "Yohoho" },
+  { src: "/logos/epulze.png", alt: "Epulze" },
+  { src: "/logos/ncgc.png", alt: "NCGC" },
+] as const;
+
+export const softwareSkills = [
+  "Flutter & Dart",
+  "Java & Spring Boot",
+  "JavaScript & TypeScript",
+  "Next.js",
+  "Supabase & PostgreSQL",
+  "Firebase",
+  "REST APIs",
+  "AWS & Docker",
+  "ESP32 / IoT",
+  "Python",
+  "Figma",
+  "Astro",
+  "Agile / Scrum",
+  "Postman",
+] as const;
+
+export const marketingSkills = [
+  "Influencer & KOL Marketing",
+  "Creator Partnerships",
+  "Performance Marketing (ROAS)",
+  "Growth Strategy & UA",
+  "Community Building",
+  "Lifecycle Campaigns (Email, SMS, Push)",
+  "Automation & CRM",
+  "Paid Ads (Meta)",
+  "KPI Reporting & Dashboards",
+  "Partner Onboarding",
+  "Content Strategy & Briefing",
+  "A/B Testing & Creative Optimization",
+  "User Segmentation",
+  "Event-Based Campaign Planning",
+  "Negotiation & Contracts",
+] as const;
+
+/** Categorized skills for the homepage Skills section (ATS-friendly) */
+export const skillGroups = {
+  engineering: {
+    Backend: ["Supabase", "PostgreSQL", "REST APIs", "Firebase", "Spring Boot", "Python"],
+    Frontend: ["Flutter", "Dart", "Riverpod", "Next.js", "TypeScript"],
+    Cloud: ["Firebase", "Supabase", "Docker", "AWS"],
+    Databases: ["PostgreSQL", "Supabase", "Firebase"],
+  },
+  marketing: {
+    Growth: ["Influencer Marketing", "Creator Partnerships", "Paid Ads", "Product Growth", "Community Building"],
+    Automation: ["Growth Systems", "Automation", "CRM", "n8n"],
+    Tools: ["Meta Business Suite", "HubSpot", "Notion", "Airtable", "Google Workspace"],
+  },
+} as const;
+
+/** Per-experience tech chips shown in the experience timeline */
+export const experienceTech: Record<string, readonly string[]> = {
+  "exp-gymeasy-dev": ["Spring Boot", "Next.js", "Supabase", "PostgreSQL", "AWS"],
+  "exp-jairosoft-intern": ["Bubble.io", "Figma"],
+  "exp-addu-cs": ["Flutter", "Python", "Supabase", "Figma"],
+  "exp-yohoho-lead": ["HubSpot", "n8n", "Meta Business Suite", "Telegram"],
+  "exp-yohoho-influ": ["HubSpot", "n8n", "Meta Business Suite"],
+  "exp-rivalry-partnerships": ["Meta Business Suite", "Telegram", "HubSpot"],
+  "exp-rivalry-community": ["Meta Business Suite", "Viber", "Notion"],
+  "exp-rivalry-campaigns": ["Meta Business Suite", "HubSpot", "Notion"],
+};
 
 export const projects: Project[] = [
   {
@@ -118,11 +219,9 @@ export const projects: Project[] = [
       'D2C Retention Architecture',
       'High-Intent Audience Filtering'
     ],
-    description: "Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members averaging 12,000-16,000 daily active users. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while maintaining 6,000-9,000 daily active users — turning the community into Rivalry's most efficient retention and support channel.",
+    description: "Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel. By requiring active User IDs for entry, I built a 100% qualified audience of 22,000 members averaging 12,000-16,000 daily active users. Following a platform strike, I engineered a rapid recovery strategy, rebuilding to 12,000 members while maintaining 6,000-9,000 daily active users, turning the community into Rivalry's most efficient retention and support channel.",
     media: { type: 'image', url: '/rivalry/new-tribe.jpg' },
-    gallery: [
-
-    ],
+    gallery: [],
   },
   {
     id: 'campaign-rivalry-evergreen',
@@ -176,10 +275,8 @@ export const projects: Project[] = [
       '/rivalry/sgc-420.png',
       '/rivalry/sgc-tribe-giveaway.png',
       '/rivalry/sgc-mus.jpg',
-
     ],
   },
-  
   {
     id: 'campaign-kuyanic-ti',
     category: 'marketing',
@@ -200,7 +297,6 @@ export const projects: Project[] = [
       url: "https://res.cloudinary.com/dvjnueacb/video/upload/q_auto/f_auto/v1778967295/AQOQnj--KjMtP0_opa50TV397WOlJ2f3JPLZ1XnkuRzH9XPvHHi-c2iwg9QGWYfExp0fKZGXd5-JwCYObWXQ0J2T-DE3MtwILRfz14cL2B5vsw_itgrfd.mp4",
       thumbnail: '/rivalry/watchparty-cover.jpg',
     },
-    
     gallery: [
       '/rivalry/watchparty-1.jpg',
       '/rivalry/watchparty-2.jpg',
@@ -228,7 +324,6 @@ export const projects: Project[] = [
     description: "Spearheaded the regional launch of 'Same Game Combos' (SGC), Rivalry's proprietary parlay feature. I engineered a viral educational campaign across Facebook and Telegram, leveraging influencers to explain the high-upside potential of the product. The campaign resulted in a 20% Month-over-Month increase in transaction volume and a 5% boost in Net Gaming Revenue (NGR), maintaining the Philippines as Rivalry's #1 global region.",
     media: { type: 'image', url: '/rivalry/sgc-cover.png' },
     gallery: [
-      
       '/rivalry/sgc-cover.png',
       '/rivalry/sgc-1.png',
       '/rivalry/sgc-2.png',
@@ -281,9 +376,23 @@ export const projects: Project[] = [
     media: { type: 'image', url: '/rivalry/parlay-1.png' },
     gallery: [
       '/rivalry/thread.png',
-      '/rivalry/thread-2.png', 
-      '/rivalry/thread-3.jpg', 
+      '/rivalry/thread-2.png',
+      '/rivalry/thread-3.jpg',
     ]
+  },
+  {
+    id: 'campaign-growth-automation',
+    category: 'marketing',
+    title: 'Growth Automation System',
+    date: '2025',
+    role: 'Growth Engineer',
+    color: '#f97316',
+    description: 'Placeholder: automated creator onboarding, lifecycle messaging, and performance reporting built on n8n, HubSpot, and Meta Business Suite.',
+    problem: 'Placeholder: manual campaign operations do not scale across many creator partners.',
+    solution: 'Placeholder: automated onboarding pipelines, lifecycle email/SMS/push, and dashboard reporting.',
+    impact: 'Placeholder: partner network scaled, activation time cut, reporting automated.',
+    tags: ['n8n', 'HubSpot', 'Meta Business Suite', 'Automation'],
+    caseStudyHref: '/marketing',
   },
   {
     id: 'proj-gymeasy',
@@ -301,6 +410,10 @@ export const projects: Project[] = [
     },
     liveUrl: 'https://staging.gymeasy.app',
     repoUrl: '',
+    problem: 'Gyms drown in front-desk admin: paper attendance, manual POS, fragmented scheduling, and disconnected coach-client pipelines.',
+    solution: 'Built an end-to-end SaaS with QR-based attendance, digitalized POS, coach-client pipelines, and scheduling, deployed on a Spring Boot + Next.js stack with PostgreSQL and AWS.',
+    impact: '67% reduction in required front-desk staff. Live in paid beta with active users.',
+    caseStudyHref: '/software',
   },
   {
     id: 'proj-agripinoy',
@@ -309,7 +422,7 @@ export const projects: Project[] = [
     date: 'Feb 2026',
     role: 'Lead Front-End Developer',
     color: '#3b82f6',
-    tags: ['Flutter', 'Dart', 'Mobile'],
+    tags: ['Flutter', 'Dart', 'Mobile', 'Supabase'],
     description: 'A Flutter-based AI chatbot that helps Filipino farmers with practical advice on growing common Pinoy crops. Built with a RAG (Retrieval-Augmented Generation) backend, real-time evaluation pipeline, and Supabase data logging.',
     media: {
       type: 'image' as const,
@@ -317,11 +430,15 @@ export const projects: Project[] = [
     },
     liveUrl: 'https://agri-pinoy-web.netlify.app/',
     repoUrl: 'https://github.com/shaheenNawaf/chatbot_ui_agribot',
+    problem: 'Filipino farmers lack accessible, localized agronomy advice for common Pinoy crops.',
+    solution: 'Built a Flutter chatbot backed by a RAG pipeline, real-time evaluation, and Supabase data logging, served via a web app.',
+    impact: 'Deployed to a public web app. RAG-grounded answers in Filipino farming context.',
+    caseStudyHref: '/software',
   },
   {
     id: 'proj-staysafe',
     category: 'software',
-    title: 'SafeStay: AirBNB Clone via Flutter',
+    title: 'StaySafe: AirBNB Clone via Flutter',
     date: 'Dec 2024',
     role: 'Full Stack Developer',
     color: '#ec4899',
@@ -333,6 +450,10 @@ export const projects: Project[] = [
     },
     liveUrl: 'https://safe-stay-exer.netlify.app/',
     repoUrl: 'https://github.com/shaheenNawaf/StaySafe',
+    problem: 'Travelers need a simple, native booking experience; the team needed a full end-to-end clone of a marketplace app.',
+    solution: 'Built a full AirBNB-style app natively in Flutter, end to end, including UI, flows, and backend integration.',
+    impact: 'Deployed to staging as a complete end-to-end marketplace clone.',
+    caseStudyHref: '/software',
   },
   {
     id: 'proj-friendslop',
@@ -353,9 +474,9 @@ export const projects: Project[] = [
   {
     id: 'proj-JCSD',
     category: 'software',
-    title: 'JCSD Booking Website - Computer Shop Booking & Management App',
+    title: 'Inventory & Employee Management System',
     date: 'March 2025',
-    role: 'Developer',
+    role: 'Full Stack Developer',
     color: '#ec4899',
     tags: ['Flutter', 'Supabase', 'Full-Stack'],
     description: 'A full end-to-end booking and management application built for a computer service and repair shop. Features customer-facing maintenance booking, serialized inventory tracking with stock in/out monitoring, and automated HR functionality covering payroll, leave, and absence management.',
@@ -365,9 +486,26 @@ export const projects: Project[] = [
     },
     liveUrl: '',
     repoUrl: 'https://github.com/shaheenNawaf/JCSD_Flutter',
+    problem: 'A computer service and repair shop ran stock and HR on paper, leading to errors and slow operations.',
+    solution: 'Built a Flutter + Supabase app with customer-facing maintenance booking, serialized inventory tracking with stock in/out, and automated payroll, leave, and absence management.',
+    impact: 'Inventory and HR automated end to end for the shop, replacing manual processes.',
+    caseStudyHref: '/software',
   },
-]
-
+  {
+    id: 'proj-esp32',
+    category: 'software',
+    title: 'ESP32 IoT Project',
+    date: '2025',
+    role: 'Firmware & Full-stack Developer',
+    color: '#3b82f6',
+    description: 'Placeholder: ESP32-based IoT device with REST telemetry and a companion dashboard.',
+    problem: 'Placeholder: describe the field or monitoring problem this device solves.',
+    solution: 'Placeholder: ESP32 firmware + REST API + realtime dashboard.',
+    impact: 'Placeholder: deployed devices reporting telemetry.',
+    tags: ['ESP32', 'IoT', 'REST APIs', 'Firmware'],
+    caseStudyHref: '/software',
+  },
+];
 
 export const experiences: Experience[] = [
   {
@@ -404,14 +542,14 @@ export const experiences: Experience[] = [
   {
     id: 'exp-addu-cs',
     category: 'software',
-    title: 'B.S. Computer Science — Dean\'s List',
+    title: 'B.S. Computer Science, Dean\'s List',
     company: 'Ateneo de Davao University',
     date: '2021 - 2026',
     location: 'Davao, Philippines',
     color: '#6366f1',
     description: 'Graduating Computer Science student with a focus on full-stack development, AI systems, and software engineering methodology.',
     details: [
-      'Completed major projects in Flutter (mobile/web), Python data pipelines, and RAG-based AI systems — all deployed to production or staging.',
+      'Completed major projects in Flutter (mobile/web), Python data pipelines, and RAG-based AI systems, all deployed to production or staging.',
       'Dean\'s List recognition (2021-2022) reflecting consistent academic performance alongside active industry work.',
       'Applied Systems Analysis & Design and Agile methodology across team capstone projects, including GymEasy.',
     ],
@@ -432,7 +570,7 @@ export const experiences: Experience[] = [
     ],
     gallery: [
       '/yohoho/initial-contracts.jpg',
-    ], 
+    ],
     video: '',
   },
   {
@@ -451,7 +589,7 @@ export const experiences: Experience[] = [
     ],
     gallery: [
       '/yohoho/yohoho-1.png'
-    ], 
+    ],
     video: '',
   },
   {
@@ -474,9 +612,9 @@ export const experiences: Experience[] = [
       '/rivalry/rivalry-tribe.jpg',
       '/rivalry/pindabali.jpg',
       '/rivalry/bali-1.jpg',
-    ], 
-    video: 
-        'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D483447207175593&show_text=0',
+    ],
+    video:
+      'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D483447207175593&show_text=0',
   },
   {
     id: 'exp-rivalry-community',
@@ -499,7 +637,7 @@ export const experiences: Experience[] = [
       '/rivalry/bbc.jpg',
       '/rivalry/nsns.jpg',
       '/rivalry/tt.jpg',
-    ], 
+    ],
     video: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fkuyanicwxc%2Fvideos%2F1425324814659531&show_text=0',
   },
   {
@@ -521,7 +659,7 @@ export const experiences: Experience[] = [
       '/rivalry/initial-campaign.jpg',
       '/rivalry/initial-campaign-2.jpg',
       '/rivalry/initial-affiliates.jpg',
-    ], 
+    ],
     video: '',
   },
-]
+];

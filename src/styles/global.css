@@ -1,581 +1,444 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&display=swap");
-
+@import "@fontsource/space-grotesk/latin-700.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
 @import "tailwindcss";
-.font-grotesk {
-  font-family: "Space Grotesk", sans-serif;
-}
+
 /* ─────────────────────────────────────────────────────────────────────────────
-   1. CORE GLOBAL STYLES (Used in: layout.astro)
+   1. DESIGN TOKENS  (single consolidated scale, works in dark + light)
    ────────────────────────────────────────────────────────────────────────── */
 @layer base {
-  /* Color system variables mapped across dark and light themes */
   :root {
-    --bg-color: #f4f3f0;
-    --card-bg: rgba(255, 255, 255, 0.85);
-    --border-color: #d9d6cf;
-    --text-main: #1c1917;
-    --text-muted: #78716c;
-    --grid-color: #e5e2db;
-    --shadow-color: rgba(0, 0, 0, 0.06);
+    /* Neutral surfaces (dark is default) */
+    --bg: #09090b;
+    --card-bg: rgba(24, 24, 27, 0.45);
+    --card-bg-2: rgba(24, 24, 27, 0.72);
+    --border: #27272a;
+    --border-strong: #3f3f46;
+    --text: #fafafa;
+    --text-muted: #a1a1aa;
+    --text-faint: #71717a;
+    --grid: #18181b;
+    --shadow: rgba(0, 0, 0, 0.4);
+
+    /* Opaque panel surface (anti-glassmorphism for content cards) */
+    --panel-bg: #151517;
+
+    /* Shared skeleton */
+    --radius-card: 1.25rem;
+    --radius-btn: 0.875rem;
+    --radius-pill: 999px;
+
+    /* Hub default accent (orange) + soft fallback */
+    --accent: #f97316;
+    --accent-2: #fb923c;
+    --accent-soft: rgba(249, 115, 22, 0.14);
+    --accent-border: rgba(249, 115, 22, 0.4);
+
+    /* Hero motif (replaced per track) */
+    --motif: none;
+
+    /* Always-on dual-track identity colors (independent of data-track) */
+    --mkt: #f97316;
+    --mkt-2: #fb923c;
+    --mkt-soft: rgba(249, 115, 22, 0.14);
+    --mkt-border: rgba(249, 115, 22, 0.4);
+    --sw: #3b82f6;
+    --sw-2: #60a5fa;
+    --sw-soft: rgba(59, 130, 246, 0.14);
+    --sw-border: rgba(59, 130, 246, 0.4);
   }
 
-  html:not(.light) {
-    --bg-color: #09090b;
-    --card-bg: rgba(24, 24, 27, 0.3);
-    --border-color: #27272a;
-    --text-main: #d4d4d8;
-    --text-muted: #71717a;
-    --grid-color: #18181b;
-    --shadow-color: rgba(0, 0, 0, 0.4);
+  html.light {
+    --bg: #f4f3f0;
+    --card-bg: rgba(255, 255, 255, 0.82);
+    --card-bg-2: rgba(255, 255, 255, 0.96);
+    --border: #d9d6cf;
+    --border-strong: #a8a29e;
+    --text: #1c1917;
+    --text-muted: #57534e;
+    --text-faint: #78716c;
+    --grid: #e5e2db;
+    --shadow: rgba(0, 0, 0, 0.06);
+
+    --panel-bg: #ffffff;
+  }
+
+  /* Marketing biome - warm, soft, expressive (rounded shape language) */
+  html[data-track="marketing"] {
+    --accent: #f97316;
+    --accent-2: #fb923c;
+    --accent-soft: rgba(249, 115, 22, 0.14);
+    --accent-border: rgba(249, 115, 22, 0.4);
+    --radius-card: 1.5rem;
+    --radius-btn: 1rem;
+    --motif:
+      radial-gradient(circle at 18% 0%, rgba(249, 115, 22, 0.22), transparent 42%),
+      radial-gradient(circle at 92% 100%, rgba(251, 146, 60, 0.16), transparent 40%);
+  }
+
+  /* Software biome - cool, precise, technical (sharper shape language) */
+  html[data-track="software"] {
+    --accent: #3b82f6;
+    --accent-2: #60a5fa;
+    --accent-soft: rgba(59, 130, 246, 0.14);
+    --accent-border: rgba(59, 130, 246, 0.4);
+    --radius-card: 1rem;
+    --radius-btn: 0.625rem;
+    --motif:
+      linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
   }
 
   body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .font-grotesk {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+  }
+
+  .font-mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono",
+      Menlo, Consolas, monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2 {
+    text-wrap: balance;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
-/* Background layout grid lines (Used in: layout.astro) */
-body {
-  background-image: 
-    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. SEMANTIC UTILITY CLASSES  (single source of truth for surfaces + text)
+   ────────────────────────────────────────────────────────────────────────── */
+@layer components {
+  .surface {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .surface-2 {
+    background-color: var(--card-bg-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .panel {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .hairline {
+    border-color: var(--border);
+  }
+  .fg { color: var(--text); }
+  .muted { color: var(--text-muted); }
+  .faint { color: var(--text-faint); }
 
-/* Radial vignetting overlay (Used in: layout.astro) */
-body::before {
-  content: ""; 
-  position: fixed; 
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 0%, var(--bg-color) 80%);
-  pointer-events: none; 
-  z-index: -1;
-}
+  .radius-card { border-radius: var(--radius-card); }
+  .radius-btn { border-radius: var(--radius-btn); }
+  .radius-pill { border-radius: var(--radius-pill); }
 
-/* Scrollbar customizations (Global) */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-color);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
-}
+  .stat-number { font-variant-numeric: tabular-nums; }
 
-/* Responsive screen height safety utility */
-.h-screen {
-  height: 100vh;
-  height: 100dvh;
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 200;
+    padding: 0.5rem 0.875rem;
+    background-color: var(--accent);
+    color: #fff;
+    border-radius: var(--radius-btn);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: top 0.15s ease;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  header#site-nav nav a.is-active {
+    color: var(--text);
+    background-color: var(--card-bg-2);
+  }
+
+  .zone-surface {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-card);
+  }
+
+  .zone-heading {
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  html[data-track="marketing"] .zone-heading {
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  /* Per-track ambient hero motif */
+  .zone-motif { background-image: var(--motif); }
+
+  /* Accent helpers */
+  .track-accent { color: var(--accent); }
+  .track-accent-bg {
+    background-color: var(--accent-soft);
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+  .track-ring:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .track-btn {
+    background-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 8px 24px -10px var(--accent);
+    transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .track-btn:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 14px 40px -10px var(--accent);
+  }
+
+  /* Dual-track identity helpers (always available, independent of data-track) */
+  .accent-marketing { color: var(--mkt); }
+  .bg-marketing { background-color: var(--mkt-soft); border-color: var(--mkt-border); }
+  .accent-software { color: var(--sw); }
+  .bg-software { background-color: var(--sw-soft); border-color: var(--sw-border); }
+
+  /* Floating glass surface used by the nav pill + trust bar */
+  .floating-glass {
+    background-color: color-mix(in srgb, var(--bg) 62%, transparent);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Mono terminal section label, e.g. // work */
+  .terminal-label {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+      monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    color: var(--text-faint);
+  }
+  .terminal-rule {
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(
+      to right,
+      var(--border-strong),
+      transparent
+    );
+  }
+
+  /* Ambient dual-track glow blobs */
+  .glow-mkt { background-color: var(--mkt); opacity: 0.1; }
+  .glow-sw { background-color: var(--sw); opacity: 0.08; }
+
+  /* Book-call form fields */
+  .book-field {
+    width: 100%;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--border);
+    background: var(--card-bg-2);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .book-field::placeholder { color: var(--text-faint); }
+  .book-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .book-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  /* Background layout grid + dot micro-pattern texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1.5px),
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 4px 4px, 40px 40px, 40px 40px;
+    z-index: -2;
+    pointer-events: none;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, var(--bg) 80%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+
+  .h-screen { height: 100vh; height: 100dvh; }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   2. DIALOG & MODAL OVERLAYS (Used in: experience_card, marketing_card, project_card)
+   3. DIALOG / MODAL OVERLAYS
    ────────────────────────────────────────────────────────────────────────── */
+@layer components {
+  dialog {
+    position: fixed !important;
+    inset: 0 !important;
+    margin: auto !important;
+    max-height: 90dvh;
+    outline: none;
+  }
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: backdropFade 0.3s ease-out;
+  }
+  dialog[open] { animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  body:has(dialog[open]) { overflow: hidden; }
 
-dialog {
-  position: fixed !important;
-  inset: 0 !important;
-  margin: auto !important;
-  max-height: 90vh;
-  max-height: 90dvh;
-  outline: none;
+  .modal {
+    background-color: var(--card-bg-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: var(--radius-card);
+  }
+  .modal-shadow-software { box-shadow: 0 0 50px -12px rgba(59, 130, 246, 0.3); }
+  .modal-shadow-marketing { box-shadow: 0 0 50px -12px rgba(249, 115, 22, 0.3); }
+
+  .close-modal {
+    background-color: color-mix(in srgb, var(--text) 8%, transparent);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .close-modal:hover { background-color: color-mix(in srgb, var(--text) 16%, transparent); }
 }
 
-/* Blurred backdrops behind dialog modals */
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  animation: backdropFade 0.3s ease-out;
-}
-
-/* Modal scale & translation entrance animation */
-dialog[open] {
-  animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Lock page scrolling when any modal dialog is open */
-body:has(dialog[open]) {
-  overflow: hidden;
-}
-
-/* Core animation transition declarations */
-main > section {
-  transition: all 0.8s ease-out;
-}
-
-/* === MODAL TEXT COLOR SAFETY OVERRIDES (Ensures perfect Dark/Light contrast) === */
-
-/* 1. Dark Mode (Default) Modal Text Colors */
-dialog .text-zinc-300 {
-  color: #d4d4d8 !important; /* High-contrast light silver-grey */
-}
-dialog .text-zinc-400 {
-  color: #a1a1aa !important; /* High-contrast light grey */
-}
-
-dialog p.border-l-4 {
-  color: #d4d4d8 !important; 
-}
-
-/* 2. Light Mode Modal Text Colors (Only active when html.light class is present) */
-html.light dialog .text-zinc-300 {
-  color: #3f3f46 !important; /* High-contrast dark charcoal */
-}
-html.light dialog .text-zinc-400 p.border-l-4 {
-  color: #3f3f46 !important; /* High-contrast dark charcoal */
-}
-
-/* Keyframes for modal and layout fade transitions */
 @keyframes reveal {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes modalFadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes backdropFade { from { opacity: 0; } to { opacity: 1; } }
 
-@keyframes backdropFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 /* ─────────────────────────────────────────────────────────────────────────────
-   3. SYNCHRONIZED TIMELINE ANIMATIONS (Used in: index.astro)
+   4. MOTION  (calm, motivated; disabled under prefers-reduced-motion)
    ────────────────────────────────────────────────────────────────────────── */
-
-/* 1. Trust Bar & Bottom CTA Button Vertical Bobbing */
 @keyframes bob {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
-.animate-bob {
-  animation: bob 3s ease-in-out infinite;
-}
+.animate-bob { animation: bob 3s ease-in-out infinite; }
 
-/* 2. Trust Bar Border Glow Pulse (Dark Mode) */
-@keyframes border-glow-sync {
-  0%, 100% {
-    border-color: var(--border-color);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    border-color: rgba(59, 130, 246, 0.25);
-    box-shadow: 
-      0 0 20px rgba(59, 130, 246, 0.1), 
-      0 0 20px rgba(249, 115, 22, 0.1),
-      0 10px 30px -10px rgba(0, 0, 0, 0.7);
-  }
+/* Animated dual-accent gradient border (floating trust bar) */
+@keyframes border-sync {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 .animate-border-sync {
-  animation: border-glow-sync 3.5s ease-in-out infinite;
+  position: relative;
+  background:
+    linear-gradient(
+        color-mix(in srgb, var(--bg) 72%, transparent),
+        color-mix(in srgb, var(--bg) 72%, transparent)
+      )
+      padding-box,
+    linear-gradient(90deg, var(--mkt), var(--sw), var(--mkt)) border-box;
+  background-size: 200% 100%, 200% 100%;
+  border: 1px solid transparent;
+  animation: border-sync 6s linear infinite;
 }
 
-/* 3. Ambient Bottom Screen Glow (More Noticeable Opacity Swing - Dark Mode) */
-@keyframes bg-glow-sync {
-  0%, 100% {
-    opacity: 0.22; /* Increased base opacity */
-  }
-  50% {
-    opacity: 0.65; /* Increased peak opacity */
-  }
+/* Breathing dual-accent glow behind the contact CTA */
+@keyframes cta-glow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
 }
-.animate-bg-sync {
-  animation: bg-glow-sync 3.5s ease-in-out infinite;
-}
+.animate-cta-glow { animation: cta-glow 4.5s ease-in-out infinite; }
 
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   4. LIGHT THEME COMPATIBILITY OVERRIDES (Global & Layout Overrides)
-   ────────────────────────────────────────────────────────────────────────── */
-/* Back to Portal Button (Light Mode) */
-html.light nav a {
-  background-color: rgba(255, 255, 255, 0.85) !important; /* Matches theme toggle background */
-  border-color: var(--border-color) !important;           /* Clean #d9d6cf border */
-  color: var(--text-muted) !important;                    /* Soft contrast text (#78716c) */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
-}
-
-html.light nav a:hover {
-  background-color: rgba(255, 255, 255, 1) !important;
-  border-color: #a8a29e !important;
-  color: var(--text-main) !important;                     /* Dark #1c1917 on hover */
-}
-
-/* Email, LinkedIn, & Resume Buttons inside IdentityHero (Light Mode) */
-html.light .bg-zinc-950\/20,
-html.light .bg-zinc-950\/30 {
-  background-color: rgba(255, 255, 255, 0.85) !important; /* Matches theme toggle background */
-  border-color: var(--border-color) !important;           /* Clean #d9d6cf border */
-  color: var(--text-muted) !important;                    /* Soft contrast icon color (#78716c) */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
-}
-
-html.light .bg-zinc-950\/20:hover,
-html.light .bg-zinc-950\/30:hover {
-  background-color: rgba(255, 255, 255, 1) !important;
-  border-color: #a8a29e !important;
-  /* Omit color !important here to let the dynamic hover:text-blue-500/text-orange-500 class shine */
-}
-
-   html.light .bg-zinc-900\/20,
-html.light .bg-zinc-950\/60,
-html.light .bg-zinc-950\/40 {
-  background-color: var(--card-bg) !important;
-  box-shadow: 0 1px 4px var(--shadow-color), 0 0 0 1px var(--border-color);
-}
-
-html.light .border-zinc-800,
-html.light .border-zinc-800\/50,
-html.light .border-white\/10 {
-  border-color: var(--border-color) !important;
-}
-
-html.light .text-white {
-  color: var(--text-main) !important;
-}
-
-html.light .text-zinc-400,
-html.light .text-zinc-500 {
-  color: var(--text-muted) !important;
-}
-
-html.light .bg-zinc-950\/30,
-html.light .bg-zinc-900\/50,
-html.light .bg-zinc-950\/50 {
-  background-color: rgba(255, 255, 255, 0.6) !important;
-}
-
-html.light .bg-zinc-600 {
-  background-color: #a8a29e !important;
-}
-
-html.light .text-zinc-500.hover\:text-white {
-  color: var(--text-muted) !important;
-}
-
-/* Trust Bar base overrides (Light Mode) (Used in: index.astro) */
-html.light .group\/bar {
-  background-color: rgba(235, 232, 226, 0.75) !important;
-  border-color: var(--border-color) !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(12px);
-}
-
-html.light .group\/bar .grayscale {
-  filter: none !important;
-  opacity: 1 !important;
-}
-
-html.light .group\/bar img[alt="Rivalry"],
-html.light .group\/bar img[alt="Epuzle"] {
-  filter: brightness(0) !important;
-}
-
-/* Light Mode Dialog Modal Overrides (Used in: experience_card, marketing_card, project_card) */
-html.light dialog {
-  background-color: rgba(255, 255, 255, 0.96) !important; /* Clear solid light background */
-  border-color: var(--border-color) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Force dark charcoal (zinc-700) on all description and list-item texts inside modals */
-html.light dialog .text-zinc-300,
-html.light dialog .text-zinc-400 {
-  color: #3f3f46 !important; /* Premium high-contrast readable text */
-}
-
-/* Ensure headings remain fully dark */
-html.light dialog h2,
-html.light dialog h3 {
-  color: var(--text-main) !important;
-}
-
-/* Soften the highlighted quote/description box underlay in light mode */
-html.light dialog .bg-blue-600\/5,
-html.light dialog .bg-orange-600\/5 {
-  background-color: rgba(59, 130, 246, 0.06) !important; /* Soft, readable underlay */
-  border-left-color: #2563eb !important;
-}
-
-/* Re-style close modal buttons to look clean and integrated on light layouts */
-html.light dialog .close-modal {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  color: var(--text-main) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-html.light dialog .close-modal:hover {
-  background-color: rgba(0, 0, 0, 0.1) !important;
-}
-/* ─────────────────────────────────────────────────────────────────────────────
-   5. COMPONENT-SPECIFIC STYLES
-   ────────────────────────────────────────────────────────────────────────── */
-
-/* Marketing Card Result Badge (Used in: marketing_card.astro) */
-.badge-marketing {
-  background-color: #ea580c; /* Solid orange in dark mode */
-  color: #ffffff !important;
-}
-html.light .badge-marketing {
-  background-color: #ffedd5 !important; /* Solid, fully opaque soft-orange base */
-  color: #c2410c !important; /* Rich, high-contrast dark orange text */
-  border: 1px solid #fed7aa !important; /* Solid, clean border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
-}
-
-/* Project Card Date Badge (Used in: project_card.astro) */
-.badge-software {
-  background-color: #2563eb; /* Solid blue in dark mode */
-  color: #ffffff !important;
-}
-html.light .badge-software {
-  background-color: #dbeafe !important; /* Solid, fully opaque soft-blue base */
-  color: #1d4ed8 !important; /* Rich, high-contrast dark blue text */
-  border: 1px solid #bfdbfe !important; /* Solid, clean border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
-}
-
-/* Sticky Floating Action Bar (Used in: sticky_bar.astro) */
-html.light #sticky-cta .sticky-bar-panel {
-  background-color: rgba(244, 243, 240, 0.85) !important;
-  border-color: var(--border-color) !important;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-}
-html.light .cta-btn {
-  background-color: #18181b;
-  color: #ffffff;
-  border: 1px solid #18181b;
-}
-html.light .cta-btn:hover {
-  background-color: #3f3f46;
-}
-
-/* Theme Toggle Component (Used in: theme_toggle.astro) */
-html.light #sun-icon {
-  display: none;
-}
-html.light #moon-icon {
-  display: block;
-}
-html.light #theme-toggle {
-  background-color: rgba(255, 255, 255, 0.85);
-  border-color: var(--border-color);
-  color: var(--text-main);
-}
-
-/* Synced Border Glow Pulse override (Light Mode) (Used in: index.astro) */
-html.light .animate-border-sync {
-  animation: border-glow-sync-light 3.5s ease-in-out infinite;
-}
-@keyframes border-glow-sync-light {
-  0%, 100% {
-    border-color: var(--border-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  50% {
-    border-color: rgba(249, 115, 22, 0.3);
-    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.08);
-  }
-}
-
-/* Envelope Wiggle Micro-Interaction (Used in: index.astro footer button) */
-@keyframes envelope-wiggle {
-  0%, 100% { 
-    transform: rotate(0) scale(1); 
-  }
-  25% { 
-    transform: rotate(-10deg) scale(1.12); 
-  }
-  75% { 
-    transform: rotate(10deg) scale(1.12); 
-  }
-}
-
-/* Triggers animation on child envelope icon when parent group is hovered */
-.group:hover .animate-envelope {
-  animation: envelope-wiggle 0.4s ease-in-out;
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   6. PAGE-SPECIFIC STYLES
-   ────────────────────────────────────────────────────────────────────────── */
-
-/* Software Engineering View Card Hovering (Used in: software.astro) */
-.software-page .group:hover {
-  border-color: rgba(59, 130, 246, 0.5);
-}
-
-/* Dynamic Page Reveals (Used in: index.astro) */
 .reveal-section {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.65s ease-out, transform 0.65s ease-out;
 }
-.reveal-section.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.reveal-section.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bob,
+  .animate-border-sync,
+  .animate-cta-glow,
+  .reveal-section,
+  .skip-link {
+    animation: none !important;
+    transition: none !important;
+  }
+  .animate-border-sync {
+    background:
+      linear-gradient(
+          color-mix(in srgb, var(--bg) 72%, transparent),
+          color-mix(in srgb, var(--bg) 72%, transparent)
+        )
+        padding-box,
+      linear-gradient(90deg, var(--mkt), var(--sw), var(--mkt)) border-box;
+    border: 1px solid transparent;
+  }
+  .reveal-section { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
 }
 
-/* Career Timeline Spine (Used in: index.astro) */
-.timeline-spine {
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    #27272a 8%,
-    #27272a 92%,
-    transparent
-  );
-}
-
-/* Career Timeline Markers & Dots (Used in: index.astro) */
-.timeline-item:hover .timeline-dot {
-  border-color: var(--exp-color);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--exp-color) 15%, transparent);
-}
-.timeline-dot {
-  box-shadow: 0 0 0 3px #09090b;
-}
-
-.timeline-item:hover .timeline-accent {
-  background-color: var(--exp-color);
-}
-.timeline-badge {
-  background-color: color-mix(in srgb, var(--exp-color) 15%, transparent);
-  color: var(--exp-color);
-}
-
-.timeline-item:last-child {
-  padding-bottom: 0;
-}
-
-/* Project Filter Tabs (Used in: index.astro) */
-.project-tab {
-  background-color: transparent;
-  border-color: #3f3f46;
-  color: #71717a;
-  cursor: pointer; /* Triggers the pointer hand cursor on hover */
-}
-
-.project-tab:hover {
-  color: #a1a1aa;
-  border-color: #52525b;
-}
-.project-tab[data-tab="marketing"][data-active="true"] {
-  background-color: rgba(249, 115, 22, 0.1);
-  border-color: rgba(249, 115, 22, 0.45);
-  color: rgb(251, 146, 60);
-}
-.project-tab[data-tab="software"][data-active="true"] {
-  background-color: rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.45);
-  color: rgb(96, 165, 250);
-}
-
-/* Timeline Light Mode overrides (Used in: index.astro) */
-html.light .timeline-dot {
-  box-shadow: 0 0 0 3px #f4f3f0;
-}
-html.light .timeline-spine {
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    #d9d6cf 8%,
-    #d9d6cf 92%,
-    transparent
-  );
-}
-
-/* Project Filter Tabs overrides (Light Mode) (Used in: index.astro) */
-html.light .project-tab {
-  background-color: transparent;
-  border-color: #d9d6cf;
-  color: #78716c;
-}
-html.light .project-tab:hover {
-  border-color: #a8a29e;
-  color: #1c1917;
-}
-html.light .project-tab[data-tab="marketing"][data-active="true"] {
-  background-color: rgba(249, 115, 22, 0.08);
-  border-color: rgba(249, 115, 22, 0.5);
-  color: rgb(234, 88, 12);
-}
-html.light .project-tab[data-tab="software"][data-active="true"] {
-  background-color: rgba(59, 130, 246, 0.08);
-  border-color: rgba(59, 130, 246, 0.5);
-  color: rgb(37, 99, 235);
-}
 /* ─────────────────────────────────────────────────────────────────────────────
-   7. CONTACT CARD CTA OVERRIDES (Used in: index.astro footer)
+   5. THEME TOGGLE  (sun/moon visibility)
    ────────────────────────────────────────────────────────────────────────── */
-
-/* High-contrast CTA Button */
-.cta-button-contrast {
-  background-color: #ffffff;
-  color: #18181b !important;
-}
-html.light .cta-button-contrast {
-  background-color: #18181b !important;
-  color: #ffffff !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
-}
-html.light .cta-button-contrast:hover {
-  background-color: #27272a !important;
-}
-
-/* 4. Synced Breathing & Pulsing Backdrop Glow behind the main CTA Button (Dark Mode) */
-@keyframes cta-glow-pulse {
-  0%, 100% {
-    transform: scale(0.95);
-    opacity: 0.45;
-  }
-  50% {
-    transform: scale(1.08); /* Organic physical breathing scale */
-    opacity: 0.85;          /* Luminous peak opacity */
-  }
-}
-.animate-cta-glow {
-  animation: cta-glow-pulse 3.5s ease-in-out infinite;
-  filter: blur(22px);
-}
-
-/* Synced Breathing & Pulsing Backdrop Glow (Light Mode override) */
-html.light .animate-cta-glow {
-  animation: cta-glow-pulse-light 3.5s ease-in-out infinite;
-  background-image: linear-gradient(to right, rgba(249, 115, 22, 0.55), rgba(59, 130, 246, 0.45), rgba(249, 115, 22, 0.55)) !important;
-  filter: blur(26px) !important;
-}
-@keyframes cta-glow-pulse-light {
-  0%, 100% {
-    transform: scale(0.95);
-    opacity: 0.55;
-  }
-  50% {
-    transform: scale(1.08);
-  }
-}
-
-/* Ambient Bottom Screen Glow (Light Mode override) */
-html.light .animate-bg-sync {
-  animation: bg-glow-sync-light 3.5s ease-in-out infinite;
-}
-@keyframes bg-glow-sync-light {
-  0%, 100% {
-    opacity: 0.35; /* Highly noticeable on light backgrounds */
-  }
-  50% {
-    opacity: 0.75;
-  }
-}
+html.light #sun-icon { display: none; }
+html.light #moon-icon { display: block; }
+html:not(.light) #sun-icon { display: block; }
+html:not(.light) #moon-icon { display: none; }

@@ -1,598 +1,199 @@
 ---
 import BaseLayout from "../layouts/layout.astro";
-import MarketingCard from "../components/marketing_card.astro";
-import ProjectCard from "../components/project_card.astro";
-import ThemeToggle from "../components/theme_toggle.astro";
+import SiteNav from "../components/site_nav.astro";
+import HeroHome from "../components/hero_home.astro";
+import ProofBand from "../components/proof_band.astro";
+import ProjectShowcase from "../components/project_showcase.astro";
+import ExperienceTimeline from "../components/experience_timeline.astro";
+import SkillsGrid from "../components/skills_grid.astro";
+import WhyHire from "../components/why_hire.astro";
+import Testimonials from "../components/testimonials.astro";
+import BookCall from "../components/book_call.astro";
+import StickyBar from "../components/sticky_bar.astro";
+import SectionHeader from "../components/section_header.astro";
+import {
+  name,
+  contact,
+  hub,
+  resumes,
+  projects,
+  featuredHomeIds,
+  trustLogos,
+} from "../data/resume";
 
-import { name, shortBio, contact, projects, experiences } from "../data/resume";
-
-const catStyle = {
-  marketing: {
-    color: "rgb(251,146,60)",
-    border: "rgba(249,115,22,0.35)",
-    bg: "rgba(249,115,22,0.1)",
-  },
-  software: {
-    color: "rgb(96, 165,250)",
-    border: "rgba(59, 130,246,0.35)",
-    bg: "rgba(59, 130,246,0.1)",
-  },
-};
-
-const marketingProjects = projects.filter((p) => p.category === "marketing");
-const softwareProjects = projects.filter((p) => p.category === "software");
-const allExperiences = [...experiences].sort((a, b) => {
-  const yearA = parseInt(a.date.match(/\d{4}/)?.[0] ?? "0");
-  const yearB = parseInt(b.date.match(/\d{4}/)?.[0] ?? "0");
-  return yearB - yearA;
-});
-
-const stats = [
-  {
-    value: "$355K+",
-    label: "Transaction Volume Generated",
-    sub: "Driven across iGaming & D2C campaigns within 4 months.",
-    accent: "blue",
-  },
-  {
-    value: "22,000+",
-    label: "Community Members Acquired",
-    sub: "Scaled KYC-gated communities across multiple campaigns.",
-    accent: "orange",
-  },
-  {
-    value: "25+",
-    label: "SEA Macro-Influencers Managed",
-    sub: "Collaborated with top-performing creators across Southeast Asia.",
-    accent: "blue",
-  },
-  {
-    value: "4:1",
-    label: "Validated ROAS Achieved",
-    sub: "Optimized performance marketing and advertising spend.",
-    accent: "orange",
-  },
-  {
-    value: "30+",
-    label: "Influencer Contents Produced",
-    sub: "Delivered branded content tailored for high-engagement campaigns.",
-    accent: "blue",
-  },
-  {
-    value: "20+",
-    label: "Campaigns Successfully Executed",
-    sub: "Managed online, offline, and O2O campaign activations.",
-    accent: "orange",
-  },
-  {
-    value: "2",
-    label: "SaaS launched",
-    sub: "Actively used and trusted by clients.",
-    accent: "blue",
-  },
-];
+const featured = featuredHomeIds
+  .map((id) => projects.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
 ---
 
-<BaseLayout title={name} hideToggle={true}>
-  {/* Sticky Navigation Header */}
-  <header
-    class="fixed top-4 md:top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-2xl pointer-events-none"
-  >
+<BaseLayout
+  title={`${name} | Full-stack Engineer & Growth Marketer`}
+  description="Full-stack software engineer and growth marketer. 2 live SaaS products, $355K+ campaign volume, 4:1 ROAS. Open to full-time roles in SEA."
+  track="hub"
+  hideToggle={true}
+>
+  <SiteNav />
+
+  <main id="main" class="relative">
+    <HeroHome />
+
+    <!-- Floating trust bar with animated dual-accent border -->
     <div
-      class="group/header bg-zinc-950/60 backdrop-blur-md border border-zinc-800 pointer-events-auto transition-all hover:border-zinc-700 relative overflow-hidden rounded-2xl md:rounded-3xl shadow-2xl"
+      class="relative z-40 -mt-10 md:-mt-14 px-4 pointer-events-none"
     >
-      <div
-        class="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-white/5 to-blue-500/0 opacity-0 group-hover/header:opacity-100 transition-opacity"
-      >
+      <div class="animate-bob max-w-2xl mx-auto pointer-events-auto">
+        <div
+          class="animate-border-sync floating-glass rounded-2xl px-6 py-3 md:py-4 flex items-center justify-center gap-5 md:gap-8 transition-transform hover:scale-[1.02]"
+        >
+          <span
+            class="font-mono text-[9px] md:text-[10px] font-bold uppercase tracking-[0.35em] text-[color:var(--text-faint)] shrink-0"
+          >
+            Trusted by
+          </span>
+          <div
+            class="flex items-center gap-5 md:gap-8 opacity-70 grayscale transition-all duration-500 hover:opacity-100 hover:grayscale-0"
+          >
+            {
+              trustLogos.map((l) => (
+                <img
+                  src={l.src}
+                  alt={l.alt}
+                  class="h-4 md:h-7 w-auto object-contain"
+                />
+              ))
+            }
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div class="relative z-10 flex items-center gap-3 p-3 md:p-5">
-        <img
-          src={contact.profileImage}
-          alt={name}
-          class="w-8 h-8 md:w-16 md:h-16 rounded-xl md:rounded-2xl object-cover border border-zinc-800 shrink-0"
-        />
+    <ProofBand />
 
-        <div class="flex-1 min-w-0">
-          <h1
-            class="text-xs md:text-xl font-semibold text-white tracking-tight leading-none truncate"
+    <section id="work" class="relative py-16 md:py-24">
+      <div class="max-w-6xl mx-auto px-5 md:px-8">
+        <SectionHeader label="// work" />
+        <div class="flex items-end justify-between gap-4 mb-10 -mt-4">
+          <div>
+            <h2
+              class="font-grotesk text-2xl md:text-3xl font-extrabold text-[color:var(--text)] tracking-tight"
+            >
+              Featured work
+            </h2>
+            <p class="muted text-sm md:text-base mt-2 max-w-2xl">
+              Selected builds and campaigns. Each one ships real users, real revenue, or real devices, with the problem, solution, and impact in plain language.
+            </p>
+          </div>
+          <a
+            href="#contact"
+            class="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-[color:var(--accent)] hover:text-[color:var(--text)] transition-colors"
           >
-            {name}
-          </h1>
-          <p
-            class="text-zinc-500 text-[9px] md:text-xs mt-0.5 md:mt-2 truncate"
+            {hub.ctaPrimary}
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+          {featured.map((project) => <ProjectShowcase {...project} />)}
+        </div>
+      </div>
+    </section>
+
+    <ExperienceTimeline />
+    <SkillsGrid />
+    <WhyHire />
+    <Testimonials />
+
+    <section id="contact" class="relative py-16 md:py-24">
+      <div class="max-w-4xl mx-auto px-5 md:px-8">
+        <SectionHeader label="// contact" />
+
+        <div class="text-center mb-10">
+          <h2
+            class="font-grotesk text-3xl md:text-5xl font-extrabold text-[color:var(--text)] tracking-tight leading-[1.05] max-w-3xl mx-auto"
           >
-            {shortBio}
-          </p>
+            Your <span class="accent-marketing">next best hire</span> is already
+            here.<br class="hidden sm:block" /> Let's
+            <span class="accent-software">make it official</span>.
+          </h2>
+        </div>
+
+        <div class="relative">
+          <div
+            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full blur-3xl animate-cta-glow -z-10"
+            style="background: linear-gradient(90deg, var(--mkt-soft), var(--sw-soft));"
+          >
+          </div>
+          <BookCall
+            title="Book a 15-min intro call"
+            subtitle="Short form first. Then pick a time on Google Appointments or reply over email."
+            defaultInterest="hybrid"
+          />
         </div>
 
         <div
-          class="flex items-center gap-1.5 md:gap-3 shrink-0 border-l border-zinc-800 pl-3 md:pl-6"
+          class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-mono uppercase tracking-widest muted"
         >
           <a
             href={`mailto:${contact.email}`}
-            class="p-2 md:p-3.5 rounded-lg md:rounded-xl bg-zinc-900/50 border border-zinc-800
-          text-zinc-400 hover:text-white hover:border-zinc-600 transition-all hover:scale-110
-          shadow-lg"
-            title="Email Me"
+            class="hover:text-[color:var(--text)] transition-colors"
           >
-            <svg
-              class="w-3.5 h-3.5 md:w-6 md:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              ></path>
-            </svg>
+            {contact.email}
           </a>
-
+          <span class="faint">/</span>
           <a
             href={`https://${contact.linkedin}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="p-2 md:p-3.5 rounded-lg md:rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-400 hover:text-blue-400 hover:border-zinc-600 transition-all hover:scale-110 shadow-lg"
-            title="LinkedIn"
+            class="hover:text-[color:var(--text)] transition-colors"
           >
-            <svg
-              class="w-3.5 h-3.5 md:w-6 md:h-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-              ></path>
-            </svg>
+            LinkedIn
           </a>
-
-          <ThemeToggle variant="inline" />
-        </div>
-      </div>
-    </div>
-  </header>
-
-  {/* Portal Split Landing Section */}
-  <section class="relative h-screen flex flex-col md:flex-row overflow-hidden">
-    <a
-      href="/marketing"
-      class="group relative flex-1 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800 transition-all duration-700 hover:flex-[1.4]"
-    >
-      <div
-        class="absolute inset-0 bg-orange-600/5 group-hover:bg-orange-600/10 transition-colors duration-700"
-      >
-      </div>
-      <div
-        class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700"
-        style="background-image: radial-gradient(circle, rgba(249,115,22,0.4) 1px, transparent 1px); background-size: 28px 28px;"
-      >
-      </div>
-      <div
-        class="absolute inset-0 flex items-center justify-center pointer-events-none"
-      >
-        <div
-          class="w-96 h-64 rounded-full bg-orange-600/0 group-hover:bg-orange-600/8 blur-3xl transition-all duration-700"
-        >
-        </div>
-      </div>
-      <div class="relative z-10 text-center p-8">
-        <span
-          class="text-orange-400 font-mono text-[12px] uppercase tracking-[0.3em] mb-4 block opacity-60 group-hover:opacity-100 transition-opacity"
-          >Growth & Scale</span
-        >
-        <h2
-          class="font-grotesk text-4xl md:text-6xl font-extrabold text-white mb-8 leading-none tracking-tight uppercase"
-        >
-          CREATOR<br /><span class="text-orange-400">STRATEGIST</span>
-        </h2>
-        <div
-          class="inline-flex items-center gap-2.5 px-6 py-2.5 border border-orange-600/40 text-orange-400 rounded-full group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-300 text-xs font-mono font-bold uppercase tracking-widest"
-        >
-          Enter Studio
-          <svg
-            class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          <span class="faint">/</span>
+          <a
+            href={resumes.software}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-[color:var(--text)] transition-colors"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2.5"
-              d="M9 5l7 7-7 7"></path>
-          </svg>
-        </div>
-      </div>
-    </a>
-
-    <a
-      href="/software"
-      class="group relative flex-1 flex items-center justify-center overflow-hidden transition-all duration-700 hover:flex-[1.4]"
-    >
-      <div
-        class="absolute inset-0 bg-blue-600/5 group-hover:bg-blue-600/10 transition-colors duration-700"
-      >
-      </div>
-      <div
-        class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700"
-        style="background-image: radial-gradient(circle, rgba(59,130,246,0.4) 1px, transparent 1px); background-size: 28px 28px;"
-      >
-      </div>
-      <div
-        class="absolute inset-0 flex items-center justify-center pointer-events-none"
-      >
-        <div
-          class="w-96 h-64 rounded-full bg-blue-600/0 group-hover:bg-blue-600/8 blur-3xl transition-all duration-700"
-        >
-        </div>
-      </div>
-      <div class="relative z-10 text-center p-8">
-        <span
-          class="text-blue-400 font-mono text-[12px] uppercase tracking-[0.3em] mb-4 block opacity-60 group-hover:opacity-100 transition-opacity"
-          >Technical Architecture</span
-        >
-        <h2
-          class="font-grotesk text-4xl md:text-6xl font-extrabold text-white mb-8 leading-none tracking-tight uppercase"
-        >
-          SOFTWARE<br /><span class="text-blue-400">ENGINEER</span>
-        </h2>
-        <div
-          class="inline-flex items-center gap-2.5 px-6 py-2.5 border border-blue-600/40 text-blue-400 rounded-full group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 transition-all duration-300 text-xs font-mono font-bold uppercase tracking-widest"
-        >
-          Enter Lab
-          <svg
-            class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+            SWE resume
+          </a>
+          <span class="faint">/</span>
+          <a
+            href={resumes.marketing}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-[color:var(--text)] transition-colors"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2.5"
-              d="M9 5l7 7-7 7"></path>
-          </svg>
+            MKT resume
+          </a>
         </div>
-      </div>
-    </a>
 
-    {/* Floating Trust Bar with synchronized float and border glow */}
-    {
-      /* Floating Trust Bar with synchronized float, border glow, and subtle downward indicators */
-    }
-    <div
-      class="absolute bottom-5 left-1/2 -translate-x-1/2 z-40 w-[88%] max-w-2xl pointer-events-none"
-    >
-      <div class="animate-bob pointer-events-auto">
-        <div
-          class="group/bar animate-border-sync bg-zinc-950/70 backdrop-blur-md border border-zinc-800 pl-8 pr-8 py-3 md:py-5 md:px-12 rounded-xl md:rounded-3xl shadow-2xl flex flex-row md:flex-col items-center justify-center gap-4 transition-all hover:border-zinc-700 relative"
-        >
-          {/* Subtle Left Downward Arrow */}
-          <svg
-            class="absolute left-3 md:left-5 w-3 h-3 md:w-3.5 md:h-3.5 text-zinc-500/60 dark:text-zinc-600/60 group-hover/bar:text-zinc-400 transition-colors duration-300 pointer-events-none select-none"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19 9l-7 7-7-7"></path>
-          </svg>
-
+        <p class="mt-12 text-center">
           <span
-            class="relative z-10 font-mono text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-[0.4em] shrink-0"
-            >Proven Impact At</span
+            id="heart-trigger"
+            class="font-mono text-[10px] font-bold faint uppercase tracking-widest cursor-pointer hover:text-red-500 transition-colors"
+            aria-label="Easter egg"
           >
-          <div
-            class="relative z-10 flex items-center justify-center gap-5 md:gap-12 opacity-60 grayscale group-hover/bar:opacity-100 group-hover/bar:grayscale-0 transition-all duration-500"
-          >
-            <img
-              src="/logos/rivalry.png"
-              alt="Rivalry"
-              class="h-4 md:h-10 w-auto object-contain"
-            />
-            <img
-              src="/logos/yohoho.png"
-              alt="Yohoho"
-              class="h-4 md:h-10 w-auto object-contain"
-            />
-            <img
-              src="/logos/epulze.png"
-              alt="Epuzle"
-              class="h-4 md:h-10 w-auto object-contain"
-            />
-            <img
-              src="/logos/ncgc.png"
-              alt="NCGC"
-              class="h-4 md:h-10 w-auto object-contain"
-            />
-          </div>
+            made with ❤ -shaheen
+          </span>
+        </p>
+      </div>
+    </section>
+  </main>
 
-          {/* Subtle Right Downward Arrow */}
-          <svg
-            class="absolute right-3 md:right-5 w-3 h-3 md:w-3.5 md:h-3.5 text-zinc-500/60 dark:text-zinc-600/60 group-hover/bar:text-zinc-400 transition-colors duration-300 pointer-events-none select-none"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    {/* Synchronized Ambient Glow System */}
-    <div class="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-30">
-      <div
-        class="md:hidden absolute inset-0 animate-bg-sync"
-        style="background: linear-gradient(to top, rgba(59, 130, 246, 0.22), transparent);"
-      >
-      </div>
-      <div
-        class="hidden md:block absolute inset-0 animate-bg-sync"
-        style="background: radial-gradient(ellipse 60% 100% at 25% 100%, rgba(249, 115, 22, 0.22), transparent 70%), radial-gradient(ellipse 60% 100% at 75% 100%, rgba(59, 130, 246, 0.22), transparent 70%);"
-      >
-      </div>
-    </div>
-  </section>
+  <StickyBar
+    ctaText={hub.ctaPrimary}
+    contactEmail={contact.email}
+    linkedinUrl={contact.linkedin}
+    profileImage={contact.profileImage}
+    name={name}
+    statusText={hub.status}
+    resumeUrl={resumes.software}
+    ctaHref="#contact"
+  />
 </BaseLayout>
 
-<main class="relative z-10 max-w-5xl mx-auto px-6 py-15 space-y-32">
-  {/* Professional History Timeline section */}
-  <section class="reveal-section">
-    <div class="flex items-center gap-4 mb-16">
-      <span
-        class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
-        >// career</span
-      >
-      <div class="h-px flex-1 bg-zinc-800/50"></div>
-    </div>
-
-    <div class="relative">
-      <div
-        class="timeline-spine absolute left-[7px] md:left-[11px] top-3 bottom-3 w-px"
-      >
-      </div>
-      <div class="space-y-0">
-        {
-          allExperiences.map((exp) => (
-            <a
-              href={`/${exp.category}#card-${exp.id}`}
-              class="timeline-item group relative pl-8 md:pl-12 pb-10 block"
-              style={`--exp-color: ${catStyle[exp.category].color}`}
-            >
-              <div class="timeline-dot absolute left-0 top-2 w-[15px] h-[15px] md:w-[23px] md:h-[23px] rounded-full border-2 border-zinc-700 bg-zinc-950 transition-all duration-300 group-hover:scale-110" />
-              <div class="relative bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-5 md:p-6 transition-all duration-300 group-hover:border-zinc-700 group-hover:-translate-y-0.5 group-hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] overflow-hidden">
-                <div class="timeline-accent absolute left-0 top-0 bottom-0 w-[3px] rounded-l-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div class="flex items-start justify-between gap-4 mb-3">
-                  <div class="flex items-center gap-3">
-                    <div class="timeline-badge w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0">
-                      {exp.company.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 class="text-sm md:text-base font-semibold text-white leading-tight">
-                        {exp.title}
-                      </h3>
-                      <p class="text-xs text-zinc-500 mt-0.5">{exp.company}</p>
-                    </div>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <span class="font-mono text-[11px] md:text-xs text-zinc-300 font-semibold uppercase tracking-wider block">
-                      {exp.date}
-                    </span>
-                    <span
-                      class="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full border mt-1 inline-block"
-                      style={`color: ${catStyle[exp.category].color}; border-color: ${catStyle[exp.category].border}; background-color: ${catStyle[exp.category].bg};`}
-                    >
-                      {exp.category}
-                    </span>
-                  </div>
-                </div>
-                <p class="text-xs md:text-sm text-zinc-400 leading-relaxed line-clamp-2 pl-11">
-                  {exp.description}
-                </p>
-                <div class="mt-3 pl-11 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <span class="font-mono text-[12px] text-zinc-600 uppercase tracking-widest">
-                    view in
-                    <span
-                      class="font-mono text-[12px] text-zinc-600 uppercase tracking-widest"
-                      style={{
-                        color: catStyle[exp.category].color,
-                        borderColor: catStyle[exp.category].border,
-                      }}
-                    >
-                      {exp.category}
-                    </span>
-                  </span>
-                  <svg
-                    class="w-2.5 h-2.5 text-zinc-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.5"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  {/* Filterable Case Studies & Projects section */}
-  <section class="reveal-section">
-    <div class="flex items-center gap-4 mb-10">
-      <span
-        class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.35em] whitespace-nowrap"
-        >// work</span
-      >
-      <div class="h-px flex-1 bg-zinc-800/50"></div>
-    </div>
-
-    <div class="flex items-center gap-2 mb-10">
-      <button
-        class="project-tab font-mono text-xs px-5 py-2 rounded-lg border transition-all duration-200 uppercase tracking-widest"
-        data-tab="marketing"
-        data-active="true"
-        id="tab-marketing"
-      >
-        Marketing
-      </button>
-      <button
-        class="project-tab font-mono text-xs px-5 py-2 rounded-lg border transition-all duration-200 uppercase tracking-widest"
-        data-tab="software"
-        id="tab-software"
-      >
-        Software
-      </button>
-    </div>
-
-    <div id="panel-marketing" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      {marketingProjects.map((project) => <MarketingCard {...project} />)}
-    </div>
-    <div
-      id="panel-software"
-      class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden"
-    >
-      {softwareProjects.map((project) => <ProjectCard {...project} />)}
-    </div>
-  </section>
-
-  {/* Unified, high-contrast Contact Card Section */}
-  <section class="reveal-section">
-    <div
-      class="mt-2 bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-3xl p-8 md:p-5 flex flex-col items-center gap-5 text-center relative overflow-hidden"
-    >
-      {/* Soft background radial grid light overlay */}
-      <div
-        class="absolute inset-0 bg-radial-gradient from-zinc-800/5 via-transparent to-transparent -z-10"
-      >
-      </div>
-
-      <span
-        class="font-mono text-[10px] md:text-xs font-bold text-zinc-500 uppercase tracking-[0.35em] whitespace-nowrap"
-      >
-        // contact
-      </span>
-
-      <h2
-        class="font-grotesk text-[19px] xs:text-[21px] sm:text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight max-w-sm sm:max-w-2xl leading-tight"
-      >
-        Your <span class="text-orange-500 dark:text-orange-400"
-          >next best hire is already here</span
-        >.<br class="block sm:hidden" /> Let's <span
-          class="text-blue-500 dark:text-blue-400">make it official</span
-        >.
-      </h2>
-
-      <div class="relative">
-        {/* Dynamic backdrop breathing scale-and-pulse glow */}
-        <div
-          class="animate-cta-glow absolute -inset-3 rounded-2xl bg-gradient-to-r from-orange-500/30 via-blue-500/20 to-orange-500/30 -z-10"
-        >
-        </div>
-        <a
-          href={`mailto:${contact.email}`}
-          class="cta-button-contrast group relative inline-flex items-center gap-3 px-10 py-4 rounded-xl font-bold font-mono uppercase text-xs tracking-[0.2em] overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.08)] hover:shadow-[0_0_30px_rgba(255,255,255,0.18)]"
-        >
-          {/* Inner animating hover gradient overlay */}
-          <div
-            class="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500/10 via-white/5 to-blue-500/10 animate-pulse opacity-70"
-          >
-          </div>
-          <div
-            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-white/10"
-          >
-          </div>
-
-          {/* Restored envelope icon with custom wiggling animation */}
-          <svg
-            class="relative z-10 w-4 h-4 shrink-0 transition-transform duration-300 animate-envelope"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            ></path>
-          </svg>
-          <span class="relative z-10">Send an Email</span>
-
-          {/* Arrow indicator */}
-          <svg
-            class="relative z-10 w-3.5 h-3.5 opacity-70 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2.5"
-              d="M9 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
-
-      <div class="flex items-center gap-6 mt-4">
-        <a
-          href={`https://${contact.linkedin}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-mono text-[11px] md:text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
-        >
-          LinkedIn
-        </a>
-        <span class="text-zinc-800">/</span>
-        <a
-          href={`https://docs.google.com/document/d/1fegmtrlKvyum3vJwKF9Vs8ELC9p7o4DuK4RyrKNJpno/export?format=pdf`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-mono text-[11px] md:text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
-        >
-          MKT RSME
-        </a>
-        <span class="text-zinc-800">/</span>
-        <a
-          href={`https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-mono text-[11px] md:text-[12px] font-bold text-zinc-500 uppercase tracking-widest hover:text-white transition-colors"
-        >
-          SFT RSME
-        </a>
-      </div>
-      <span
-        id="heart-trigger"
-        class="font-mono text-[10px] font-bold text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-red-500 transition-colors"
-      >
-        made with ❤ -shaheen
-      </span>
-    </div>
-  </section>
-</main>
-
-{
-  /* Attaches home-specific interactive features like count-ups and dynamic filters */
-}
 <script src="../scripts/index-page.ts"></script>
 <script src="../scripts/portal.ts"></script>

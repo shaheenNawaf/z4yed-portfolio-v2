@@ -1,0 +1,70 @@
+---
+import { experiences, experienceTech } from "../data/resume";
+import SectionHeader from "./section_header.astro";
+---
+
+<section id="experience" class="relative py-16 md:py-24">
+  <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <SectionHeader label="// career" />
+
+    <ol class="relative ml-2 md:ml-3 border-l hairline">
+      {
+        experiences.map((exp) => {
+          const tech = experienceTech[exp.id] ?? [];
+          return (
+            <li
+              class="relative pl-6 md:pl-10 pb-10 last:pb-0"
+              style={`--card-accent: ${exp.category === "marketing" ? "var(--mkt)" : "var(--sw)"}`}
+            >
+              <span
+                class="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full border-2"
+                style={`background-color: var(--bg); border-color: var(--card-accent)`}
+                aria-hidden="true"
+              />
+              <div class="panel radius-card p-5 md:p-6">
+                <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+                  <h3 class="font-grotesk text-base md:text-lg font-extrabold text-[color:var(--text)] tracking-tight">
+                    {exp.company}
+                  </h3>
+                  <span class="font-mono text-[10px] uppercase tracking-widest muted">
+                    {exp.date}
+                  </span>
+                </div>
+                <p
+                  class="text-[color:var(--card-accent)] text-[12px] font-bold uppercase tracking-widest mb-3"
+                >
+                  {exp.title}
+                </p>
+                <p class="muted text-sm leading-relaxed mb-4">
+                  {exp.description}
+                </p>
+                {exp.details.length > 0 && (
+                  <ul class="space-y-2 mb-4">
+                    {exp.details.slice(0, 3).map((d) => (
+                      <li class="flex items-start gap-2 text-[13px] muted leading-relaxed">
+                         <span
+                           class="mt-1.5 w-1 h-1 rounded-full shrink-0"
+                           style={`background-color: var(--card-accent)`}
+                         />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {tech.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5 pt-3 border-t hairline">
+                    {tech.map((t) => (
+                      <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>

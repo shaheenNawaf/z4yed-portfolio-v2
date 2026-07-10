@@ -1,0 +1,40 @@
+---
+import { hubStats } from "../data/resume";
+---
+
+<section id="proof" class="relative py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-5 md:px-8">
+    <div class="flex items-center gap-3 mb-8">
+      <h2
+        class="font-grotesk text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--text)]"
+      >
+        Proof, not promises
+      </h2>
+      <div class="h-px flex-1 hairline"></div>
+    </div>
+
+    <div
+      class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4"
+    >
+      {
+        hubStats.map((stat, i) => (
+          <div
+            class="panel radius-card p-5 md:p-6 reveal-section"
+            style={`border-top: 2px solid ${stat.accent === "marketing" ? "var(--mkt)" : "var(--sw)"}; transition-delay: ${i * 90}ms;`}
+          >
+            <p
+              class="stat-number font-grotesk text-3xl md:text-4xl font-extrabold text-[color:var(--text)] tracking-tight"
+              data-value={stat.value}
+            >
+              {stat.value}
+            </p>
+            <p class="mt-2 text-sm font-semibold text-[color:var(--text)] leading-snug">
+              {stat.label}
+            </p>
+            <p class="mt-1 text-[12px] muted leading-snug">{stat.sub}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

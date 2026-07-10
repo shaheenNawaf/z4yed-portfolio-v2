@@ -1,0 +1,124 @@
+---
+import { name, contact, hub, resumes } from "../data/resume";
+---
+
+<section
+  id="hero"
+  class="relative isolate min-h-[100dvh] flex items-center pt-20 md:pt-24 pb-16 md:pb-20 overflow-hidden"
+>
+  <div
+    class="absolute inset-0 overflow-hidden pointer-events-none -z-10"
+    aria-hidden="true"
+  >
+    <!-- Dual-track ambient glows: growth (orange) top-right, engineering (blue) bottom-left -->
+    <div
+      class="absolute -top-40 -right-40 w-[40rem] h-[40rem] rounded-full blur-3xl glow-mkt"
+    >
+    </div>
+    <div
+      class="absolute -bottom-40 -left-40 w-[36rem] h-[36rem] rounded-full blur-3xl glow-sw"
+    >
+    </div>
+    <!-- Subtle large dot texture for focus behind the name -->
+    <div
+      class="absolute inset-0 opacity-60"
+      style="background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.5px); background-size: 26px 26px; mask-image: radial-gradient(circle at 50% 40%, black, transparent 70%);"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto w-full px-5 md:px-8">
+    <div class="grid lg:grid-cols-[1.25fr_0.75fr] gap-10 lg:gap-16 items-center">
+      <div>
+        <div class="flex flex-wrap items-center gap-2 mb-6">
+          <span
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border hairline bg-[color:var(--card-bg-2)] text-[11px] font-mono font-bold uppercase tracking-widest text-[color:var(--text)]"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+            {hub.status}
+          </span>
+        </div>
+
+        <h1
+          class="font-grotesk text-5xl sm:text-6xl md:text-7xl font-extrabold text-[color:var(--text)] tracking-tighter leading-[1.02] max-w-2xl"
+        >
+          {name}
+        </h1>
+
+        <p
+          class="mt-4 text-base md:text-lg muted font-medium tracking-tight"
+        >
+          Full-stack Software Engineer &amp; Growth Marketer
+        </p>
+
+        <p
+          class="mt-6 muted text-base md:text-lg leading-relaxed max-w-[58ch]"
+        >
+          {hub.headline}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href="#contact"
+            class="track-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-[0.15em] transition-all active:scale-[0.98]"
+          >
+            {hub.ctaPrimary}
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          <a
+            href={`https://${contact.linkedin}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="panel inline-flex items-center px-4 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+          >
+            LinkedIn
+          </a>
+          <div class="flex items-center gap-2 text-[11px] muted">
+            <a
+              href={resumes.software}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[color:var(--text)] transition-colors font-mono uppercase tracking-wider"
+            >
+              SWE resume
+            </a>
+            <span class="faint">/</span>
+            <a
+              href={resumes.marketing}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-[color:var(--text)] transition-colors font-mono uppercase tracking-wider"
+            >
+              MKT resume
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center lg:justify-end">
+        <div
+          class="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden panel"
+        >
+          <div
+            class="absolute inset-0 rounded-2xl pointer-events-none"
+            style="box-shadow: 0 0 0 1px var(--accent-border), 0 20px 60px -20px var(--mkt-soft), 0 20px 60px -20px var(--sw-soft), 0 20px 60px -20px rgba(0,0,0,0.6);"
+          >
+          </div>
+          <img
+            src={contact.profileImage}
+            alt={name}
+            class="absolute inset-0 w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+        <div
+          class="absolute -bottom-3 -right-3 panel rounded-xl px-3 py-2 text-[11px] font-mono uppercase tracking-widest muted hidden sm:block"
+        >
+          {contact.location}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

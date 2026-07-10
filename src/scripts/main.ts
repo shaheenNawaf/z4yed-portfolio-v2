@@ -23,15 +23,10 @@ const setupModals = () => {
       const modalId = trigger.getAttribute('data-modal-id');
       if (!modalId) return;
       const dialog = document.getElementById(modalId) as HTMLDialogElement | null;
-      if (dialog) {
-        dialog.showModal();
-        document.body.style.overflow = 'hidden';
-
-        const iframe = dialog.querySelector('iframe[data-src]') as HTMLIFrameElement | null;
-        if (iframe && !iframe.src) {
-          iframe.src = iframe.dataset.src ?? '';
-        }
-      }
+       if (dialog) {
+         dialog.showModal();
+         document.body.style.overflow = 'hidden';
+       }
     });
   });
 
@@ -88,47 +83,6 @@ const setupStickyBar = () => {
   observer.observe(heroTrigger);
 };
 
-// Manages keyboard navigation (Arrow keys and Escape) within gallery views and modals
-const setupGalleryNav = () => {
-  const navButtons = document.querySelectorAll('[data-nav-to]');
-  
-  navButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const targetId = btn.getAttribute('data-nav-to');
-      const currentDialog = btn.closest('dialog');
-      
-      if (currentDialog) {
-        currentDialog.close();
-      }
-
-      const nextTrigger = document.querySelector(`[data-modal-id="${targetId}"]`) as HTMLElement;
-      if (nextTrigger) {
-        nextTrigger.click();
-      }
-    });
-  });
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    const openDialog = document.querySelector('dialog[open]');
-    if (!openDialog) return;
-
-    if (e.key === 'ArrowRight') {
-      const nextBtn = openDialog.querySelector('[data-nav-dir="next"]') as HTMLElement;
-      nextBtn?.click();
-    } else if (e.key === 'ArrowLeft') {
-      const prevBtn = openDialog.querySelector('[data-nav-dir="prev"]') as HTMLElement;
-      prevBtn?.click();
-    } else if (e.key === 'Escape') {
-        const closeBtn = openDialog.querySelector('.close-modal') as HTMLElement;
-        closeBtn?.click();
-    }
-  };
-
-  window.removeEventListener('keydown', handleKeyDown);
-  window.addEventListener('keydown', handleKeyDown);
-};
-
 // Handles clicking theme buttons and setting persistent storage changes across views
 const setupTheme = () => {
   const toggle = document.getElementById('theme-toggle');
@@ -143,8 +97,6 @@ const setupTheme = () => {
     
     const theme = isLight ? 'light' : 'dark';
     localStorage.setItem('theme', theme);
-    
-    window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
   });
 };
 
@@ -169,7 +121,6 @@ const setupImageProtection = () => {
 const initMain = () => {
   setupModals();
   setupStickyBar();
-  setupGalleryNav();
   setupTheme();
   setupImageProtection(); // Invokes global image security
 };

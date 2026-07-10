@@ -1,10 +1,11 @@
 ---
 import BaseLayout from "../layouts/layout.astro";
 import IdentityHero from "../components/identity_hero.astro";
-import ProjectCard from "../components/project_card.astro";
+import WorkCard from "../components/work_card.astro";
 import ExperienceCard from "../components/experience_card.astro";
 import StickyBar from "../components/sticky_bar.astro";
-import ThemeToggle from "../components/theme_toggle.astro";
+import ZoneNav from "../components/zone_nav.astro";
+import BookCall from "../components/book_call.astro";
 import {
   name,
   softwareSummary,
@@ -12,42 +13,37 @@ import {
   experiences,
   softwareSkills,
   contact,
+  resumes,
+  featuredProjectIds,
+  softwareFit,
+  hub,
+  trustLogos,
 } from "../data/resume";
 
-const softwareProjects = projects.filter((p) => p.category === "software");
+const featured = featuredProjectIds.software
+  .map((id) => projects.find((p) => p.id === id))
+  .filter(Boolean);
+
+const featuredIds = new Set<string>(featuredProjectIds.software);
+const moreProjects = projects.filter(
+  (p) => p.category === "software" && !featuredIds.has(p.id),
+);
 const softwareExp = experiences.filter((e) => e.category === "software");
 ---
 
-<BaseLayout title="Shaheen | Software Engineering" hideToggle={true}>
+<BaseLayout
+  title="Shaheen | Software Engineering"
+  description="Full-stack software engineer. Live SaaS, product shipping, remote SEA. Book an intro call."
+  track="software"
+  hideToggle={true}
+>
   <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
   </div>
 
-  <main class="software-page max-w-4xl mx-auto w-full flex flex-col py-12 px-6">
-    {/* Navigation row with reduced bottom margin to pull Hero card closer */}
-    <nav class="flex justify-between items-center w-full mb-6 md:mb-10">
-      <a
-        href="/"
-        class="inline-flex items-center gap-2 py-2 md:py-0 px-4 md:px-6 h-auto md:h-[54px] rounded-xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm text-zinc-400 hover:text-orange-400 hover:border-orange-500/30 hover:bg-zinc-800/60 transition-all text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] group shrink-0"
-      >
-        <svg
-          class="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover:-translate-x-0.5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2.5"
-            d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Back to Portal
-      </a>
-      <ThemeToggle variant="inline" />
-    </nav>
+  <main id="main" class="software-page max-w-4xl mx-auto w-full flex flex-col py-12 px-6">
+    <ZoneNav mode="software" />
 
-    {/* Layout content stack wrapper */}
-    <div class="flex flex-col gap-16">
+    <div class="flex flex-col gap-16 md:gap-20">
       <IdentityHero
         name={name}
         headline="Full-stack Software Engineer & Project Manager"
@@ -57,53 +53,115 @@ const softwareExp = experiences.filter((e) => e.category === "software");
         contact={contact}
         mode="software"
         impactBadge="Dean's List · Ateneo de Davao"
-        resumeUrl="https://docs.google.com/document/d/1fegmtrlKvyum3vJwKF9Vs8ELC9p7o4DuK4RyrKNJpno/export?format=pdf"
+        resumeUrl={resumes.software}
       />
 
       <section>
-        {
-          /* Adjusted tracking & added wrapping support to avoid mobile overflow */
-        }
-        <div class="flex items-center gap-4 mb-8">
-          <span
-            class="font-mono text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] md:tracking-[0.35em] whitespace-normal break-words leading-relaxed"
-          >
-            // featured projects
-          </span>
-          <div class="h-px flex-1 bg-zinc-800/50"></div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {softwareProjects.map((project) => <ProjectCard {...project} />)}
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 radius-card border hairline bg-[color:var(--card-bg)] px-5 py-4"
+        >
+          <p class="text-xs muted max-w-sm leading-relaxed">
+            Shipping owner for product and platforms. Open to full-time remote
+            SEA roles; select freelance when the build is right.
+          </p>
+          <div class="flex items-center gap-6 opacity-60">
+            {
+              trustLogos.slice(0, 2).map((logo) => (
+                <img src={logo.src} alt={logo.alt} class="h-6 w-auto object-contain" />
+              ))
+            }
+          </div>
         </div>
       </section>
 
-      <section class="pb-21">
-        {
-          /* Adjusted tracking & added wrapping support to avoid mobile overflow */
-        }
-        <div class="flex items-center gap-4 mb-8">
-          <span
-            class="font-mono text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] md:tracking-[0.35em] whitespace-normal break-words leading-relaxed"
+      <section>
+        <div class="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <h2
+              class="zone-heading font-grotesk text-xl md:text-2xl font-extrabold tracking-tight"
+            >
+              Flagship builds
+            </h2>
+            <p class="mt-1 text-sm muted">
+              Depth over volume. Live systems and real users.
+            </p>
+          </div>
+          <a
+            href="#book-call"
+            class="hidden sm:inline-flex text-[10px] font-bold uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors"
           >
-            // engineering history & experience
-          </span>
-          <div class="h-px flex-1 bg-zinc-800/50"></div>
+            {hub.ctaPrimary}
+          </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {
+            featured.map((project) => project && <WorkCard {...project} mode="software" />)
+          }
+        </div>
+      </section>
+
+      <section class="zone-surface p-6 md:p-8">
+        <h2
+          class="zone-heading font-grotesk text-lg font-extrabold mb-4"
+        >
+          Good fit when you need
+        </h2>
+        <ul class="space-y-3">
+          {
+            softwareFit.map((item) => (
+              <li class="flex items-start gap-3 text-sm muted">
+                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      {
+        moreProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8">
+              <h2 class="text-sm font-semibold muted">More projects</h2>
+              <div class="h-px flex-1 hairline" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {moreProjects.map((project) => (
+                <WorkCard {...project} mode="software" />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section>
+        <div class="flex items-center gap-4 mb-8">
+          <h2 class="text-sm font-semibold muted">Engineering history</h2>
+          <div class="h-px flex-1 hairline" />
         </div>
         <div class="flex flex-col gap-4">
           {softwareExp.map((exp) => <ExperienceCard {...exp} />)}
         </div>
       </section>
+
+      <section class="pb-24">
+        <BookCall
+          defaultInterest="software"
+          title="Book a lab intro"
+          subtitle="Talk product, stack, and how I ship. Full-time preferred."
+        />
+      </section>
     </div>
   </main>
 
   <StickyBar
-    ctaText="Let's build"
+    ctaText={hub.ctaPrimary}
     contactEmail={contact.email}
     linkedinUrl={contact.linkedin}
     profileImage={contact.profileImage}
     name={name}
-    statusText="Available for Software Roles"
-    resumeUrl="https://docs.google.com/document/d/1fegmtrlKvyum3vJwKF9Vs8ELC9p7o4DuK4RyrKNJpno/export?format=pdf
-"
+    statusText="Remote · SEA · Software roles"
+    resumeUrl={resumes.software}
+    ctaHref="#book-call"
   />
 </BaseLayout>

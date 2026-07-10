@@ -1,17 +1,11 @@
 ---
-interface Props {
-  variant?: "fixed" | "inline";
-}
-const { variant = "fixed" } = Astro.props;
 const positionClass =
-  variant === "inline"
-    ? "relative cursor-pointer p-2 md:p-3.5 rounded-lg md:rounded-xl bg-zinc-900/50 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600 transition-all hover:scale-110 shadow-lg"
-    : "fixed cursor-pointer top-20 right-4 md:top-6 md:right-6 z-[100] p-2 md:p-3 rounded-xl md:rounded-2xl shadow-2xl";
+  "relative cursor-pointer p-2 md:p-3.5 rounded-lg md:rounded-xl surface text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all hover:scale-110";
 ---
 
 <button
   id="theme-toggle"
-  class={`${positionClass} border border-zinc-800 bg-zinc-900/50 backdrop-blur-md text-zinc-400 hover:text-white transition-all pointer-events-auto`}
+  class={`${positionClass} border hairline`}
   aria-label="Toggle Theme"
 >
   <svg

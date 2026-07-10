@@ -1,0 +1,63 @@
+---
+import { skillGroups } from "../data/resume";
+
+const eng = skillGroups.engineering;
+const mkt = skillGroups.marketing;
+---
+
+<section id="skills" class="relative py-16 md:py-24">
+  <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <div class="flex items-center gap-3 mb-10">
+      <h2
+        class="font-grotesk text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--text)]"
+      >
+        Skills
+      </h2>
+      <div class="h-px flex-1 hairline"></div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="panel radius-card p-6 border-t-2 border-t-[color:var(--sw-border)]">
+        <div class="flex items-center gap-2 mb-5">
+          <span class="font-mono text-[10px] font-bold uppercase tracking-widest accent-software">Engineering</span>
+          <span class="h-px flex-1 hairline"></span>
+        </div>
+        <dl class="space-y-5">
+          {
+            Object.entries(eng).map(([group, items]) => (
+              <div>
+                <dt class="text-[10px] font-bold uppercase tracking-[0.18em] faint mb-2">
+                  {group}
+                </dt>
+                <dd class="text-[13px] muted leading-relaxed">
+                  {items.join(" · ")}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div class="panel radius-card p-6 border-t-2 border-t-[color:var(--mkt-border)]">
+        <div class="flex items-center gap-2 mb-5">
+          <span class="font-mono text-[10px] font-bold uppercase tracking-widest accent-marketing">Marketing</span>
+          <span class="h-px flex-1 hairline"></span>
+        </div>
+        <dl class="space-y-5">
+          {
+            Object.entries(mkt).map(([group, items]) => (
+              <div>
+                <dt class="text-[10px] font-bold uppercase tracking-[0.18em] faint mb-2">
+                  {group}
+                </dt>
+                <dd class="text-[13px] muted leading-relaxed">
+                  {items.join(" · ")}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

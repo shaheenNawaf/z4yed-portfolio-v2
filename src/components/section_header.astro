@@ -1,0 +1,12 @@
+---
+interface Props {
+  label: string;
+  id?: string;
+}
+const { label, id } = Astro.props;
+---
+
+<div class="flex items-center gap-4 mb-8 md:mb-10">
+  <span class="terminal-label" id={id}>{label}</span>
+  <div class="terminal-rule"></div>
+</div>

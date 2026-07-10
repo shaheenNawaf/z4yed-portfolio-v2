@@ -1,10 +1,11 @@
 ---
 import BaseLayout from "../layouts/layout.astro";
 import IdentityHero from "../components/identity_hero.astro";
-import MarketingCard from "../components/marketing_card.astro";
+import WorkCard from "../components/work_card.astro";
 import ExperienceCard from "../components/experience_card.astro";
 import StickyBar from "../components/sticky_bar.astro";
-import ThemeToggle from "../components/theme_toggle.astro";
+import ZoneNav from "../components/zone_nav.astro";
+import BookCall from "../components/book_call.astro";
 import {
   name,
   marketingSummary,
@@ -12,42 +13,37 @@ import {
   experiences,
   marketingSkills,
   contact,
+  resumes,
+  featuredProjectIds,
+  marketingFit,
+  hub,
+  trustLogos,
 } from "../data/resume";
 
-const marketingProjects = projects.filter((p) => p.category === "marketing");
+const featured = featuredProjectIds.marketing
+  .map((id) => projects.find((p) => p.id === id))
+  .filter(Boolean);
+
+const featuredIds = new Set<string>(featuredProjectIds.marketing);
+const moreProjects = projects.filter(
+  (p) => p.category === "marketing" && !featuredIds.has(p.id),
+);
 const marketingExp = experiences.filter((e) => e.category === "marketing");
 ---
 
-<BaseLayout title="Shaheen | Creator Partnerships" hideToggle={true}>
+<BaseLayout
+  title="Shaheen | Creator Partnerships"
+  description="Growth marketer and creator strategist. SEA scale, ROAS, communities. Book an intro call."
+  track="marketing"
+  hideToggle={true}
+>
   <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
   </div>
 
-  <main class="max-w-4xl mx-auto w-full flex flex-col py-12 px-6">
-    {/* Navigation row with reduced bottom margin to pull Hero card closer */}
-    <nav class="flex justify-between items-center w-full mb-6 md:mb-10">
-      <a
-        href="/"
-        class="inline-flex items-center gap-2 py-2 md:py-0 px-4 md:px-6 h-auto md:h-[54px] rounded-xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm text-zinc-400 hover:text-orange-400 hover:border-orange-500/30 hover:bg-zinc-800/60 transition-all text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] group shrink-0"
-      >
-        <svg
-          class="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover:-translate-x-0.5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2.5"
-            d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Back to Portal
-      </a>
-      <ThemeToggle variant="inline" />
-    </nav>
+  <main id="main" class="marketing-page max-w-4xl mx-auto w-full flex flex-col py-12 px-6">
+    <ZoneNav mode="marketing" />
 
-    {/* Layout content stack wrapper */}
-    <div class="flex flex-col gap-16">
+    <div class="flex flex-col gap-16 md:gap-20">
       <IdentityHero
         name={name}
         headline="Growth Marketing"
@@ -57,52 +53,118 @@ const marketingExp = experiences.filter((e) => e.category === "marketing");
         contact={contact}
         mode="marketing"
         impactBadge="$355K+ Managed Volume in 4 m"
-        resumeUrl="https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf"
+        resumeUrl={resumes.marketing}
       />
 
       <section>
-        {
-          /* Adjusted tracking & added wrapping support to avoid mobile overflow */
-        }
-        <div class="flex items-center gap-4 mb-8">
-          <span
-            class="font-mono text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] md:tracking-[0.35em] whitespace-normal break-words leading-relaxed"
-          >
-            // campaign case studies
-          </span>
-          <div class="h-px flex-1 bg-zinc-800/50"></div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {marketingProjects.map((project) => <MarketingCard {...project} />)}
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 radius-card border track-accent-bg px-5 py-4"
+        >
+          <p class="text-xs muted max-w-sm leading-relaxed">
+            Creator partnerships, community systems, and performance plays that
+            move volume. SEA market operator who builds the stack behind the
+            campaigns.
+          </p>
+          <div class="flex items-center gap-6 opacity-70">
+            {
+              trustLogos.map((logo) => (
+                <img src={logo.src} alt={logo.alt} class="h-6 w-auto object-contain" />
+              ))
+            }
+          </div>
         </div>
       </section>
 
-      <section class="pb-21">
-        {
-          /* Adjusted tracking & added wrapping support to avoid mobile overflow */
-        }
-        <div class="flex items-center gap-4 mb-8">
-          <span
-            class="font-mono text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] md:tracking-[0.35em] whitespace-normal break-words leading-relaxed"
+      <section>
+        <div class="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <h2
+              class="zone-heading font-grotesk text-xl md:text-2xl font-extrabold tracking-tight"
+            >
+              Flagship campaigns
+            </h2>
+            <p class="mt-1 text-sm muted">
+              Volume, ROAS, and systems, not just creative drops.
+            </p>
+          </div>
+          <a
+            href="#book-call"
+            class="hidden sm:inline-flex text-[10px] font-bold uppercase tracking-wider text-orange-400 hover:text-orange-300 transition-colors"
           >
-            // professional history
-          </span>
-          <div class="h-px flex-1 bg-zinc-800/50"></div>
+            {hub.ctaPrimary}
+          </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {
+            featured.map(
+              (project) => project && <WorkCard {...project} mode="marketing" />,
+            )
+          }
+        </div>
+      </section>
+
+      <section class="zone-surface p-6 md:p-8">
+        <h2
+          class="zone-heading font-grotesk text-lg font-extrabold mb-4"
+        >
+          Good fit when you need
+        </h2>
+        <ul class="space-y-3">
+          {
+            marketingFit.map((item) => (
+              <li class="flex items-start gap-3 text-sm muted">
+                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0" />
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      {
+        moreProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8">
+              <h2 class="text-sm font-semibold muted">More campaigns</h2>
+              <div class="h-px flex-1 hairline" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {moreProjects.map((project) => (
+                <WorkCard {...project} mode="marketing" />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section>
+        <div class="flex items-center gap-4 mb-8">
+          <h2 class="text-sm font-semibold muted">Professional history</h2>
+          <div class="h-px flex-1 hairline" />
         </div>
         <div class="flex flex-col gap-4">
           {marketingExp.map((exp) => <ExperienceCard {...exp} />)}
         </div>
       </section>
+
+      <section class="pb-24">
+        <BookCall
+          defaultInterest="marketing"
+          title="Book a studio intro"
+          subtitle="Talk growth systems, creator ops, and SEA markets. Full-time preferred."
+        />
+      </section>
     </div>
   </main>
 
   <StickyBar
-    ctaText="Let's talk"
+    ctaText={hub.ctaPrimary}
     contactEmail={contact.email}
     linkedinUrl={contact.linkedin}
     profileImage={contact.profileImage}
     name={name}
-    statusText="Avalable for marketing roles"
-    resumeUrl="https://docs.google.com/document/d/1yOaGJtXkOTe59ygH9QrlcFg2VB70k6qNKo0e-Hc_Aeg/export?format=pdf"
+    statusText="Remote · SEA · Marketing roles"
+    resumeUrl={resumes.marketing}
+    ctaHref="#book-call"
   />
 </BaseLayout>
