@@ -118,18 +118,6 @@ Appointment Button
 
 ---
 
-# Footer
-
-Simple.
-
-Socials.
-
-Resume.
-
-Copyright.
-
----
-
 # Acceptance Criteria
 
 □ Components reusable

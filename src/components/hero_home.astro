@@ -1,5 +1,12 @@
 ---
-import { name, contact, hub, resumes, hubStats, trustLogos } from "../data/resume";
+import {
+  name,
+  contact,
+  hub,
+  resumes,
+  hubStats,
+  trustLogos,
+} from "../data/resume";
 
 const heroMetrics = [hubStats[0], hubStats[3], hubStats[1], hubStats[2]];
 const words = hub.position.split(" ");
@@ -48,8 +55,7 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
                 stroke="var(--mkt)"
                 stroke-width="2"
                 stroke-linecap="round"
-                fill="none"
-              />
+                fill="none"></path>
               <!-- Imperfect arrowhead with wobble -->
               <path
                 d="M 18,20 L 12,26 L 19,25"
@@ -57,8 +63,7 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                fill="none"
-              />
+                fill="none"></path>
             </svg>
           </div>
 
@@ -111,24 +116,27 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
       <!-- Left column: argument -->
       <div class="order-2 lg:order-1">
         <!-- Name eyebrow -->
-        <p
+        <!-- <p
           class="hero-reveal-name text-[13px] font-bold uppercase tracking-[0.08em] text-[color:var(--accent)] mb-5"
         >
           {name}
-        </p>
+        </p> -->
 
         <!-- Headline + Annotation 4: check mark -->
         <h1
           class="relative text-5xl sm:text-6xl md:text-7xl font-semibold text-[color:var(--text)] tracking-tighter leading-[1.1] max-w-2xl"
         >
-          {headlineWords.map((word, i) => (
-            <span
-              class="hero-word inline-block"
-              style={`animation-delay: ${i * 80}ms;`}
-            >
-              {word}{i < headlineWords.length - 1 ? "\u00A0" : ""}
-            </span>
-          ))}
+          {
+            headlineWords.map((word, i) => (
+              <span
+                class="hero-word inline-block"
+                style={`animation-delay: ${i * 80}ms;`}
+              >
+                {word}
+                {i < headlineWords.length - 1 ? "\u00A0" : ""}
+              </span>
+            ))
+          }
           <!-- Hand-drawn check mark near end of headline (hidden on mobile) -->
           <svg
             class="hero-check hidden sm:block absolute right-0 md:-right-2 bottom-2 md:bottom-3 w-4 h-4 md:w-5 md:h-5 pointer-events-none"
@@ -142,8 +150,7 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
               stroke-width="2.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              fill="none"
-            />
+              fill="none"></path>
           </svg>
         </h1>
 
@@ -166,16 +173,13 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
                 stroke="var(--mkt)"
                 stroke-width="2"
                 stroke-linecap="round"
-                fill="none"
-              />
+                fill="none"></path>
             </svg>
           </span>
         </p>
 
         <!-- CTA group -->
-        <div
-          class="hero-reveal-cta mt-8 flex flex-wrap items-center gap-2.5"
-        >
+        <div class="hero-reveal-cta mt-8 flex flex-wrap items-center gap-2.5">
           <a
             href="#contact"
             class="track-btn inline-flex items-center justify-center px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all active:scale-[0.98]"
@@ -186,9 +190,9 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
             href={`https://${contact.linkedin}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="surface inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.15em] text-[color:var(--text)] hover:text-[color:var(--text-muted)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+            class="surface inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.22em] text-[color:var(--text)] hover:text-[color:var(--text-muted)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
           >
-            LinkedIn
+            Linked_In
             <svg
               class="w-3 h-3"
               fill="none"
@@ -203,7 +207,7 @@ const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
                 d="M7 17L17 7M17 7H7M17 7v10"></path>
             </svg>
           </a>
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-2.5 mt-2">
             <a
               href={resumes.software}
               target="_blank"

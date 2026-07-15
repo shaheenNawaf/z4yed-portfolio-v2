@@ -1,6 +1,6 @@
 # Navbar Specification
 
-Version: 1.0
+Version: 1.1
 Status: Draft
 
 ---
@@ -37,6 +37,10 @@ Thin border.
 
 Smooth transition.
 
+Hide on downward scroll.
+
+Reveal on upward scroll.
+
 ---
 
 # Height
@@ -53,23 +57,13 @@ Desktop
 
 -------------------------------------------------
 
-Logo
-
-Spacer
-
-Projects
-
-Experience
-
-Resume
-
-LinkedIn
-
-Book a Call
+Logo       [Projects  Experience  Resume  LinkedIn]       Book a Call
 
 -------------------------------------------------
 
 Logo always left.
+
+Nav links grouped inside a single pill cluster, centered.
 
 Primary CTA always right.
 
@@ -81,7 +75,7 @@ Hamburger.
 
 Slide-over menu.
 
-Primary CTA pinned at bottom.
+Primary CTA pinned at bottom of slide-over.
 
 ---
 
@@ -111,37 +105,63 @@ No more than five navigation items.
 
 ---
 
-# CTA
+# Pill Cluster
 
-Primary
+All nav links sit inside a single container styled as a pill.
 
-Book a Call
+Container background: low-opacity white fill (e.g. rgba(255,255,255,0.04)).
 
-Always visually dominant.
+Container border: subtle (e.g. rgba(255,255,255,0.08)), border-radius 999px.
+
+Individual link padding: 5px 14px, border-radius 999px.
+
+Active link: slightly brighter background (e.g. rgba(255,255,255,0.08)), full white text.
+
+Inactive links: muted (e.g. 45% white opacity).
+
+Hover: smooth color transition, 150ms.
 
 ---
 
-# Scroll Behavior
+# CTA
 
-Hidden at top.
+Label: Book a Call.
 
-Reveal after Hero.
+Style: solid orange fill, white text, pill shape (border-radius 999px).
 
-Hide on downward scroll.
+Always visually dominant.
 
-Reveal on upward scroll.
+Hover: slight opacity reduction.
+
+---
+
+# Surface
+
+Background: rgba(10,10,10,0.80) or equivalent dark translucent.
+
+Backdrop filter: blur(12px).
+
+Bottom border: 1px, low opacity.
 
 ---
 
 # Motion
 
-Fade
+Fade + translateY(-8px) on hide.
 
-Translate Y
+Fade + translateY(0) on reveal.
 
-200ms
+Duration: 200ms.
 
-Ease-out
+Easing: ease-out.
+
+---
+
+# Active State
+
+Track active section via IntersectionObserver.
+
+Apply active styles to the matching pill link.
 
 ---
 
@@ -151,7 +171,9 @@ Keyboard navigation.
 
 Visible focus states.
 
-ARIA labels.
+ARIA labels on logo, nav, hamburger, and CTA.
+
+aria-current="page" on active nav link.
 
 ---
 
@@ -164,3 +186,14 @@ Never
 - Add dark shadows.
 - Add more than five links.
 - Use oversized logos.
+- Float nav links loosely — always wrap in the pill cluster container.
+
+---
+
+# Data Rule
+
+Before introducing new data structures, check whether the information already exists inside resume.ts.
+
+Prefer extending existing exports over creating new ones.
+
+Avoid duplicate sources of truth.

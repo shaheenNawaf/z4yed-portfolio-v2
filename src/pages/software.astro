@@ -1,11 +1,13 @@
 ---
 import BaseLayout from "../layouts/layout.astro";
 import IdentityHero from "../components/identity_hero.astro";
-import WorkCard from "../components/work_card.astro";
+import ProjectCard from "../components/project_card.astro";
+import ProjectModal from "../components/project_modal.astro";
 import ExperienceCard from "../components/experience_card.astro";
 import StickyBar from "../components/sticky_bar.astro";
 import ZoneNav from "../components/zone_nav.astro";
 import BookCall from "../components/book_call.astro";
+
 import {
   name,
   softwareSummary,
@@ -40,7 +42,7 @@ const softwareExp = experiences.filter((e) => e.category === "software");
   <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
   </div>
 
-  <main id="main" class="software-page max-w-4xl mx-auto w-full flex flex-col py-12 px-6">
+  <main id="main" class="software-page max-w-4xl mx-auto w-full flex flex-col py-12 px-5 md:px-8">
     <ZoneNav mode="software" />
 
     <div class="flex flex-col gap-16 md:gap-20">
@@ -78,7 +80,7 @@ const softwareExp = experiences.filter((e) => e.category === "software");
         <div class="flex items-end justify-between gap-4 mb-8">
           <div>
             <h2
-              class="zone-heading font-grotesk text-xl md:text-2xl font-extrabold tracking-tight"
+              class="zone-heading text-xl md:text-2xl font-bold tracking-tight"
             >
               Flagship builds
             </h2>
@@ -95,14 +97,14 @@ const softwareExp = experiences.filter((e) => e.category === "software");
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {
-            featured.map((project) => project && <WorkCard {...project} mode="software" />)
+            featured.map((project) => project && <ProjectCard {...project} />)
           }
         </div>
       </section>
 
       <section class="zone-surface p-6 md:p-8">
         <h2
-          class="zone-heading font-grotesk text-lg font-extrabold mb-4"
+          class="zone-heading text-lg font-bold mb-4"
         >
           Good fit when you need
         </h2>
@@ -127,7 +129,7 @@ const softwareExp = experiences.filter((e) => e.category === "software");
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {moreProjects.map((project) => (
-                <WorkCard {...project} mode="software" />
+                <ProjectCard {...project} />
               ))}
             </div>
           </section>
@@ -156,12 +158,17 @@ const softwareExp = experiences.filter((e) => e.category === "software");
 
   <StickyBar
     ctaText={hub.ctaPrimary}
-    contactEmail={contact.email}
     linkedinUrl={contact.linkedin}
     profileImage={contact.profileImage}
     name={name}
     statusText="Remote · SEA · Software roles"
     resumeUrl={resumes.software}
     ctaHref="#book-call"
+    email={contact.email}
   />
+
+  {/* Project Modals */}
+  {[...featured, ...moreProjects].filter(Boolean).map((project) => project && (
+    <ProjectModal {...project} />
+  ))}
 </BaseLayout>

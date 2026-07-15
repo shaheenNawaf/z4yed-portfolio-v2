@@ -1,8 +1,25 @@
-@import "@fontsource/space-grotesk/latin-700.css";
-@import "@fontsource/inter/latin-400.css";
-@import "@fontsource/inter/latin-500.css";
-@import "@fontsource/inter/latin-600.css";
-@import "@fontsource/inter/latin-700.css";
+/* Self-hosted Satoshi via @font-face (Fontshare) */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -94,12 +111,8 @@
   body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Satoshi", system-ui, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .font-grotesk {
-    font-family: "Space Grotesk", "Inter", sans-serif;
   }
 
   .font-mono {
@@ -219,7 +232,7 @@
     background-color: var(--accent);
     color: #fff;
     box-shadow: 0 8px 24px -10px var(--accent);
-    transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    transition: filter 0.2s cubic-bezier(0.16,1,0.3,1), transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s cubic-bezier(0.16,1,0.3,1);
   }
   .track-btn:hover {
     filter: brightness(1.08);
@@ -241,29 +254,15 @@
     box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
   }
 
-  /* Mono terminal section label, e.g. // work */
-  .terminal-label {
-    font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
-      monospace;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.35em;
-    color: var(--text-faint);
-  }
-  .terminal-rule {
-    height: 1px;
-    flex: 1;
-    background: linear-gradient(
-      to right,
-      var(--border-strong),
-      transparent
-    );
-  }
-
   /* Ambient dual-track glow blobs */
   .glow-mkt { background-color: var(--mkt); opacity: 0.1; }
   .glow-sw { background-color: var(--sw); opacity: 0.08; }
+
+  /* Premium card hover glow */
+  .project-card:hover {
+    box-shadow: 0 24px 60px -24px color-mix(in srgb, var(--card-accent) 20%, transparent),
+                0 8px 24px -12px rgba(0, 0, 0, 0.4);
+  }
 
   /* Book-call form fields */
   .book-field {
@@ -408,7 +407,7 @@
 .reveal-section {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
 }
 .reveal-section.is-visible { opacity: 1; transform: translateY(0); }
 
@@ -442,3 +441,8 @@ html.light #sun-icon { display: none; }
 html.light #moon-icon { display: block; }
 html:not(.light) #sun-icon { display: block; }
 html:not(.light) #moon-icon { display: none; }
+
+/* Trust bar logos — white in dark, black in light */
+html.light #trust-bar img {
+  filter: brightness(0);
+}

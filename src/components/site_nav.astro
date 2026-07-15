@@ -9,7 +9,7 @@ const navLinks = [
   { href: "/#skills", label: "Skills" },
 ];
 
-const firstName = name.split(" ")[0];
+// const firstName = name.split(" ")[0];
 ---
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
@@ -21,9 +21,15 @@ const firstName = name.split(" ")[0];
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label={`${name} - home`}>
       <span class="nav-monogram" aria-hidden="true">
-        <DitherAvatar client:load name={firstName} hue={230} size={24} animate={true} />
+        <DitherAvatar
+          client:load
+          name={name}
+          hue={230}
+          size={24}
+          animate={true}
+        />
       </span>
-      <span class="nav-wordmark">{firstName}</span>
+      <span class="nav-wordmark">{name}</span>
     </a>
 
     <nav class="nav-links" aria-label="Section navigation">
@@ -58,14 +64,18 @@ const firstName = name.split(" ")[0];
 
       <a href="/#contact" class="nav-cta">
         <span>Book a Call</span>
-        <svg class="nav-cta-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <svg
+          class="nav-cta-arrow"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden="true"
+        >
           <path
             d="M3 8H13M13 8L8 3M13 8L8 13"
             stroke="currentColor"
             stroke-width="1.75"
             stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke-linejoin="round"></path>
         </svg>
       </a>
     </div>
@@ -88,9 +98,15 @@ const firstName = name.split(" ")[0];
   <div class="flex items-center justify-between px-5 min-h-[64px] shrink-0">
     <a href="/" class="nav-logo" aria-label={`${name} - home`}>
       <span class="nav-monogram" aria-hidden="true">
-        <DitherAvatar client:load name={firstName} hue={230} size={24} animate={true} />
+        <DitherAvatar
+          client:load
+          name="name"
+          hue={230}
+          size={24}
+          animate={true}
+        />
       </span>
-      <span class="nav-wordmark">{firstName}</span>
+      <span class="nav-wordmark">{name}</span>
     </a>
     <div class="flex items-center gap-2">
       <ThemeToggle variant="inline" />
@@ -100,14 +116,25 @@ const firstName = name.split(" ")[0];
         aria-label="Close menu"
         type="button"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
   </div>
 
-  <div class="flex-1 flex flex-col items-center justify-center -mt-16 gap-1 px-5">
+  <div
+    class="flex-1 flex flex-col items-center justify-center -mt-16 gap-1 px-5"
+  >
     {
       navLinks.map((l) => (
         <a
@@ -143,9 +170,14 @@ const firstName = name.split(" ")[0];
           nav.style.setProperty("--np", String(eased.toFixed(4)));
         }
 
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = maxScroll > 0 ? Math.min(1, scrollY / maxScroll) : 0;
-        nav.style.setProperty("--scroll-progress", String(scrollPercent.toFixed(4)));
+        const maxScroll =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent =
+          maxScroll > 0 ? Math.min(1, scrollY / maxScroll) : 0;
+        nav.style.setProperty(
+          "--scroll-progress",
+          String(scrollPercent.toFixed(4)),
+        );
       }
 
       if (hero) {
@@ -153,7 +185,10 @@ const firstName = name.split(" ")[0];
           ([entry]) => {
             if (entry.intersectionRatio < 0.25 && !entry.isIntersecting) {
               nav.setAttribute("data-nav-state", "companion");
-            } else if (entry.isIntersecting || entry.intersectionRatio >= 0.25) {
+            } else if (
+              entry.isIntersecting ||
+              entry.intersectionRatio >= 0.25
+            ) {
               nav.setAttribute("data-nav-state", "hero");
             }
           },
@@ -173,22 +208,31 @@ const firstName = name.split(" ")[0];
       }
 
       window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", () => requestAnimationFrame(updateProgress), { passive: true });
+      window.addEventListener(
+        "resize",
+        () => requestAnimationFrame(updateProgress),
+        { passive: true },
+      );
       updateProgress();
 
       /* ═══════════════════════════════════════════════════════════════
          MOBILE FULL-SCREEN OVERLAY
          ═══════════════════════════════════════════════════════════════ */
-      const toggle = document.getElementById("mobile-menu-toggle") as HTMLButtonElement | null;
+      const toggle = document.getElementById(
+        "mobile-menu-toggle",
+      ) as HTMLButtonElement | null;
       const menu = document.getElementById("mobile-menu");
       const closeBtn = document.getElementById("mobile-menu-close");
       let lastFocusedElement: Element | null = null;
 
-      const focusableSelector = 'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])';
+      const focusableSelector =
+        'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])';
 
       const trapFocus = (e: KeyboardEvent) => {
         if (e.key !== "Tab" || !menu) return;
-        const focusables = Array.from(menu.querySelectorAll(focusableSelector)) as HTMLElement[];
+        const focusables = Array.from(
+          menu.querySelectorAll(focusableSelector),
+        ) as HTMLElement[];
         if (focusables.length === 0) return;
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
@@ -209,7 +253,9 @@ const firstName = name.split(" ")[0];
         toggle.setAttribute("aria-expanded", "true");
         document.body.style.overflow = "hidden";
         document.body.classList.add("mobile-menu-open");
-        const closeButton = menu.querySelector("#mobile-menu-close") as HTMLElement | null;
+        const closeButton = menu.querySelector(
+          "#mobile-menu-close",
+        ) as HTMLElement | null;
         (closeButton || menu.querySelector("a"))?.focus();
         menu.addEventListener("keydown", trapFocus);
       };
@@ -276,10 +322,15 @@ const firstName = name.split(" ")[0];
     right: 0;
     z-index: 50;
     height: 64px;
-    background-color: color-mix(in srgb, var(--bg) calc(60% + 20% * var(--np)), transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--bg) calc(60% + 20% * var(--np)),
+      transparent
+    );
     backdrop-filter: blur(20px) saturate(150%);
     -webkit-backdrop-filter: blur(20px) saturate(150%);
-    border-bottom: 1px solid color-mix(in srgb, var(--border) calc(50% + 50% * var(--np)), transparent);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--border) calc(50% + 50% * var(--np)), transparent);
   }
 
   /* Subtle noise texture on glass */
@@ -301,13 +352,23 @@ const firstName = name.split(" ")[0];
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, #fff 8%, transparent) 50%, transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, #fff 8%, transparent) 50%,
+      transparent
+    );
     pointer-events: none;
     opacity: calc(0.4 + 0.6 * var(--np));
   }
 
   html.light #site-nav::after {
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, #000 6%, transparent) 50%, transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, #000 6%, transparent) 50%,
+      transparent
+    );
   }
 
   /* ── Nav inner ── */
@@ -387,7 +448,9 @@ const firstName = name.split(" ")[0];
     color: var(--text-muted);
     text-decoration: none;
     border-radius: 8px;
-    transition: color 150ms ease, background-color 150ms ease;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease;
   }
   .nav-link::after {
     content: "";
@@ -430,7 +493,10 @@ const firstName = name.split(" ")[0];
     border: 1px solid transparent;
     color: var(--text-muted);
     cursor: pointer;
-    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease;
   }
   .nav-icon-btn:hover {
     color: var(--text);
@@ -459,7 +525,12 @@ const firstName = name.split(" ")[0];
     border-radius: 8px;
     border: 1px solid transparent;
     background-color: transparent;
-    transition: filter 150ms ease, transform 150ms ease, color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+    transition:
+      filter 150ms ease,
+      transform 150ms ease,
+      color 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease;
   }
   .nav-theme :global(#theme-toggle:hover) {
     color: var(--text);
@@ -506,7 +577,10 @@ const firstName = name.split(" ")[0];
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    transition: filter 150ms ease, transform 150ms ease, box-shadow 200ms ease;
+    transition:
+      filter 150ms ease,
+      transform 150ms ease,
+      box-shadow 200ms ease;
   }
   .nav-cta:hover {
     filter: brightness(1.1);
@@ -565,8 +639,9 @@ const firstName = name.split(" ")[0];
     height: 1.5px;
     background-color: currentColor;
     border-radius: 1px;
-    transition: transform 200ms cubic-bezier(0.16,1,0.3,1),
-                opacity 150ms ease;
+    transition:
+      transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 150ms ease;
     transform-origin: center;
   }
   #mobile-menu-toggle.is-active .mobile-toggle-line:nth-child(1) {

@@ -93,10 +93,25 @@ const initScrollSpy = () => {
   sections.forEach((s) => io.observe(s));
 };
 
+const initTrustBarObserver = () => {
+  const proofSection = document.getElementById("proof");
+  const stickyBar = document.getElementById("sticky-cta");
+  if (!proofSection || !stickyBar) return;
+
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      stickyBar.classList.toggle("is-hidden", !entry.isIntersecting);
+    },
+    { threshold: 0 }
+  );
+  io.observe(proofSection);
+};
+
 const initIndex = () => {
   initReveal();
   initCountUp();
   initScrollSpy();
+  initTrustBarObserver();
 };
 
 if (document.readyState === "loading") {

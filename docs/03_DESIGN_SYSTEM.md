@@ -35,7 +35,13 @@ Never resemble a template portfolio.
 
 Font Family
 
-Satoshi
+Satoshi (self-hosted via @font-face from Fontshare)
+
+Weights
+
+400 Regular (body)
+500 Medium (subheadings, emphasis)
+700 Bold (headings, display)
 
 Fallback
 
@@ -46,6 +52,11 @@ Maximum Fonts
 ONE
 
 Do not introduce secondary fonts.
+
+Exception
+
+System monospace stack is permitted for code/terminal UI elements (tags, dates, labels, watermark).
+This is an intentional design exception — not a secondary brand font.
 
 ---
 

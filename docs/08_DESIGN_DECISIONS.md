@@ -26,7 +26,15 @@ Hero deserves full attention.
 
 # Decision 003
 
-Single font only.
+Single font family.
+
+Implementation
+
+Satoshi (self-hosted via @font-face).
+
+400 Regular for body, 700 Bold for headings.
+
+System monospace stack permitted as exception for terminal/code UI (tags, dates, labels, watermark, GLaDOS).
 
 Reason
 

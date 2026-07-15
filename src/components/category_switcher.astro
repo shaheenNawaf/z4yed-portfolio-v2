@@ -1,0 +1,240 @@
+---
+/**
+ * Generic segmented-control filter switcher.
+ * Pass target/item selectors + storage key via props;
+ * script reads them from data-* attributes so nothing is hardcoded.
+ */
+
+export interface CategoryDef {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  /** CSS selector for the container whose children to filter */
+  targetSelector?: string;
+  /** CSS selector for individual filterable items inside the target */
+  itemSelector?: string;
+  /** localStorage key to persist the active category */
+  storageKey?: string;
+  /** Pill definitions – defaults to the project categories */
+  categories?: CategoryDef[];
+}
+
+const {
+  targetSelector = "[data-project-grid]",
+  itemSelector = "[data-project-card]",
+  storageKey = "project-category",
+  categories = [
+    { id: "all", label: "All" },
+    { id: "software", label: "Software" },
+    { id: "marketing", label: "Growth Marketing" },
+    { id: "systems", label: "Systems" },
+  ],
+} = Astro.props;
+
+const defaultId = categories[0]?.id ?? "all";
+---
+
+<div
+  class="category-switcher"
+  role="tablist"
+  aria-label="Filter items"
+  data-target={targetSelector}
+  data-item={itemSelector}
+  data-storage-key={storageKey}
+  data-default={defaultId}
+>
+  {
+    categories.map((cat, i) => (
+      <button
+        class="category-btn"
+        role="tab"
+        aria-selected={i === 0 ? "true" : "false"}
+        data-category={cat.id}
+        tabindex={i === 0 ? "0" : "-1"}
+      >
+        {cat.label}
+      </button>
+    ))
+  }
+  <div class="category-indicator" aria-hidden="true" />
+</div>
+
+<style>
+  .category-switcher {
+    display: inline-flex;
+    position: relative;
+    padding: 4px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-btn);
+    gap: 2px;
+  }
+
+  .category-btn {
+    position: relative;
+    z-index: 1;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: calc(var(--radius-btn) - 2px);
+    cursor: pointer;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .category-btn:hover {
+    color: var(--text);
+  }
+
+  .category-btn[aria-selected="true"] {
+    color: var(--text);
+  }
+
+  .category-indicator {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    background-color: var(--card-bg-2);
+    border: 1px solid var(--border-strong);
+    border-radius: calc(var(--radius-btn) - 2px);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) {
+    .category-switcher {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .category-switcher::-webkit-scrollbar {
+      display: none;
+    }
+    .category-btn {
+      padding: 8px 12px;
+      font-size: 11px;
+    }
+  }
+</style>
+
+<script>
+  const initCategorySwitcher = () => {
+    document.querySelectorAll<HTMLElement>(".category-switcher").forEach((switcher) => {
+      const targetSelector = switcher.dataset.target ?? "[data-project-grid]";
+      const itemSelector = switcher.dataset.item ?? "[data-project-card]";
+      const storageKey = switcher.dataset.storageKey ?? "project-category";
+      const defaultId = switcher.dataset.default ?? "all";
+
+      const buttons = switcher.querySelectorAll<HTMLElement>(".category-btn");
+      const indicator = switcher.querySelector<HTMLElement>(".category-indicator");
+      const grid = document.querySelector<HTMLElement>(targetSelector);
+      if (!grid || !indicator) return;
+
+      const cards = grid.querySelectorAll<HTMLElement>(itemSelector);
+
+      const saved = localStorage.getItem(storageKey) || defaultId;
+
+      const updateIndicator = (btn: HTMLElement) => {
+        const rect = btn.getBoundingClientRect();
+        const switcherRect = switcher.getBoundingClientRect();
+        indicator.style.width = `${rect.width}px`;
+        indicator.style.transform = `translateX(${rect.left - switcherRect.left - 4}px)`;
+      };
+
+      const filterItems = (category: string) => {
+        cards.forEach((card) => {
+          const cardCategory = card.getAttribute("data-category");
+          const el = card as HTMLElement;
+          if (category === "all" || cardCategory === category) {
+            el.style.display = "";
+            el.style.opacity = "1";
+            el.style.transform = "";
+          } else {
+            el.style.opacity = "0";
+            el.style.transform = "scale(0.95)";
+            setTimeout(() => {
+              el.style.display = "none";
+            }, 200);
+          }
+        });
+      };
+
+      // Initialize ARIA states
+      buttons.forEach((btn) => {
+        const category = btn.getAttribute("data-category");
+        if (category === saved) {
+          btn.setAttribute("aria-selected", "true");
+          btn.tabIndex = 0;
+        } else {
+          btn.setAttribute("aria-selected", "false");
+          btn.tabIndex = -1;
+        }
+      });
+
+      // Set initial indicator position
+      const activeBtn = switcher.querySelector<HTMLElement>('.category-btn[aria-selected="true"]');
+      if (activeBtn) {
+        requestAnimationFrame(() => updateIndicator(activeBtn));
+      }
+
+      filterItems(saved);
+
+      // Click + keyboard handlers
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const category = btn.getAttribute("data-category") || defaultId;
+
+          buttons.forEach((b) => {
+            b.setAttribute("aria-selected", "false");
+            b.tabIndex = -1;
+          });
+          btn.setAttribute("aria-selected", "true");
+          btn.tabIndex = 0;
+
+          updateIndicator(btn);
+          localStorage.setItem(storageKey, category);
+          filterItems(category);
+        });
+
+        btn.addEventListener("keydown", (e) => {
+          const btnArray = Array.from(buttons);
+          const index = btnArray.indexOf(btn);
+
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            e.preventDefault();
+            const next = btnArray[(index + 1) % btnArray.length];
+            next.click();
+            next.focus();
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            const prev = btnArray[(index - 1 + btnArray.length) % btnArray.length];
+            prev.click();
+            prev.focus();
+          }
+        });
+      });
+
+      // Recalculate indicator on resize
+      window.addEventListener("resize", () => {
+        const active = switcher.querySelector<HTMLElement>('.category-btn[aria-selected="true"]');
+        if (active) updateIndicator(active);
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCategorySwitcher);
+  } else {
+    initCategorySwitcher();
+  }
+  document.addEventListener("astro:after-swap", initCategorySwitcher);
+</script>

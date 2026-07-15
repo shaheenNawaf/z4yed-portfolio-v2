@@ -1,4 +1,4 @@
-export type Category = 'software' | 'marketing';
+export type Category = 'software' | 'marketing' | 'systems';
 
 export interface Project {
   id: string;
@@ -40,11 +40,12 @@ export const name = "Shaheen Al Adwani";
 
 /** Conversion funnel copy + booking config */
 export const hub = {
-  headline: "I design, build, and ship software products, then run the growth systems that grow them.",
+  position: "Growth Marketer × Software Engineer",
+  headline: "I Build Products That Convert.",
   subtext:
     "Full-stack engineer and growth operator. Two live SaaS products, $355K+ in campaign volume, 4:1 ROAS, 22K-member communities. Open to full-time roles and select freelance.",
-  status: "Open to full-time · Remote SEA",
-  ctaPrimary: "Book intro call",
+  status: "Open to SWE & MKT roles · Project work",
+  ctaPrimary: "Book a Call",
   appointmentUrl: "" as string,
 };
 
@@ -77,6 +78,7 @@ export const featuredProjectIds = {
     "campaign-sgc-launch",
   ],
   software: ["proj-gymeasy", "proj-agripinoy", "proj-JCSD"],
+  systems: ["campaign-growth-automation", "proj-esp32"],
 } as const;
 
 /** Order and selection of projects featured on the homepage */
@@ -93,8 +95,8 @@ export const featuredHomeIds = [
 export const hubStats = [
   {
     value: "$355K+",
-    label: "Campaign transaction volume",
-    sub: "Generated across creator partnerships",
+    label: "Total Transaction Volume in just 4 months",
+    sub: "Grew from $6K/mo to $355K total in just 4 months",
     accent: "marketing",
   },
   {
@@ -382,7 +384,7 @@ export const projects: Project[] = [
   },
   {
     id: 'campaign-growth-automation',
-    category: 'marketing',
+    category: 'systems',
     title: 'Growth Automation System',
     date: '2025',
     role: 'Growth Engineer',
@@ -493,7 +495,7 @@ export const projects: Project[] = [
   },
   {
     id: 'proj-esp32',
-    category: 'software',
+    category: 'systems',
     title: 'ESP32 IoT Project',
     date: '2025',
     role: 'Firmware & Full-stack Developer',

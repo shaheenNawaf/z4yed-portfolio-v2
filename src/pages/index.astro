@@ -3,27 +3,25 @@ import BaseLayout from "../layouts/layout.astro";
 import SiteNav from "../components/site_nav.astro";
 import HeroHome from "../components/hero_home.astro";
 import ProofBand from "../components/proof_band.astro";
-import ProjectShowcase from "../components/project_showcase.astro";
+import ProjectCard from "../components/project_card.astro";
+import CategorySwitcher from "../components/category_switcher.astro";
+import ProjectModal from "../components/project_modal.astro";
 import ExperienceTimeline from "../components/experience_timeline.astro";
 import SkillsGrid from "../components/skills_grid.astro";
 import WhyHire from "../components/why_hire.astro";
-import Testimonials from "../components/testimonials.astro";
+
 import BookCall from "../components/book_call.astro";
 import StickyBar from "../components/sticky_bar.astro";
-import SectionHeader from "../components/section_header.astro";
 import {
   name,
   contact,
   hub,
   resumes,
   projects,
-  featuredHomeIds,
-  trustLogos,
 } from "../data/resume";
 
-const featured = featuredHomeIds
-  .map((id) => projects.find((p) => p.id === id))
-  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+// All projects for the homepage (max 6 per category)
+const allProjects = projects.slice(0, 18);
 ---
 
 <BaseLayout
@@ -34,53 +32,25 @@ const featured = featuredHomeIds
 >
   <SiteNav />
 
+  <div id="hero-trigger" class="absolute top-0 h-20 w-full pointer-events-none">
+  </div>
+
   <main id="main" class="relative">
     <HeroHome />
 
-    <!-- Floating trust bar with animated dual-accent border -->
-    <div
-      class="relative z-40 -mt-10 md:-mt-14 px-4 pointer-events-none"
-    >
-      <div class="animate-bob max-w-2xl mx-auto pointer-events-auto">
-        <div
-          class="animate-border-sync floating-glass rounded-2xl px-6 py-3 md:py-4 flex items-center justify-center gap-5 md:gap-8 transition-transform hover:scale-[1.02]"
-        >
-          <span
-            class="font-mono text-[9px] md:text-[10px] font-bold uppercase tracking-[0.35em] text-[color:var(--text-faint)] shrink-0"
-          >
-            Trusted by
-          </span>
-          <div
-            class="flex items-center gap-5 md:gap-8 opacity-70 grayscale transition-all duration-500 hover:opacity-100 hover:grayscale-0"
-          >
-            {
-              trustLogos.map((l) => (
-                <img
-                  src={l.src}
-                  alt={l.alt}
-                  class="h-4 md:h-7 w-auto object-contain"
-                />
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-
     <ProofBand />
 
-    <section id="work" class="relative py-16 md:py-24">
+    <section id="work" class="relative py-16 md:py-32">
       <div class="max-w-6xl mx-auto px-5 md:px-8">
-        <SectionHeader label="// work" />
-        <div class="flex items-end justify-between gap-4 mb-10 -mt-4">
+        <div class="flex items-end justify-between gap-4 mb-10 md:mb-14">
           <div>
             <h2
-              class="font-grotesk text-2xl md:text-3xl font-extrabold text-[color:var(--text)] tracking-tight"
+              class="text-3xl md:text-4xl font-bold text-[color:var(--text)] tracking-tight"
             >
-              Featured work
+              Projects
             </h2>
-            <p class="muted text-sm md:text-base mt-2 max-w-2xl">
-              Selected builds and campaigns. Each one ships real users, real revenue, or real devices, with the problem, solution, and impact in plain language.
+            <p class="muted text-base md:text-lg mt-3 max-w-2xl">
+              Real products. Real business impact. Built with measurable outcomes.
             </p>
           </div>
           <a
@@ -94,8 +64,102 @@ const featured = featuredHomeIds
           </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          {featured.map((project) => <ProjectShowcase {...project} />)}
+        <div class="mb-8">
+          <CategorySwitcher />
+        </div>
+
+        {/* Featured project card */}
+        <a
+          href="#"
+          class="block mb-8 md:h-[320px] surface radius-card overflow-hidden group transition-all duration-200 hover:border-[color:var(--card-accent)]"
+          style={`--card-accent: var(--mkt)`}
+        >
+          {/* Mobile layout */}
+          <div class="md:hidden flex flex-col">
+            <div
+              class="w-full h-[180px] relative overflow-hidden"
+              style={`background-color: #3b82f618`}
+            >
+              <img
+                src="/rivalry/new-tribe.jpg"
+                alt="Rivalry Tribe: The Gated D2C Powerhouse"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition-all duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+              <p class="text-[11px] font-bold uppercase tracking-[0.1em] text-[color:var(--text-muted)] mb-2">
+                Featured Project
+              </p>
+              <h3 class="text-[18px] font-bold text-[color:var(--text)] tracking-tight leading-snug mb-2 group-hover:text-[color:var(--card-accent)] transition-colors">
+                Rivalry Tribe: The Gated D2C Powerhouse
+              </h3>
+              <p class="muted text-[14px] leading-relaxed mb-3 line-clamp-3">
+                Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel, achieving 22,000 members and 12-16K daily active users.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">KYC-Gated Funnel</span>
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">D2C Retention</span>
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">Community Strategy</span>
+              </div>
+              <div class="mt-auto">
+                <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] group-hover:text-[color:var(--card-accent)] transition-colors">
+                  View case study
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop layout */}
+          <div class="hidden md:flex h-full">
+            {/* Image side — 60% */}
+            <div
+              class="relative w-[60%] h-full overflow-hidden"
+              style={`background-color: #3b82f618`}
+            >
+              <img
+                src="/rivalry/new-tribe.jpg"
+                alt="Rivalry Tribe: The Gated D2C Powerhouse"
+                class="w-full h-full object-cover group-hover:scale-[1.02] transition-all duration-200"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(90deg, transparent 60%, color-mix(in srgb, var(--card-bg) 85%, transparent) 100%);"></div>
+            </div>
+
+            {/* Content side — 40% */}
+            <div class="w-[40%] p-8 flex flex-col justify-center">
+              <p class="text-[11px] font-bold uppercase tracking-[0.1em] text-[color:var(--text-muted)] mb-3">
+                Featured Project
+              </p>
+              <h3 class="text-[24px] font-bold text-[color:var(--text)] tracking-tight leading-snug mb-3 group-hover:text-[color:var(--card-accent)] transition-colors">
+                Rivalry Tribe: The Gated D2C Powerhouse
+              </h3>
+              <p class="muted text-[14px] leading-relaxed mb-4 line-clamp-3">
+                Architected and scaled 'Rivalry Tribe', a private D2C community gated by a strict manual KYC-verification funnel, achieving 22,000 members averaging 12-16K daily active users.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">KYC-Gated Funnel</span>
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">D2C Retention</span>
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">Community Strategy</span>
+                <span class="px-2 py-0.5 panel radius-btn text-[10px] font-mono muted">Resilience Strategy</span>
+              </div>
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] group-hover:text-[color:var(--card-accent)] transition-colors">
+                View case study
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6" data-project-grid>
+          {allProjects.map((project) => (
+            <ProjectCard {...project} />
+          ))}
         </div>
       </div>
     </section>
@@ -103,74 +167,177 @@ const featured = featuredHomeIds
     <ExperienceTimeline />
     <SkillsGrid />
     <WhyHire />
-    <Testimonials />
 
-    <section id="contact" class="relative py-16 md:py-24">
-      <div class="max-w-4xl mx-auto px-5 md:px-8">
-        <SectionHeader label="// contact" />
-
-        <div class="text-center mb-10">
+    <section id="contact" class="relative py-12 md:py-32">
+      <div class="max-w-6xl mx-auto px-6 md:px-8">
+        {/* Mobile layout */}
+        <div class="md:hidden text-center">
+          <p class="text-[12px] font-mono uppercase tracking-widest text-[color:var(--accent)]">
+            {hub.status}
+          </p>
           <h2
-            class="font-grotesk text-3xl md:text-5xl font-extrabold text-[color:var(--text)] tracking-tight leading-[1.05] max-w-3xl mx-auto"
+            class="mt-4 text-[clamp(28px,7vw,36px)] font-bold text-[color:var(--text)] tracking-tight leading-[1.2] max-w-[280px] mx-auto"
           >
             Your <span class="accent-marketing">next best hire</span> is already
-            here.<br class="hidden sm:block" /> Let's
+            here. Let's
             <span class="accent-software">make it official</span>.
           </h2>
-        </div>
+          <p class="mt-6 text-base text-[color:var(--text-muted)] leading-relaxed max-w-md mx-auto">
+            Send a short note or book a time.
+          </p>
 
-        <div class="relative">
-          <div
-            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full blur-3xl animate-cta-glow -z-10"
-            style="background: linear-gradient(90deg, var(--mkt-soft), var(--sw-soft));"
-          >
+          <div class="mt-8 relative">
+            <div
+              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full blur-3xl animate-cta-glow -z-10"
+              style="background: linear-gradient(90deg, var(--mkt-soft), var(--sw-soft));"
+            >
+            </div>
+            <BookCall
+              id="book-call-mobile"
+              title="Book a 15-min intro call"
+              subtitle="Short form first. Then pick a time on Google Appointments or reply over email."
+              defaultInterest="hybrid"
+              compact={true}
+            />
           </div>
-          <BookCall
-            title="Book a 15-min intro call"
-            subtitle="Short form first. Then pick a time on Google Appointments or reply over email."
-            defaultInterest="hybrid"
-          />
+
+          <div class="mt-6 grid grid-cols-2 gap-2 max-w-xs mx-auto">
+            <a
+              href={`mailto:${contact.email}`}
+              class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Email
+            </a>
+            <a
+              href={`https://${contact.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+              LinkedIn
+            </a>
+            <a
+              href={resumes.software}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              SWE Resume
+            </a>
+            <a
+              href={resumes.marketing}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              MKT Resume
+            </a>
+          </div>
+
+          <p class="mt-5 text-[12px] text-[color:var(--text-muted)]">
+            Replies within 24–48 hours.
+          </p>
         </div>
 
-        <div
-          class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-mono uppercase tracking-widest muted"
-        >
-          <a
-            href={`mailto:${contact.email}`}
-            class="hover:text-[color:var(--text)] transition-colors"
-          >
-            {contact.email}
-          </a>
-          <span class="faint">/</span>
-          <a
-            href={`https://${contact.linkedin}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-[color:var(--text)] transition-colors"
-          >
-            LinkedIn
-          </a>
-          <span class="faint">/</span>
-          <a
-            href={resumes.software}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-[color:var(--text)] transition-colors"
-          >
-            SWE resume
-          </a>
-          <span class="faint">/</span>
-          <a
-            href={resumes.marketing}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-[color:var(--text)] transition-colors"
-          >
-            MKT resume
-          </a>
+        {/* Desktop layout */}
+        <div class="hidden md:grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <!-- Left column: argument -->
+          <div class="text-center md:text-left">
+            <h2
+              class="text-3xl md:text-5xl font-bold text-[color:var(--text)] tracking-tight leading-[1.05]"
+            >
+              Your <span class="accent-marketing">next best hire</span> is already
+              here.<br class="hidden sm:block" /> Let's
+              <span class="accent-software">make it official</span>.
+            </h2>
+            <p class="mt-6 text-base md:text-lg text-[color:var(--text-muted)] leading-relaxed max-w-md mx-auto md:mx-0">
+              Send a short note or book a time.
+            </p>
+
+            <div class="mt-8">
+              <p class="text-[12px] font-mono uppercase tracking-widest text-[color:var(--accent)]">
+                {hub.status}
+              </p>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-2 max-w-xs mx-auto md:mx-0">
+              <a
+                href={`mailto:${contact.email}`}
+                class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Email
+              </a>
+              <a
+                href={`https://${contact.linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+                LinkedIn
+              </a>
+              <a
+                href={resumes.software}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                SWE Resume
+              </a>
+              <a
+                href={resumes.marketing}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="surface flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-[color:var(--text-muted)] hover:text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                MKT Resume
+              </a>
+            </div>
+
+            <p class="mt-5 text-[12px] text-[color:var(--text-muted)]">
+              Replies within 24–48 hours.
+            </p>
+          </div>
+
+          <!-- Right column: form -->
+          <div class="relative">
+            <div
+              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full blur-3xl animate-cta-glow -z-10"
+              style="background: linear-gradient(90deg, var(--mkt-soft), var(--sw-soft));"
+            >
+            </div>
+            <BookCall
+              title="Book a 15-min intro call"
+              subtitle="Short form first. Then pick a time on Google Appointments or reply over email."
+              defaultInterest="hybrid"
+            />
+          </div>
         </div>
 
-        <p class="mt-12 text-center">
+        <p class="mt-16 text-center">
           <span
             id="heart-trigger"
             class="font-mono text-[10px] font-bold faint uppercase tracking-widest cursor-pointer hover:text-red-500 transition-colors"
@@ -185,14 +352,19 @@ const featured = featuredHomeIds
 
   <StickyBar
     ctaText={hub.ctaPrimary}
-    contactEmail={contact.email}
     linkedinUrl={contact.linkedin}
     profileImage={contact.profileImage}
     name={name}
     statusText={hub.status}
     resumeUrl={resumes.software}
     ctaHref="#contact"
+    email={contact.email}
   />
+
+  {/* Project Modals */}
+  {allProjects.map((project) => (
+    <ProjectModal {...project} />
+  ))}
 </BaseLayout>
 
 <script src="../scripts/index-page.ts"></script>

@@ -1,6 +1,6 @@
 /*
- * Global Scripts: Manages modal dialogues, theme toggle syncing, 
- * image-security, and the floating sticky CTA banner.
+ * Global Scripts: Manages modal dialogues, theme toggle syncing,
+ * and image-security.
  */
 
 // Handles showing and hiding modals, as well as pausing running media on close
@@ -58,29 +58,65 @@ const setupModals = () => {
   });
 };
 
-// Displays or hides the bottom floating contact CTA based on scroll position
-const setupStickyBar = () => {
-  const stickyBar = document.getElementById('sticky-cta');
-  const heroTrigger = document.getElementById('hero-trigger');
-  const siteHeader = document.getElementById('site-header');
+// Handles showing and hiding project case study modals
+const setupProjectModals = () => {
+  const projectCards = document.querySelectorAll('[data-project-card]');
 
-  if (!stickyBar || !heroTrigger) return;
+  // Halts video playbacks to avoid background audio when closing a modal
+  const stopVideo = (modal: HTMLDialogElement) => {
+    const video = modal.querySelector('video');
+    if (video) { video.pause(); video.currentTime = 0; }
+  };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) {
-        stickyBar.classList.remove('translate-y-40');
-        stickyBar.classList.add('translate-y-0');
-        siteHeader?.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
-      } else {
-        stickyBar.classList.add('translate-y-40');
-        stickyBar.classList.remove('translate-y-0');
-        siteHeader?.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+  // Registers click events to open project modals
+  projectCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const projectId = card.getAttribute('data-project-card');
+      if (!projectId) return;
+      const modal = document.getElementById(`modal-${projectId}`) as HTMLDialogElement | null;
+      if (modal) {
+        modal.showModal();
+        document.body.style.overflow = 'hidden';
       }
     });
-  }, { threshold: 0 });
 
-  observer.observe(heroTrigger);
+    // Keyboard support
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.dispatchEvent(new Event('click'));
+      }
+    });
+  });
+
+  // Registers handlers for closing project modals
+  document.querySelectorAll('[data-project-modal]').forEach(modal => {
+    const dialog = modal as HTMLDialogElement;
+    
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = 'auto';
+    });
+
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
+      if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+        stopVideo(dialog);
+        dialog.close();
+      }
+    });
+  });
+
+  // Close buttons inside project modals
+  document.querySelectorAll('[data-project-modal] .close-modal').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dialog = (btn as HTMLElement).closest('dialog') as HTMLDialogElement | null;
+      if (dialog) {
+        stopVideo(dialog);
+        dialog.close();
+      }
+    });
+  });
 };
 
 // Handles clicking theme buttons and setting persistent storage changes across views
@@ -120,7 +156,7 @@ const setupImageProtection = () => {
 // Initialization runner
 const initMain = () => {
   setupModals();
-  setupStickyBar();
+  setupProjectModals();
   setupTheme();
   setupImageProtection(); // Invokes global image security
 };

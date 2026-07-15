@@ -68,9 +68,17 @@ const selectionClass =
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
+
+    {/* Handwritten annotation font (hero portrait only) */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
-  <body class="min-h-screen font-sans relative transition-colors duration-300">
+  <body class="min-h-screen relative transition-colors duration-300">
     <a href="#main" class="skip-link">Skip to content</a>
 
     {!hideToggle && <ThemeToggle />}

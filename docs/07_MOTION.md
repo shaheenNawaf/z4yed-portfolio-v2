@@ -28,11 +28,17 @@ Natural
 
 # Duration
 
-150-250ms
+150-250ms (micro-interactions, scroll reveals)
 
 Ease Out
 
 No bounce.
+
+Exception
+
+Ambient brand animations (floating trust bar bob, border-sync glow, CTA glow) are decorative and may exceed 250ms. They are not motion-guiding interactions.
+
+Hero entrance animations are motion-guiding and use 400ms per element for a deliberate, high-impact reveal. This is the only section that should exceed the 250ms micro-interaction budget.
 
 ---
 

@@ -1,6 +1,6 @@
 # Hero Section Specification
 
-Version: 1.0
+Version: 1.1
 Status: Draft
 
 ---
@@ -61,7 +61,7 @@ The Hero must communicate information in this exact order.
 
 4. Primary CTA
 
-5. Secondary CTA
+5. Secondary CTAs
 
 6. Supporting Metrics
 
@@ -77,22 +77,25 @@ Desktop
 
 Two-column layout.
 
+Left column carries the argument.
+
+Right column carries the proof (portrait + depth layer).
+
+Desktop ratio: 55 / 45
+
 Left
 
+- Name (small, muted — above the headline)
 - Headline
 - Supporting Copy
-- CTA Buttons
-- Quick Metrics
+- CTA Group
+- Metrics Row
 
 Right
 
-- Portrait
-- Subtle animated background
-- Floating technology indicators (optional)
-
-Desktop ratio
-
-55 / 45
+- Portrait card (framed, not floating)
+- Ambient depth layer behind portrait
+- No floating tech badges
 
 ---
 
@@ -122,19 +125,29 @@ Everything vertically stacked.
 
 ---
 
+# Name Treatment
+
+Render the name small and muted above the headline.
+
+fontSize: 13–14px.
+
+color: low opacity white or orange accent.
+
+letterSpacing: 0.08em.
+
+textTransform: uppercase.
+
+Acts as an eyebrow label, not a heading.
+
+---
+
 # Headline
 
-The headline should be large.
+Large. Maximum two lines.
 
-Maximum two lines.
+Current: "Growth Marketer × Software Engineer"
 
-Examples
-
-"Growth Marketer × Software Engineer"
-
-or
-
-"I Build Products That Convert."
+The × operator is intentional — it signals intersection, not a list.
 
 Avoid buzzwords.
 
@@ -148,47 +161,68 @@ Clarity wins.
 
 Maximum three lines.
 
+Must answer: why is this combination rare and valuable?
+
+Good direction: "Most marketers can't ship. Most engineers can't sell."
+
 Communicate
 
-- Growth mindset
-- Engineering execution
+- The rarity of the combination
+- Execution capability
 - Business impact
 
 Avoid life story.
 
 Avoid mission statements.
 
----
-
-# CTA
-
-Primary
-
-View Selected Work
-
-Secondary
-
-Download Resume
-
-Never add more than two CTAs.
+Avoid "passionate about" language.
 
 ---
 
-# Metrics
+# CTA Group
 
-Maximum four.
+Primary button
+
+- Label: Book a Call
+- Style: solid orange fill, white text, pill shape
+- Links to: #contact
+
+Secondary links (below or beside primary, visually subordinate)
+
+- LinkedIn — ghost/text link with ↗ arrow
+- SWE Resume — ghost/text link with ↓ arrow
+- MKT Resume — ghost/text link with ↓ arrow
+
+Secondary links must be smaller and more muted than the primary.
+
+Never render primary and secondary at equal visual weight.
+
+Never add more than one solid button.
+
+---
+
+# Metrics Row
+
+Maximum four metrics.
+
+Sits below the CTA group.
+
+Separated from CTA group by a thin top border or 24–32px gap.
+
+Rendered as a single horizontal row on desktop.
+
+Each metric: large number, small muted label below it.
+
+Dividers between metrics: 1px vertical line, low opacity.
 
 Examples
 
-4+ Years Experience
+- $355K+ Campaign Volume
+- 4:1 ROAS
+- 22K+ Community Members
+- 25+ SEA Creator Partnerships
 
-$355K+ Campaign Volume
-
-22K+ Community Members
-
-25+ SEA Creator Partnerships
-
-Metrics should appear as compact cards.
+Metrics read as evidence, not decoration.
 
 Never dominate the Hero.
 
@@ -196,47 +230,64 @@ Never dominate the Hero.
 
 # Portrait
 
-Professional.
+Professional. High contrast. No busy background.
 
-High contrast.
+Rendered inside a dark framed card, not floating freely.
 
-No busy background.
+Card: subtle border (1px, low opacity), rounded corners (12–16px), dark background slightly lighter than page.
 
-Rounded corners.
+Portrait fills the card. No excessive padding.
 
-Should visually balance the text.
+The card grounds the portrait visually.
 
 ---
 
-# Navigation
+# Right Column Depth Layer
 
-Navbar must NOT be visible while the Hero is fully in view.
+The right column must not be a flat surface.
 
-The Hero owns the user's attention.
+Apply one ambient element behind the portrait card.
 
-Navbar appears only after the Hero scrolls out of view.
+Options (pick one, implement subtly)
+
+- Radial gradient using orange accent at 4–6% opacity, centered behind the card
+- Faint dot grid or noise texture clipped to the column
+- Very low opacity geometric shape (circle or blob) in orange or white
+
+The depth layer must not be distracting.
+
+It exists to add perceived depth, not to decorate.
+
+Do not animate it.
 
 ---
 
 # Motion
 
-Headline
+Stagger the left column reveals in this order.
 
-Fade + slight upward motion.
+1. Name eyebrow — fade in
+2. Headline — fade + translateY(12px → 0)
+3. Supporting copy — fade + translateY(12px → 0), 80ms delay
+4. CTA group — fade, 160ms delay
+5. Metrics — staggered per item, 20ms apart, 240ms start delay
 
 Portrait
 
-Subtle fade.
+- Fade in only, no translate
+- Slight delay (100ms) so text leads
 
-Buttons
+Depth layer
 
-Fade.
+- Static. No animation.
 
-Metrics
+Duration: 400ms per element.
 
-Staggered reveal.
+Easing: ease-out.
 
 Avoid excessive animation.
+
+Respect prefers-reduced-motion.
 
 ---
 
@@ -246,17 +297,19 @@ Proper heading hierarchy.
 
 Keyboard accessible buttons.
 
-Descriptive alt text.
+Descriptive alt text on portrait.
 
-Readable contrast.
+Readable contrast on all text.
+
+Secondary links must have visible focus states.
 
 ---
 
 # Performance
 
-Portrait optimized.
+Portrait optimized (WebP, correct dimensions).
 
-Lazy load decorative assets.
+Lazy load depth layer decorative asset if any.
 
 Avoid blocking animations.
 
@@ -283,9 +336,22 @@ Do NOT
 - Add rotating text.
 - Add typing animations.
 - Add carousels.
-- Add more than two buttons.
+- Add more than one solid CTA button.
 - Add walls of text.
-- Add decorative statistics.
+- Add decorative statistics with no context.
 - Add social media icons.
-- Add technology logos.
+- Add technology logo strips.
 - Add unnecessary badges.
+- Float the portrait with no frame or context.
+- Make the secondary links the same visual weight as the primary CTA.
+- Animate the depth layer.
+
+---
+
+# Data Rule
+
+Before introducing new data structures, check whether the information already exists inside resume.ts.
+
+Prefer extending existing exports over creating new ones.
+
+Avoid duplicate sources of truth.
