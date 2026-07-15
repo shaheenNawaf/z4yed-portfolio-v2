@@ -1,124 +1,425 @@
 ---
-import { name, contact, hub, resumes } from "../data/resume";
+import { name, contact, hub, resumes, hubStats, trustLogos } from "../data/resume";
+
+const heroMetrics = [hubStats[0], hubStats[3], hubStats[1], hubStats[2]];
+const words = hub.position.split(" ");
+const headlineWords = [words[0] + " " + words[1], words.slice(2).join(" ")];
 ---
 
 <section
   id="hero"
-  class="relative isolate min-h-[100dvh] flex items-center pt-20 md:pt-24 pb-16 md:pb-20 overflow-hidden"
+  class="relative isolate min-h-[100dvh] flex items-center pt-16 md:pt-24 pb-12 md:pb-20 overflow-hidden"
 >
-  <div
-    class="absolute inset-0 overflow-hidden pointer-events-none -z-10"
-    aria-hidden="true"
-  >
-    <!-- Dual-track ambient glows: growth (orange) top-right, engineering (blue) bottom-left -->
-    <div
-      class="absolute -top-40 -right-40 w-[40rem] h-[40rem] rounded-full blur-3xl glow-mkt"
-    >
-    </div>
-    <div
-      class="absolute -bottom-40 -left-40 w-[36rem] h-[36rem] rounded-full blur-3xl glow-sw"
-    >
-    </div>
-    <!-- Subtle large dot texture for focus behind the name -->
-    <div
-      class="absolute inset-0 opacity-60"
-      style="background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.5px); background-size: 26px 26px; mask-image: radial-gradient(circle at 50% 40%, black, transparent 70%);"
-    >
-    </div>
-  </div>
-
   <div class="relative z-10 max-w-6xl mx-auto w-full px-5 md:px-8">
-    <div class="grid lg:grid-cols-[1.25fr_0.75fr] gap-10 lg:gap-16 items-center">
-      <div>
-        <div class="flex flex-wrap items-center gap-2 mb-6">
-          <span
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border hairline bg-[color:var(--card-bg-2)] text-[11px] font-mono font-bold uppercase tracking-widest text-[color:var(--text)]"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-            {hub.status}
-          </span>
+    <div class="grid lg:grid-cols-[11fr_9fr] gap-6 lg:gap-16 items-center">
+      <!-- Portrait (desktop only) -->
+      <div
+        class="hidden md:flex order-1 lg:order-2 relative justify-center lg:justify-end"
+      >
+        <!-- Depth layer: static radial gradient behind portrait -->
+        <div
+          class="absolute inset-0 -inset-x-8 -inset-y-8 pointer-events-none"
+          aria-hidden="true"
+          style="background: radial-gradient(circle at 50% 50%, rgba(249,115,22,0.05), transparent 70%);"
+        >
         </div>
 
-        <h1
-          class="font-grotesk text-5xl sm:text-6xl md:text-7xl font-extrabold text-[color:var(--text)] tracking-tighter leading-[1.02] max-w-2xl"
+        <!-- Portrait group: all annotations move with the portrait -->
+        <div class="relative ml-auto overflow-visible">
+          <!-- Annotation 1: "That's me." + arrow pointing to left shoulder -->
+          <div
+            class="absolute top-2 -right-8 sm:top-2 sm:-right-12 md:top-4 md:-right-16 z-20 pointer-events-none"
+          >
+            <span
+              class="hero-annotation block text-[18px] font-normal text-white leading-none mb-0.5"
+              style="font-family: 'Caveat', cursive; transform: rotate(-4deg);"
+            >
+              That's me.
+            </span>
+            <svg
+              class="hero-annotation-arrow w-10 h-7"
+              viewBox="0 0 50 30"
+              fill="none"
+              aria-hidden="true"
+            >
+              <!-- Wobbly shaft curving down-left toward shoulder -->
+              <path
+                d="M 44,3 C 40,5 36,9 30,14 C 24,19 18,23 12,26"
+                stroke="var(--mkt)"
+                stroke-width="2"
+                stroke-linecap="round"
+                fill="none"
+              />
+              <!-- Imperfect arrowhead with wobble -->
+              <path
+                d="M 18,20 L 12,26 L 19,25"
+                stroke="var(--mkt)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+              />
+            </svg>
+          </div>
+
+          <!-- Portrait card -->
+          <div
+            class="hero-reveal-portrait relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden panel"
+          >
+            <div
+              class="absolute inset-0 rounded-2xl pointer-events-none"
+              style="box-shadow: 0 0 0 1px var(--border);"
+            >
+            </div>
+            <img
+              src={contact.profileImage}
+              alt={`Portrait of ${name}`}
+              class="absolute inset-0 w-full h-full object-cover"
+              width="384"
+              height="384"
+              loading="eager"
+            />
+          </div>
+
+          <!-- Trust bar — anchored to portrait -->
+          <div
+            id="trust-bar"
+            class="hero-trust-bar mt-5 panel rounded-2xl pl-4 md:pl-5 pr-2 py-3 flex items-center justify-center gap-3 md:gap-0 w-56 sm:w-64 md:w-72 overflow-visible"
+          >
+            <span
+              class="font-medium text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-[color:var(--text-faint)] shrink-0 pr-3 md:pr-4"
+            >
+              Trusted by
+            </span>
+            <div
+              class="flex items-center gap-1.5 md:gap-2 opacity-40 transition-opacity duration-300 hover:opacity-100"
+            >
+              {
+                trustLogos.map((l, i) => (
+                  <img
+                    src={l.src}
+                    alt={l.alt}
+                    class="h-4 md:h-6 w-auto object-contain px-1 md:px-1.5 shrink-0 last:h-4 md:last:h-5"
+                  />
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left column: argument -->
+      <div class="order-2 lg:order-1">
+        <!-- Name eyebrow -->
+        <p
+          class="hero-reveal-name text-[13px] font-bold uppercase tracking-[0.08em] text-[color:var(--accent)] mb-5"
         >
           {name}
+        </p>
+
+        <!-- Headline + Annotation 4: check mark -->
+        <h1
+          class="relative text-5xl sm:text-6xl md:text-7xl font-semibold text-[color:var(--text)] tracking-tighter leading-[1.1] max-w-2xl"
+        >
+          {headlineWords.map((word, i) => (
+            <span
+              class="hero-word inline-block"
+              style={`animation-delay: ${i * 80}ms;`}
+            >
+              {word}{i < headlineWords.length - 1 ? "\u00A0" : ""}
+            </span>
+          ))}
+          <!-- Hand-drawn check mark near end of headline (hidden on mobile) -->
+          <svg
+            class="hero-check hidden sm:block absolute right-0 md:-right-2 bottom-2 md:bottom-3 w-4 h-4 md:w-5 md:h-5 pointer-events-none"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M 3,11 C 5,13 7,15 8,16 C 10,14 14,8 17,4"
+              stroke="var(--mkt)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </svg>
         </h1>
 
+        <!-- Supporting copy + Annotation 2: handwritten underline -->
         <p
-          class="mt-4 text-base md:text-lg muted font-medium tracking-tight"
+          class="hero-reveal-copy relative mt-6 text-base md:text-lg muted leading-relaxed max-w-[52ch]"
         >
-          Full-stack Software Engineer &amp; Growth Marketer
+          I Build <span class="relative">
+            Products That Convert.
+            <!-- Hand-drawn orange underline SVG (only under "Products That Convert.") -->
+            <svg
+              class="hero-underline absolute -bottom-2.5 left-0 w-full h-3 pointer-events-none"
+              viewBox="0 0 200 12"
+              fill="none"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M 2,7 C 20,4 50,9 80,5 C 110,2 140,8 170,4 C 185,3 195,6 198,5"
+                stroke="var(--mkt)"
+                stroke-width="2"
+                stroke-linecap="round"
+                fill="none"
+              />
+            </svg>
+          </span>
         </p>
 
-        <p
-          class="mt-6 muted text-base md:text-lg leading-relaxed max-w-[58ch]"
+        <!-- CTA group -->
+        <div
+          class="hero-reveal-cta mt-8 flex flex-wrap items-center gap-2.5"
         >
-          {hub.headline}
-        </p>
-
-        <div class="mt-8 flex flex-wrap items-center gap-3">
           <a
             href="#contact"
-            class="track-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-[0.15em] transition-all active:scale-[0.98]"
+            class="track-btn inline-flex items-center justify-center px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all active:scale-[0.98]"
           >
             {hub.ctaPrimary}
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
-            </svg>
           </a>
           <a
             href={`https://${contact.linkedin}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="panel inline-flex items-center px-4 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-[color:var(--text)] hover:border-[color:var(--border-strong)] transition-all"
+            class="surface inline-flex items-center justify-center gap-1.5 px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.15em] text-[color:var(--text)] hover:text-[color:var(--text-muted)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
           >
             LinkedIn
+            <svg
+              class="w-3 h-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M7 17L17 7M17 7H7M17 7v10"></path>
+            </svg>
           </a>
-          <div class="flex items-center gap-2 text-[11px] muted">
+          <div class="flex items-center gap-2.5">
             <a
               href={resumes.software}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-[color:var(--text)] transition-colors font-mono uppercase tracking-wider"
+              class="hero-resume-btn inline-flex items-center gap-1.5 px-7 py-3.5 rounded-full text-xs font-medium uppercase tracking-wider text-white/60 border border-white/20 hover:text-white hover:border-white/50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
             >
-              SWE resume
+              SWE Resume
+              <svg
+                class="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M12 5v14m0 0l-6-6m6 6l6-6"></path>
+              </svg>
             </a>
-            <span class="faint">/</span>
             <a
               href={resumes.marketing}
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:text-[color:var(--text)] transition-colors font-mono uppercase tracking-wider"
+              class="hero-resume-btn inline-flex items-center gap-1.5 px-7 py-3.5 rounded-full text-xs font-medium uppercase tracking-wider text-white/60 border border-white/20 hover:text-white hover:border-white/50 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
             >
-              MKT resume
+              MKT Resume
+              <svg
+                class="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M12 5v14m0 0l-6-6m6 6l6-6"></path>
+              </svg>
             </a>
           </div>
         </div>
-      </div>
 
-      <div class="relative flex justify-center lg:justify-end">
+        <!-- Metrics row + Annotation 3: metric note -->
         <div
-          class="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden panel"
+          class="hero-reveal-metrics relative mt-8 pt-6 border-t border-[color:var(--border)]"
         >
-          <div
-            class="absolute inset-0 rounded-2xl pointer-events-none"
-            style="box-shadow: 0 0 0 1px var(--accent-border), 0 20px 60px -20px var(--mkt-soft), 0 20px 60px -20px var(--sw-soft), 0 20px 60px -20px rgba(0,0,0,0.6);"
-          >
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {
+              heroMetrics.map((metric, i) => (
+                <div
+                  class:list={[
+                    "hero-metric-item flex flex-col text-center md:text-left",
+                    {
+                      "md:border-l md:border-[color:var(--border)] md:pl-6":
+                        i > 0,
+                    },
+                  ]}
+                  style={`animation-delay: ${240 + i * 20}ms;`}
+                >
+                  <span
+                    class="stat-number text-2xl md:text-3xl font-bold text-[color:var(--text)] tracking-tight"
+                    data-value={metric.value}
+                  >
+                    {metric.value}
+                  </span>
+                  <span class="mt-1 text-[11px] font-medium uppercase tracking-wider text-[color:var(--text-muted)] leading-snug line-clamp-2">
+                    {metric.label}
+                  </span>
+                </div>
+              ))
+            }
           </div>
-          <img
-            src={contact.profileImage}
-            alt={name}
-            class="absolute inset-0 w-full h-full object-cover"
-            loading="eager"
-          />
-        </div>
-        <div
-          class="absolute -bottom-3 -right-3 panel rounded-xl px-3 py-2 text-[11px] font-mono uppercase tracking-widest muted hidden sm:block"
-        >
-          {contact.location}
+          <!-- Handwritten review note (hidden on mobile) -->
+          <span
+            class="hero-metric-note hidden sm:inline-block mt-3 text-sm text-[color:var(--mkt)] pointer-events-none"
+            style="font-family: 'Caveat', cursive; transform: rotate(-2deg); opacity: 0.7;"
+          >
+            Real results.
+          </span>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* ── Hero staggered reveal animations ── */
+  @keyframes hero-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes hero-blur-in {
+    from {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0);
+    }
+  }
+  @keyframes draw-stroke {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Headline words: staggered blur-dissolve reveal */
+  .hero-word {
+    opacity: 0;
+    animation: hero-blur-in 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Left column reveals */
+  .hero-reveal-name {
+    animation: hero-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+  .hero-reveal-copy {
+    animation: hero-fade-up 400ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
+    opacity: 0;
+  }
+  .hero-reveal-cta {
+    animation: hero-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) 160ms forwards;
+    opacity: 0;
+  }
+
+  /* Metrics container: no animation (individual items stagger) */
+  .hero-metric-item {
+    opacity: 0;
+    animation: hero-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Portrait */
+  .hero-reveal-portrait {
+    animation: hero-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) 100ms forwards;
+    opacity: 0;
+  }
+
+  /* Trust bar under portrait */
+  .hero-trust-bar {
+    animation: hero-fade 400ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+    opacity: 0;
+  }
+
+  /* Annotation 1: "That's me." arrow draws, then text fades */
+  .hero-annotation-arrow path {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: draw-stroke 500ms cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards;
+  }
+  .hero-annotation {
+    opacity: 0;
+    animation: hero-fade 150ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
+  }
+
+  /* Annotation 2: Underline draws beneath tagline */
+  .hero-underline path {
+    stroke-dasharray: 350;
+    stroke-dashoffset: 350;
+    animation: draw-stroke 500ms cubic-bezier(0.16, 1, 0.3, 1) 500ms forwards;
+  }
+
+  /* Annotation 4: Check mark draws */
+  .hero-check path {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: draw-stroke 400ms cubic-bezier(0.16, 1, 0.3, 1) 600ms forwards;
+  }
+
+  /* Annotation 3: Metric note fades */
+  .hero-metric-note {
+    opacity: 0;
+    animation: hero-fade 150ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms forwards;
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-word,
+    .hero-reveal-name,
+    .hero-reveal-copy,
+    .hero-reveal-cta,
+    .hero-metric-item,
+    .hero-reveal-portrait,
+    .hero-trust-bar,
+    .hero-annotation,
+    .hero-metric-note {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+    .hero-annotation-arrow path,
+    .hero-underline path,
+    .hero-check path {
+      animation: none !important;
+      stroke-dashoffset: 0 !important;
+    }
+  }
+</style>
